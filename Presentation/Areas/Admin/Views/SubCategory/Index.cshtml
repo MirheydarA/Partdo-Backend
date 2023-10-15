@@ -1,0 +1,89 @@
+﻿@using Business.ViewModels.Admin.SubCategory
+@model SubCategoryIndexVM
+
+<h1 class="h3 mb-2 text-gray-800">SubCategroy</h1>
+
+<a class="btn btn-info mb-3" asp-action="Create" asp-controller="subcategory">Create</a>
+
+
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @foreach (var subCategory in Model.SubCategories)
+        {
+            <tr>
+                <td>@subCategory.Id</td>
+                <td>@subCategory.Name</td>
+                <td>@subCategory.Category.Name</td>
+                <td>
+                    @if (!subCategory.IsDeleted)
+                    {
+                        <span class="text-success">Active</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">Non-Active</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-controller="subCategory" asp-route-id="@subCategory.Id" class="btn btn-danger btn-delete">Delete</a>
+                    <a asp-action="Update" asp-controller="subcategory" asp-route-id="@subCategory.Id" class="btn btn-primary ">Update</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(".btn-delete").on("click", (e) => {
+            e.preventDefault()
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    let link = e.target.getAttribute("href")
+                    fetch(link).then(res => {
+                        //console.log(res.ok)
+                        if (res.ok == true) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            ).then(() => {
+                                window.location.reload()
+                            })
+
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong!',
+                                footer: '<a href="">Why do I have this issue?</a>'
+                            })
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+    }

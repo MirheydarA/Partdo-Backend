@@ -1,0 +1,94 @@
+﻿@using Business.ViewModels.Admin.OnSale_2
+@model OnSale_2IndexVM
+
+<h1 class="h3 mb-2 text-gray-800">OnSale_2 Components</h1>
+
+<a class="btn btn-info mb-3" asp-action="Create" asp-controller="onsale_2">Create</a>
+
+
+<table class="table ">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Photo</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @foreach (var onSale in Model.OnSale_2s)
+        {
+            <tr>
+                <td>@onSale.Id</td>
+                <td>
+                    <img src="~/Users/assets/images/@onSale.Photo" style="width: 100px" />
+                </td>
+                <td>@onSale.Title</td>
+                <td>@onSale.Description</td>
+                <td>
+                    @if (!onSale.IsDeleted)
+                    {
+                        <span class="text-success">Active</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">Non-Active</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-controller="onsale_2" asp-route-id="@onSale.Id" class="btn btn-danger btn-delete">Delete</a>
+                    <a asp-action="Update" asp-controller="onsale_2" asp-route-id="@onSale.Id" class="btn btn-primary">Update</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(".btn-delete").on("click", (e) => {
+            e.preventDefault()
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    let link = e.target.getAttribute("href")
+                    fetch(link).then(res => {
+                        //console.log(res.ok)
+                        if (res.ok == true) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            ).then(() => {
+                                window.location.reload()
+                            })
+
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong!',
+                                footer: '<a href="">Why do I have this issue?</a>'
+                            })
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+    }
+

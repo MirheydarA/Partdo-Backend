@@ -1,0 +1,46 @@
+﻿@using Business.ViewModels.Admin.Blog
+@model BlogDetailsVM
+
+
+<div class="px-4">
+    @if (Model is not null)
+    {
+        <h3 class="border-bottom">Main Photo</h3>
+        <span>
+            <img src="~/Users/assets/images/@Model.Photo" style="width:100px"/>
+        </span>
+
+        <h3>Title</h3>
+        <span>@Model.Title</span>
+
+        <h3>Short Description</h3>
+        <span>@Model.ShortDesc</span>
+
+        <h3>Description</h3>
+        <span>@Html.Raw(@Model.Description)</span>
+
+        <h3>Tags</h3>
+        <span>@Model.Tags</span>
+
+        <h3>Author</h3>
+        <span>@Model.Author</span>
+
+        <h3>Category</h3>
+        <span>@Model.Category</span>
+
+        <h3>Created Time</h3>
+        <span>@Model.CreatedAt</span>
+
+
+        <h3>Modified Time</h3>
+        <span>@Model.ModifiedAt</span>
+    }
+</div>
+
+
+
+
+
+
+
+

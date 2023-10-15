@@ -1,0 +1,333 @@
+﻿@using Business.ViewModels.Users.Blog
+@model BlogDetailsVM
+
+<!-- Main Starts -->
+<div>
+    <section class="container mx-auto flex flex-col pb-[80px] mt-[66px] xl:mt-[0px] mid:flex-row ">
+        <div class="left-part mid:w-[72%] w-full">
+
+            <div class="Blog mt-10">
+                <h1 class="text-[38px] leading-tight font-semibold">@Model.Title</h1>
+
+                <div class="info mt-6 flex gap-9 mb-5">
+                    <div class="flex flex-col text-[15px]">
+                        <span class="text-[gray]">Date</span>
+                        <a href="">@Model.CreatedAt.ToString("MMMM dd, yyyy")</a>
+                    </div>
+
+                    <div class="flex flex-col text-[15px]">
+                        <span class="text-[gray]">Category</span>
+                        <a href="">@Model.Category</a>
+                    </div>
+
+                    <div class="flex flex-col text-[15px]">
+                        <span class="text-[gray]">Tags</span>
+                        <a href="">@Model.Tags</a>
+                    </div>
+                </div>
+
+                <a href="blog-single.html">
+                    <div class="rounded-lg">
+                        <img src="~/Users/assets/images/@Model.Photo"
+                             alt=""
+                             class="rounded-xl w-full hover:brightness-50 duration-500 cursor-pointer" />
+                    </div>
+                </a>
+
+                <div class="img-desc ">
+                    <p class="text-[#000000] mt-2 mb-[16px]">
+                        @Html.Raw(Model.Description)
+                    </p>
+
+                </div>
+            </div>
+
+            <div>
+                <div class="messages mt-10 mb-[60px]">
+                    <h5 class="text-[24px] font-semibold leading-tight">3 thoughts on “BUYING CHEAP USED TRANSMISSIONS ISN’T AS RISKY AS YOU THINK”</h5>
+                    <ul class="border-t pt-[24px] mt-[24px] border-[#dcdcdc]">
+
+                        <li class="1PersonComment flex">
+                            <div class="mid:mr-[40px] mr-5 w-80">
+                                <img src="https://secure.gravatar.com/avatar/dd28514c9a8cfba334e05f21703be28e?s=96&d=mm&r=g" alt="" class="rounded-full ">
+                            </div>
+                            <div class="comment">
+                                <div>
+                                    <span class="font-semibold text-[16px]">admin</span>
+                                    <span class="text-[12px] ml-[15px] text-[#a7a7a7]">November 4, 2022</span>
+                                </div>
+
+                                <div>
+                                    <p class="text-[13px] mb-[16px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
+
+                                </div>
+
+                                <a href="" class="text-[13px] font-bold">Reply</a>
+                            </div>
+                        </li>
+
+                        <li class="1PersonComment md:pl-[40px] flex mt-10">
+
+                            <div class="mid:mr-[40px] mr-5 w-80">
+                                <img src="https://secure.gravatar.com/avatar/dd28514c9a8cfba334e05f21703be28e?s=96&d=mm&r=g" alt="" class="rounded-full">
+                            </div>
+                            <div class="comment ">
+                                <div>
+                                    <span class="font-semibold text-[16px]">admin</span>
+                                    <span class="text-[12px] ml-[15px] text-[#a7a7a7]">November 4, 2022</span>
+                                </div>
+
+                                <p class="text-[13px] mb-[16px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
+                                <a href="" class="text-[13px] font-bold">Reply</a>
+                            </div>
+
+                        </li>
+
+                        <li class="1PersonComment flex mt-10">
+                            <div class="mid:mr-[40px] mr-5 w-80">
+                                <img src="https://secure.gravatar.com/avatar/dd28514c9a8cfba334e05f21703be28e?s=96&d=mm&r=g" alt="" class="rounded-full">
+                            </div>
+                            <div class="comment">
+                                <div>
+                                    <span class="font-semibold text-[16px]">admin</span>
+                                    <span class="text-[12px] ml-[15px] text-[#a7a7a7]">November 4, 2022</span>
+                                </div>
+
+                                <div>
+                                    <p class="text-[13px] mb-[16px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
+
+                                </div>
+
+                                <a href="" class="text-[13px] font-bold">Reply</a>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="ReplyComment pt-[30px] border-t border-[#cacaca]">
+                    <h3 class="font-semibold">Leave a Reply</h3>
+                    <p class="text-[16px] text-[#797979] mb-[16px]">Your email address will not be published. Required fields are marked *</p>
+
+                    <form action="">
+                        <div class="flex flex-col mb-[16px]">
+                            <label class="text-[13px]" for="">Comment *</label>
+                            <textarea name="" id="" cols="30" rows="5" class="border min-h-[150px] border-[#c6c6c6] rounded-xl py-[12px] px-[15px] outline-none focus:shadow-black"></textarea>
+                        </div>
+
+                        <div class="mid:grid mid:grid-cols-2 mid:gap-3 mb-[16px]">
+                            <div class="flex flex-col">
+                                <label for="" class="text-[13px]">Name *</label>
+                                <input type="text" class="border border-[#c6c6c6] rounded-xl h-[42px] px-3">
+                            </div>
+
+                            <div class="flex flex-col">
+                                <label for="" class="text-[13px]">Email *</label>
+                                <input type="text" class="border border-[#c6c6c6] rounded-xl h-[42px] px-3">
+                            </div>
+
+                        </div>
+
+                        <div class="flex flex-col mb-[16px]">
+                            <label for="" class="text-[13px]">Website *</label>
+                            <input type="text" class="border border-[#c6c6c6] rounded-xl h-[42px] px-3">
+                        </div>
+
+                        <div>
+                            <input type="checkbox" class="mr-2" name="" id="">
+                            <label class="text-[13px]" for="">Save my name, email, and website in this browser for the next time I comment.</label>
+                        </div>
+
+                        <div class="mt-4">
+                            <input type="submit" class="bg-partdored px-9 py-3 rounded-xl text-white font-semibold" value="Post Comment">
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="right-part mid:w-[28%] ">
+
+            <div class="Post-Widget mid:pr-5 mid:pl-10 mt-10">
+                <h4 class="font-bold text-[15px] mb-5">Posts Widget</h4>
+                <ul>
+                    @{
+                        var counter = 0;
+                    }
+                    @foreach (var blog in ViewBag.Listblog.Blogs)
+                    {
+                        counter = counter + 1;
+                        <li class="mb-5">
+                            <div class="flex ">
+                                <div class="img relative w-[30%] flex items-center ">
+                                    <img src="assets/images/blog-03.jpg" alt="" class="w-[66px] h-[66px] rounded-full object-cover ">
+                                    <span class="absolute top-2 left-0 bg-[#4dd2f0] rounded-full w-[25px] h-[25px] flex justify-center items-center text-white border-2 font-semibold">1</span>
+                                </div>
+                                <div class="description w-[70%] flex flex-col">
+                                    <span class="text-[12px] font-semibold mb-[6px]">October 12, 2023</span>
+                                    <a href="" class="text-[14px] font-semibold hover:text-red duration-300">BUYING CHEAP USED TRANSMISSIONS ISN’T AS RISKY AS YOU THINK</a>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            <div class="sticky top-[-43px] mid:pr-5 mid:pl-10 mt-10">
+                <div class="relative">
+                    <a href="" class="">
+                        <div class="overflow-hidden rounded-xl w-full h-[211px] mid:h-auto flex justify-center">
+                            <img src="https://klbtheme.com/partdo/wp-content/uploads/2022/10/banner-26.jpg" alt="" class="rounded-xl hover:scale-[1.1] duration-500 w-full object-cover">
+                        </div>
+                        <div class="img-content absolute top-6 left-0 px-6">
+                            <span class="bg-partdored px-2 py-[2px] rounded-xl text-white text-[12px] font-bold">On Sale This Week</span>
+                            <h2 class="mt-4 mb-6 font-bold text-[20px] leading-tight">Genuine Auto Parts You Can Find at Affordable Prices</h2>
+
+                            <a href="" class="text-[14px] font-semibold">Shop Now <i class="fa-solid fa-arrow-right ml-2"></i></a>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="mt-7">
+                    <h4 class="font-bold text-[15px] mb-5">Social Media</h4>
+                    <ul class="w-full">
+
+                        <li class="group gap-4 mb-2 w-full bg-[#e2f1ff] py-2 px-4 rounded-lg cursor-pointer hover:bg-[#518eff]">
+                            <a href="" class="text-[14px]"><i class="fa-brands fa-facebook-f text-[#518eff] group-hover:text-white"><span class="ml-6 text-[11px]">FACEBOOK</span></i></a>
+                        </li>
+
+                        <li class="group gap-4 mb-2 w-full bg-[#eaf5ff] py-2 px-4 rounded-lg cursor-pointer hover:bg-[#51b7ff]">
+                            <a href="" class="text-[14px] "><i class="fa-brands fa-twitter text-[#51b7ff] group-hover:text-white"></i>  <span class="ml-4 text-[13px] font-semibold text-[#51b7ff] group-hover:text-white">TWITTER</span></i></a>
+                        </li>
+
+                        <li class="group gap-4 mb-2 w-full bg-[#ffd8d8] py-2 px-4 rounded-lg cursor-pointer hover:bg-[red]">
+                            <a href="" class="text-[14px] "><i class="fa-brands fa-pinterest text-[red] group-hover:text-white"></i> <span class="ml-4 text-[13px] text-[red] group-hover:text-white font-semibold">PINTEREST</span></i></a>
+                        </li>
+
+                        <li class="group gap-4 mb-2 w-full bg-[#deeaf8] py-2 px-4 rounded-lg cursor-pointer hover:bg-[#5caae3]">
+                            <a href="" class="text-[14px] "><i class="fa-brands fa-linkedin-in text-[#5caae3] group-hover:text-white"></i> <span class="ml-4 text-[13px] text-[#5caae3] group-hover:text-white font-semibold">LINKEDIN</span></i></a>
+                        </li>
+
+                        <li class="group gap-4 w-full bg-[#ffd8d8] py-2 px-4 rounded-lg cursor-pointer hover:bg-[red]">
+                            <a href="" class="text-[14px] "><i class="fa-brands fa-youtube text-[red] group-hover:text-white"></i> <span class="ml-4 text-[13px] text-[red] group-hover:text-white font-semibold">YOUTUBE</span></i></a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="">
+        <div class="email py-[60px] container mx-auto mid:grid mid:grid-cols-2 flex flex-col border-t border-[#dedede]">
+            <div class="email-left flex pr-[60px]">
+                <div class="envelope-icon mid:block hidden">
+                    <i class="fa-regular fa-envelope envelope text-[60px] pr-[30px]"></i>
+                </div>
+                <div class="email-content">
+                    <h5 class="text-red text-[16px] mb-[10px] font-semibold">
+                        Join our newsletter for £10 offs
+                    </h5>
+                    <h3 class="text-[26px] mb-[10px] font-medium">
+                        Get our emails for info on new items, sales and much more.
+                    </h3>
+                    <p class="text-14px text-gray w-[350px]">
+                        Register now to get latest updates on promotions & coupons.
+                        Don’t worry, we not spam!
+                    </p>
+                </div>
+            </div>
+
+            <div class="email-right flex flex-col items-start mid:items-end justify-center">
+                <div>
+                    <div class="email-right-top">
+                        <form action="">
+                            <div class="input-email flex justify-between border border-border rounded-[12px] gap-[15px] py-1 pr-1 mt-5 mid:mt-0">
+                                <input type="email"
+                                       name="email"
+                                       placeholder="Enter your email address"
+                                       class="text-[18px] w-full focus:outline-none py-2 pl-3 pr-[10px] rounded-[12px]" />
+                                <button type="submit"
+                                        class="bg-red text-[16px] font-bold w-[40%] text-white py-2 rounded-[8px]">
+                                    Subscribe
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="email-right-bottom mt-[10px]">
+                        <p class="text-[12px]">
+                            By subscribing you agree to our
+                            <a href="" class="text-red underline">Terms & Conditions and Privacy & Cookies Policy.</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="responsive navbar-bottom">
+        <div class="flex justify-between fixed bottom-0 bg-white w-full px-10 md:hidden border-t border-[#cbcbcb]">
+            <div class="flex flex-col items-center py-4">
+                <a href="" class="flex flex-col items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="20"
+                         height="20"
+                         fill="currentColor"
+                         class="bi bi-house-door"
+                         viewBox="0 0 16 16">
+                        <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146ZM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5Z" />
+                    </svg>
+                    <span class="text-[10px] mt-2">HOME</span>
+                </a>
+            </div>
+
+            <div class="flex flex-col items-center py-4">
+                <a href="" class="flex flex-col items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="20"
+                         height="20"
+                         fill="currentColor"
+                         class="bi bi-filter"
+                         viewBox="0 0 16 16">
+                        <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
+                    </svg>
+                    <span class="text-[10px] mt-2">FILTER</span>
+                </a>
+            </div>
+
+            <div class="flex flex-col items-center py-4">
+
+                <a href="" class="flex flex-col items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                    <span class="text-[10px] mt-2">SEARCH</span>
+                </a>
+            </div>
+
+            <div class="flex flex-col items-center py-4">
+                <a href="" class="flex flex-col items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+                    </svg>
+                    <span class="text-[10px] mt-2">HEART</span>
+                </a>
+            </div>
+
+            <div class="flex flex-col items-center py-4">
+                <a href="" class="flex flex-col items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
+                    </svg>
+                    <span class="text-[10px] mt-2">HEART</span>
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- Main Ends -->

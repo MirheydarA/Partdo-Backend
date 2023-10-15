@@ -1,0 +1,98 @@
+﻿@using Business.ViewModels.Users.Home
+@using Common.Entities;
+@model List<Product>
+
+
+
+<div id="" class=" tabcontent">
+    <div class="owl-slider">
+        <div id="carousel" class="owl-carousel">
+            @foreach (var product in Model)
+            {
+                <div class="item border-none">
+
+                    <div class="img">
+                        <img src="~/Users/assets/images/@product.MainPhoto"
+                             alt="1000X1000"
+                             class="rounded-[10px] " />
+                        <span class="sale absolute bg-[#ff1900] text-[12px] font-semibold text-white py-[2px] px-[9px] rounded-[22%] top-[10px] left-[10px]">8%</span>
+                        <span class="heart absolute flex justify-center items-center w-7 h-7 bg-[#f4f4f4] text-[16px] text-black py-[2px] px-[9px] rounded-full top-[10px] right-[10px] hover:bg-[#ffe2e2] hover:text-red cursor-pointer duration-200"><i class="fa-regular fa-heart heart-icon"></i></span>
+                    </div>
+
+                    <div class="image-desc flex flex-col mt-[15px]">
+                        <a href="" class="img-title text-[14px] font-semibold hover:text-red duration-200">
+                            @product.Name
+                        </a>
+
+                        <div class="star-rating text-[12px] mt-[10px] text-[#e1e1e1]">
+                            <span class="fa fa-star checked star-icon text-yellow-500"></span>
+                            <span class="fa fa-star checked star-icon text-yellow-500"></span>
+                            <span class="fa fa-star checked star-icon text-yellow-500"></span>
+                            <span class="fa fa-star star-icon "></span>
+                            <span class="fa fa-star star-icon"></span>
+                            <span class="review text-[12px] font-semibold ml-[10px] text-black">1 review</span>
+                        </div>
+
+                        <div class="priceandbasket flex justify-between items-center">
+                            <div class="price flex flex-col">
+                                <span class="old-price line-through text-[#787878]">
+                                    $@product.Price
+                                </span>
+                                <span class="new-price text-red text-[19px] font-medium mt-[5px]">
+                                    $@product.NewPrice
+                                </span>
+                            </div>
+
+                            <div class="basket text-[20px] bg-[#f2f2f2] rounded-[30%] p-[5px] hover:bg-red hover:text-white duration-200">
+                                <a href="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart2" viewBox="0 0 16 16">
+                                        <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="stock mt-[8px]">
+                            <span class="text-green-900 text-[14px] font-medium">
+                                <i class="fa-solid fa-cube package taxt-[12px]  mr-2"></i> @product.StockType
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+            }
+
+        </div>
+    </div>
+</div>
+
+<script>
+    jQuery("#carousel").owlCarousel({
+        autoplay: false,
+        rewind: true,
+        margin: 20,
+        responsiveClass: true,
+        autoHeight: true,
+        autoplayTimeout: 7000,
+        smartSpeed: 800,
+        nav: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+
+            600: {
+                items: 3
+            },
+
+            1024: {
+                items: 3
+            },
+
+            1366: {
+                items: 5
+            }
+        }
+    });
+</script>

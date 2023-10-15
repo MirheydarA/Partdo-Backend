@@ -1,0 +1,17 @@
+C:\Users\ASUS\Desktop\projects\PartDoApp\DataAccess\bin\Debug\net7.0\DataAccess.deps.json
+C:\Users\ASUS\Desktop\projects\PartDoApp\DataAccess\bin\Debug\net7.0\DataAccess.runtimeconfig.json
+C:\Users\ASUS\Desktop\projects\PartDoApp\DataAccess\bin\Debug\net7.0\DataAccess.dll
+C:\Users\ASUS\Desktop\projects\PartDoApp\DataAccess\bin\Debug\net7.0\DataAccess.pdb
+C:\Users\ASUS\Desktop\projects\PartDoApp\DataAccess\bin\Debug\net7.0\Common.dll
+C:\Users\ASUS\Desktop\projects\PartDoApp\DataAccess\bin\Debug\net7.0\Common.pdb
+C:\Users\ASUS\Desktop\projects\PartDoApp\DataAccess\obj\Debug\net7.0\DataAccess.csproj.AssemblyReference.cache
+C:\Users\ASUS\Desktop\projects\PartDoApp\DataAccess\obj\Debug\net7.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ASUS\Desktop\projects\PartDoApp\DataAccess\obj\Debug\net7.0\DataAccess.AssemblyInfoInputs.cache
+C:\Users\ASUS\Desktop\projects\PartDoApp\DataAccess\obj\Debug\net7.0\DataAccess.AssemblyInfo.cs
+C:\Users\ASUS\Desktop\projects\PartDoApp\DataAccess\obj\Debug\net7.0\DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\Desktop\projects\PartDoApp\DataAccess\obj\Debug\net7.0\DataAccess.csproj.CopyComplete
+C:\Users\ASUS\Desktop\projects\PartDoApp\DataAccess\obj\Debug\net7.0\DataAccess.dll
+C:\Users\ASUS\Desktop\projects\PartDoApp\DataAccess\obj\Debug\net7.0\refint\DataAccess.dll
+C:\Users\ASUS\Desktop\projects\PartDoApp\DataAccess\obj\Debug\net7.0\DataAccess.pdb
+C:\Users\ASUS\Desktop\projects\PartDoApp\DataAccess\obj\Debug\net7.0\DataAccess.genruntimeconfig.cache
+C:\Users\ASUS\Desktop\projects\PartDoApp\DataAccess\obj\Debug\net7.0\ref\DataAccess.dll

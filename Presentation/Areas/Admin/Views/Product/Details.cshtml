@@ -1,0 +1,82 @@
+﻿@using Business.ViewModels.Admin.Product
+@model ProductDetailsVM
+<div class="px-4">
+    @if (Model is not null)
+    {
+        <h3>Special Product</h3>
+        <span>
+            @Model.IsSpecial
+        </span>
+
+        <h3>Main Product</h3>
+        <span>
+            @Model.IsSpecial
+        </span>
+
+        <h3>Main Photo</h3>
+        <span>
+            <img src="~/Users/assets/images/@Model.MainPhoto" style="width: 100px" />
+        </span>
+
+        <h3>Photos</h3>
+        <span>
+            @foreach (var photo in Model.Photos)
+            {
+                <img class="mr-2" src="~/Users/assets/images/@photo.Name" style="width: 100px"/>
+            }
+        </span>
+
+        <h3>Name</h3>
+        <span>@Model.Name</span>
+
+        <h3>Description</h3>
+        <span>@Model.Description</span>
+
+        <h3>Short Description</h3>
+        <span>@Model.ShortDesc</span>
+
+        <h3>Stock Type</h3>
+        <span>@Model.StockType</span>
+
+        <h3>Stock Quantity</h3>
+        <span>@Model.StockQuantity</span>
+
+        @if (Model.Status is not null)
+        {
+            <h3>Status</h3>
+            <span>@Model.Status</span>
+        }
+
+        <h3>Price</h3>
+        <span>
+            @Model.Price
+        </span>
+
+        @if (Model.NewPrice is not null)
+        {
+            <h3>New Price</h3>
+            <span>@Model.NewPrice</span>
+        }
+
+        <h3>SubCategory</h3>
+        <span>@Model.SubCategory.Name</span>
+
+
+        <h3>Category</h3>
+        <span>@Model.SubCategory.Category.Name</span>
+
+        <h3>Created Time</h3>
+        <span>@Model.CreatedAt</span>
+
+
+        <h3>Modified Time</h3>
+        <span>@Model.ModifiedAt</span>
+    }
+</div>
+
+
+
+
+
+
+

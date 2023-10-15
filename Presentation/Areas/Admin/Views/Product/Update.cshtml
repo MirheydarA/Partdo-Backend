@@ -1,0 +1,122 @@
+﻿@using Business.ViewModels.Admin.Product
+@using DataAccess.Constants;
+@model ProductUpdateVM
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Update Product</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <form enctype="multipart/form-data" asp-action="update" asp-controller="product" method="post">
+                <div>
+                    <div class="form-group d-flex gap-5">
+                        <div >
+                            <label asp-for="IsSpecial"></label>
+                            <input type="checkbox" asp-for="IsSpecial" />
+                            <span asp-validation-for="IsSpecial"></span>
+                        </div>
+
+                        <div>
+                            <label asp-for="IsMain"></label>
+                            <input type="checkbox" asp-for="IsMain" />
+                            <span asp-validation-for="IsMain"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input class="form-control rounded-lg" asp-for="Name"></input>
+                        <span asp-validation-for="Name"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description"></label>
+                        <input class="form-control rounded-lg" asp-for="Description"></input>
+                        <span asp-validation-for="Description"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ShortDesc"></label>
+                        <input class="form-control rounded-lg" asp-for="ShortDesc"></input>
+                        <span asp-validation-for="ShortDesc"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="StockType" class="col-md-2 control-label"></label>
+                        <div class="col-md-10">
+                            <select asp-for="StockType" asp-items="@Html.GetEnumSelectList<ProductStock>()">
+                                <option selected="selected" value="">Please select</option>
+                            </select>
+                            <span asp-validation-for="StockType" class="text-danger" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="StockQuantity"></label>
+                        <input class="form-control rounded-lg" asp-for="StockQuantity" type="number" />
+                        <span asp-validation-for="StockQuantity"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <div>
+                            Current Main Photo: <br />
+                            <img src="~/Users/assets/images/@Model.MainPhotoPath" style="width: 100px" />
+                        </div>
+                        <label asp-for="MainPhoto"></label>
+                        <input class="form-control imgInput" asp-for="MainPhoto" />
+                        <span asp-validation-for="MainPhoto"></span>
+
+                        <div id="imgPreview" class="mt-1"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <div>
+                            Current Photos: <br />
+                            @foreach (var photo in Model.PhotoNames)
+                            {
+                                <img src="~/Users/assets/images/@photo.Name" style="width: 100px" />
+                            }
+                        </div>
+
+                        <label asp-for="Photos"></label>
+                        <input class="form-control imgInputs" asp-for="Photos " />
+                        <span asp-validation-for="Photos"></span>
+
+                        <div id="imgPreviews" class="mt-1"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Status"></label>
+                        <input class="form-control rounded-lg" asp-for="Status"></input>
+                        <span asp-validation-for="Status"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price"></label>
+                        <input class="form-control rounded-lg" asp-for="Price"></input>
+                        <span asp-validation-for="Price"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NewPrice"></label>
+                        <input class="form-control rounded-lg" asp-for="NewPrice"></input>
+                        <span asp-validation-for="NewPrice"></span>
+                    </div>
+                    <div>
+                        <label for="SubCategroyId" class="">Select an option :</label>
+                        <select asp-for="SubCategoryId" asp-items="Model.SubCategories" class="form-select" aria-label="Default select example">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group w-100 mt-3">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+@section scripts{
+
+    @await Html.PartialAsync("ImgUploadPartialjs")
+
+}

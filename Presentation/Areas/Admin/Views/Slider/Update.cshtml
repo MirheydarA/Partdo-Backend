@@ -1,0 +1,49 @@
+﻿@using Business.ViewModels.Admin.Slider
+@model SliderUpdateVM
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Update Slider</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <form enctype="multipart/form-data" asp-action="update" asp-controller="slider" method="post">
+                <div class="form-group">
+                    <label asp-for="Title"></label>
+                    <input class="form-control" asp-for="Title"></input>
+                    <span asp-validation-for="Title"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description"></label>
+                    <input class="form-control" asp-for="Description"></input>
+                    <span asp-validation-for="Description"></span>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        Current Photo: <br />
+                        <img src="~/Users/assets/images/@Model.PhotoPath" />
+                    </div>
+                    <label asp-for="PhotoName"></label>
+                    <input class="form-control imgInput" asp-for="PhotoName" onchange="previewImage(event)"></input>
+                    <span asp-validation-for="PhotoName"></span>
+
+                    <div id="imgPreview" class="mt-1"></div>
+                </div>
+                <button class="btn btn-primary" type="submit">Update</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- /.container-fluid -->
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    
+    @await Html.PartialAsync("_ImageUploadScriptPartial")
+
+}
