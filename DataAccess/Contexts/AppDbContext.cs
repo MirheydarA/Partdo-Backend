@@ -25,5 +25,7 @@ namespace DataAccess.Contexts
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<OnSale_1Component> OnSaleComponents { get; set; }
         public DbSet<OnSale_2Component> OnSale_2Components { get; set; }
+        public DbSet<Basket> Baskets { get; set; }
+        public DbSet<BasketProduct> BasketProducts { get; set; }
     }
 }

@@ -168,10 +168,10 @@
                             <div class="lists">
                                 <ul class="mt-[10px]">
                                     <li class="border-b-[1px] border-[#ededed] pb-[10px] pt-[5px]">
-                                        <a href="" class="font-semibold">Home</a>
+                                        <a asp-action="index" asp-controller="home" class="font-semibold">Home</a>
                                     </li>
                                     <li class="border-b-[1px] border-[#ededed] pb-[10px] pt-[5px]">
-                                        <a href="/shop.html" class="font-semibold">Shop</a>
+                                        <a asp-action="index" asp-controller="shop" class="font-semibold">Shop</a>
                                     </li>
                                     <li class="border-b-[1px] border-[#ededed] pb-[10px] pt-[5px]">
                                         <a href="" class="font-semibold">Tires & Wheels</a>
@@ -180,7 +180,7 @@
                                         <a href="" class="font-semibold">Interior Accessories</a>
                                     </li>
                                     <li class="border-b-[1px] border-[#ededed] pb-[10px] pt-[5px]">
-                                        <a href="" class="font-semibold">Blog</a>
+                                        <a asp-action="index" asp-controller="blog" class="font-semibold">Blog</a>
                                     </li>
                                     <li class="pb-[10px] mt-[5px]">
                                         <a href="" class="font-semibold">Contact</a>
@@ -458,4 +458,7 @@
 </body>
 
 </html>
+
+@RenderSection("scripts", required: false)
+
 

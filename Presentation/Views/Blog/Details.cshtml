@@ -163,12 +163,12 @@
                         <li class="mb-5">
                             <div class="flex ">
                                 <div class="img relative w-[30%] flex items-center ">
-                                    <img src="assets/images/blog-03.jpg" alt="" class="w-[66px] h-[66px] rounded-full object-cover ">
-                                    <span class="absolute top-2 left-0 bg-[#4dd2f0] rounded-full w-[25px] h-[25px] flex justify-center items-center text-white border-2 font-semibold">1</span>
+                                    <img src="~/Users/assets/images/@blog.Photo" alt="" class="w-[66px] h-[66px] rounded-full object-cover ">
+                                    <span class="absolute top-2 left-0 bg-[#4dd2f0] rounded-full w-[25px] h-[25px] flex justify-center items-center text-white border-2 font-semibold">@counter</span>
                                 </div>
                                 <div class="description w-[70%] flex flex-col">
-                                    <span class="text-[12px] font-semibold mb-[6px]">October 12, 2023</span>
-                                    <a href="" class="text-[14px] font-semibold hover:text-red duration-300">BUYING CHEAP USED TRANSMISSIONS ISN’T AS RISKY AS YOU THINK</a>
+                                    <span class="text-[12px] font-semibold mb-[6px]">@blog.CreatedAt.ToString("MMMM dd, yyyy")</span>
+                                    <a asp-action="details" asp-controller="blog" asp-route-id="@blog.Id" class="text-[14px] font-semibold hover:text-red duration-300">@blog.Title</a>
                                 </div>
                             </div>
                         </li>

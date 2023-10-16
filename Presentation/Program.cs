@@ -65,7 +65,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<Business.Services.Abstract.Admin.IBlogService, Business.Services.Concrete.Admin.BlogService>();
 builder.Services.AddScoped<IOnSale_1Service, OnSale_1Service>();
 builder.Services.AddScoped<IOnSale_2Service, OnSale_2Service>();
-builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<Business.Services.Abstract.Admin.IAccountService, Business.Services.Concrete.Admin.AccountService>();
 ////////////////////////////////////////////////////////
 
 
@@ -73,6 +73,7 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 /////////////////////Users Services/////////////////////
 builder.Services.AddScoped<IHomeService, HomeService>();
 builder.Services.AddScoped<Business.Services.Abstract.Users.IBlogService, Business.Services.Concrete.Users.BlogService>();
+builder.Services.AddScoped<Business.Services.Abstract.Users.IAccountService, Business.Services.Concrete.Users.AccountService>();
 ////////////////////////////////////////////////////////
 
 

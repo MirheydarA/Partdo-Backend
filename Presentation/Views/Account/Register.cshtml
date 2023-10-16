@@ -1,0 +1,181 @@
+﻿@using Business.ViewModels.Users.Account
+@model AccountRegisterVM
+
+
+<!-- Main Start -->
+
+<div class="my-[88px]">
+    <div class="container mx-auto">
+        <div class="mx-auto max-w-[560px] ">
+            <div class="md:border border-border rounded-lg py-[60px] md:p-[60px]">
+                <div class="page-tab flex justify-center gap-6  mb-10">
+                    <a class="text-[18px] font-semibold text-[#bdbdbd] text-black" href="#" id="login">Register</a>
+                </div>
+
+                <div class="register-form " id="registerForm">
+                    <form method="post" asp-action="register" asp-controller="account">
+                        <div class="flex flex-col mb-7">
+                            <label class="text-[13px] mb-[6px]" asp-for="Username">Username *</label>
+                            <input class="border border-[#b4b4b4] h-[42px] rounded-xl shadow-md px-3" asp-for="@Model.Username" type="text">
+                            <span asp-validation-for="@Model.Username"></span>
+                        </div>
+
+                        <div class="flex flex-col mb-7">
+                            <label class="text-[13px] mb-[6px]" asp-for="Email">Email address *</label>
+                            <input class="border border-[#b4b4b4] h-[42px] rounded-xl shadow-md px-3" asp-for="@Model.Email" type="email">
+                            <span asp-validation-for="@Model.Email"></span>
+                        </div>
+
+                        <div class="flex flex-col mb-7">
+                            <label class="text-[13px] mb-[6px]" asp-for="Password">Password *</label>
+                            <input class="border border-[#b4b4b4] h-[42px] rounded-xl shadow-md px-3" type="password" asp-for="@Model.Password" type="password">
+                            <span asp-validation-for="@Model.Password"></span>
+                        </div>
+                        <div class="flex flex-col mb-7">
+                            <label class="text-[13px] mb-[6px]" asp-for="ConfirmPassword">Confirm Password *</label>
+                            <input class="border border-[#b4b4b4] h-[42px] rounded-xl shadow-md px-3" asp-for="@Model.ConfirmPassword" type="password">
+                            <span asp-validation-for="@Model.ConfirmPassword"></span>
+                        </div>
+                            
+                        <p class="mb-4 text-[13px]">
+                            Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our <a class="text-red hover:text-[#005eff]" href="">privacy policy</a>.
+                        </p>
+
+                        <button class="bg-[#eaeaea] mb-4 w-full py-3 rounded-xl font-semibold hover:bg-[#cbcbcb] duration-300" type="submit">Register</button>
+                        <div class="text-[14px] flex">
+                            <span>Already have an account?</span> <a asp-controller="account" asp-action="login" class="hover:text-red ml-2">Login now</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section>
+    <div class="email py-[60px] container mx-auto mid:grid mid:grid-cols-2 flex flex-col border-t border-border">
+        <div class="email-left flex pr-[60px]">
+            <div class="envelope-icon mid:block hidden">
+                <i class="fa-regular fa-envelope envelope text-[60px] pr-[30px] text-[#b7b7b7]"></i>
+            </div>
+            <div class="email-content">
+                <h5 class="text-red text-[16px] mb-[10px] font-semibold">
+                    Join our newsletter for £10 offs
+                </h5>
+                <h3 class="text-[26px] mb-[10px] font-medium">
+                    Get our emails for info on new items, sales and much more.
+                </h3>
+                <p class="text-14px text-gray w-[350px]">
+                    Register now to get latest updates on promotions & coupons.
+                    Don’t worry, we not spam!
+                </p>
+            </div>
+        </div>
+
+        <div class="email-right flex flex-col items-start mid:items-end justify-center">
+            <div>
+                <div class="email-right-top">
+                    <form action="">
+                        <div class="input-email flex justify-between border border-border rounded-[12px] gap-[15px] py-1 pr-1 mt-5 mid:mt-0">
+                            <input type="email"
+                                   name="email"
+                                   placeholder="Enter your email address"
+                                   class="text-[18px] w-full focus:outline-none py-2 pl-3 pr-[10px] rounded-[12px]" />
+                            <button type="submit"
+                                    class="bg-red text-[16px] font-bold w-[40%] text-white py-2 rounded-[8px]">
+                                Subscribe
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="email-right-bottom mt-[10px]">
+                    <p class="text-[12px]">
+                        By subscribing you agree to our
+                        <a href="" class="text-red underline">Terms & Conditions and Privacy & Cookies Policy.</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main End -->
+
+<section class="responsive navbar-bottom">
+    <div class="flex justify-between fixed bottom-0 bg-white w-full px-10 md:hidden border-t border-[#cbcbcb]">
+        <div class="flex flex-col items-center py-4">
+            <a href="" class="flex flex-col items-center">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="20"
+                     height="20"
+                     fill="currentColor"
+                     class="bi bi-house-door"
+                     viewBox="0 0 16 16">
+                    <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146ZM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5Z" />
+                </svg>
+                <span class="text-[10px] mt-2">HOME</span>
+            </a>
+        </div>
+
+        <div class="flex flex-col items-center py-4">
+            <a href="" class="flex flex-col items-center">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="20"
+                     height="20"
+                     fill="currentColor"
+                     class="bi bi-filter"
+                     viewBox="0 0 16 16">
+                    <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
+                </svg>
+                <span class="text-[10px] mt-2">FILTER</span>
+            </a>
+        </div>
+
+        <div class="flex flex-col items-center py-4">
+            <a href="" class="flex flex-col items-center">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="16"
+                     height="20"
+                     fill="currentColor"
+                     class="bi bi-search"
+                     viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                </svg>
+                <span class="text-[10px] mt-2">SEARCH</span>
+            </a>
+        </div>
+
+        <div class="flex flex-col items-center py-4">
+            <a href="" class="flex flex-col items-center">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="16"
+                     height="20"
+                     fill="currentColor"
+                     class="bi bi-heart"
+                     viewBox="0 0 16 16">
+                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+                </svg>
+                <span class="text-[10px] mt-2">HEART</span>
+            </a>
+        </div>
+
+        <div class="flex flex-col items-center py-4">
+            <a href="" class="flex flex-col items-center">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="16"
+                     height="20"
+                     fill="currentColor"
+                     class="bi bi-person"
+                     viewBox="0 0 16 16">
+                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
+                </svg>
+                <span class="text-[10px] mt-2">HEART</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    <script src="~/Users/styles/js/my-account.js"></script>
+} 
