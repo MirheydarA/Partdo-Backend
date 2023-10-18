@@ -1,0 +1,211 @@
+﻿@using Business.ViewModels.Users.Basket
+@model List<BasketVM>
+
+<!-- Main Start -->
+
+<section>
+    <div class="sm:container mx-auto mt-[126px] xl:mt-[60px] mb-[40px] mid:flex">
+        @if (Model.Count != 0)
+        {
+            <div class="left-part mid:w-[70%]">
+                <div class="bg-[#f3f3f3] p-4 rounded-xl">
+                    @{
+                        decimal subTotalprice = 0;
+                    }
+                    @foreach (var basketProduct in Model)
+                    {
+                        int intValue = basketProduct.Count;
+                        decimal decimalValue = (decimal)intValue;
+
+                        subTotalprice = subTotalprice + decimalValue * basketProduct.Price;
+                    }
+                    @{
+                        decimal widthPercentage = subTotalprice / 500 * 100;
+                    }
+                   
+                    <p class="text-[13px]">
+
+                        @(
+                        subTotalprice < 500 ? "Add" : "" )
+                         <span class="text-red font-bold">@(
+                                subTotalprice < 500 ? "$" + (500 - subTotalprice) : "Your order qualifies for free shipping!"
+                                )
+                        </span> @(
+                    subTotalprice < 500 ? "to cart and get free shipping!" : "")
+                    </p>
+
+                    <div class="h-1 rounded-full mt-2 @(widthPercentage >=100 ? "bg-green-600" : "bg-red" ) " style="width: @widthPercentage%">
+                    </div>
+
+                </div>
+
+                <div class="relative mt-5 overflow-x-auto shadow-md sm:rounded-lg ">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3"></th>
+                                <th scope="col" class="px-6 py-3"></th>
+                                <th scope="col" class="px-6 py-3">Product name</th>
+                                <th scope="col" class="px-6 py-3 hidden sm:block">Price</th>
+                                <th scope="col" class="px-6 py-3">Quantity</th>
+                                <th scope="col" class="px-6 py-3 hidden sm:block">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var basketProduct in Model)
+                            {
+                                if (basketProduct.Count != 0)
+                                {
+                                    <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                                        <td class="text-center text-[20px]"> <a asp-action="delete" asp-controller="basket" asp-route-id="@basketProduct.Id"><i class="hover:text-red duration-300 cursor-pointer fa-regular fa-trash-can"></i> </a></td>
+                                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <a class="relative ">
+                                                <img src="~/Users/assets/images/@basketProduct.PhotoName" alt="" class="w-[70px]" />
+                                            </a>
+                                        </td>
+                                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            @basketProduct.Title
+                                        </td>
+                                        <td class="px-6 py-4 hidden sm:table-cell ">$@basketProduct.Price</td>
+                                        <td class="px-6 py-4">
+                                            <div class="px-2 py-1 border rounded-xl flex justify-between ">
+                                                <a class="decreaseCount cursor-pointer" data-id="@basketProduct.Id" id="decreaseCount">-</a>
+                                                <input type="number" value="@basketProduct.Count" class="increaseCount text-center w-[20px] !outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none">
+                                                <a class="increaseCount cursor-pointer" data-id="@basketProduct.Id" id="increaseCount">+</a>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 hidden sm:table-cell">$@(basketProduct.Count * basketProduct.Price)</td>
+                                    </tr>
+                                }
+                                
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <table class="w-full mb-10">
+                    <tr>
+                        <td>
+                            <div>
+                                <div class="w-full flex justify-between mt-4">
+                                    <div class="flex flex-row ">
+                                        <input class="border border-[#c1c1c1] h-[42px] rounded-xl px-4 text-[13px] focus:outline-[#ededed] focus:outline-offset-2 outline-8" placeholder="Coupon code" type="text">
+                                        <button class="px-4 py-2 bg-[#e3e3e3] rounded-xl ml-3 text-[14px]">Apply coupon</button>
+                                    </div>
+
+                                    <div class="flex items-center">
+                                        <button class="px-4 py-2 bg-[#e3e3e3] rounded-xl ml-3 text-[14px]">Remove All</button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+
+            <div class="right-part mid:ml-8 mid:w-[30%] border p-5 rounded-lg border-border h-min">
+                <h2 class="border-b border-border mb-4 font-semibold pb-2">CART TOTALS</h2>
+                <div class="flex justify-between border-b border-border pb-[10px]">
+                    <span class="text-[14px] font-semibold">Subtotal</span>
+                    <span>$@subTotalprice</span>
+                </div>
+
+                <div class="flex justify-between border-b border-border py-[10px] items-center">
+                    <span class="text-[14px] font-semibold">Shipping</span>
+                    <div class="flex flex-col items-end text-[12px] gap-2">
+                        <span>Flat rate: $15.00 <input type="radio" name="" id=""></span>
+                        <span>Local pickup <input type="radio" name="" id=""></span>
+                        <span>Shipping to CA.</span>
+                    </div>
+                </div>
+
+                <div class="flex justify-between border-b border-border py-[10px]">
+                    <span class="text-[14px] font-semibold">Total</span>
+                    <span class="text-[20px] font-semibold">$@subTotalprice</span>
+                </div>
+
+                <div class="py-[10px] text-white font-semibold">
+                    <button class="bg-partdored w-full py-3 rounded-xl">Proceed to checkout</button>
+                </div>
+            </div>
+        }
+
+        else
+        {
+            <div class="flex flex-col items-center justify-center pb-[100px] w-full">
+
+                <div class="w-[150px] h-[150px]">
+                    <img src="~/Users/assets/images/empty-cart.svg" alt="">
+                </div>
+
+                <div class="text-red text-[20px] font-semibold mt-5">YOUR CART IS CURRENTLY EMPTY.</div>
+
+                <a asp-action="index" asp-controller="shop" class="bg-[#e7e7e7] px-4 py-2 rounded-lg font-semibold mt-4">Return to shop</a>
+            </div>
+        }
+    </div>
+</section>
+
+<section>
+    <div class="email py-[60px] container mx-auto mid:grid mid:grid-cols-2 flex flex-col border-t border-[#dedede]">
+        <div class="email-left flex pr-[60px]">
+            <div class="envelope-icon mid:block hidden">
+                <i class="fa-regular fa-envelope envelope text-[60px] pr-[30px]"></i>
+            </div>
+            <div class="email-content">
+                <h5 class="text-red text-[16px] mb-[10px] font-semibold">
+                    Join our newsletter for £10 offs
+                </h5>
+                <h3 class="text-[26px] mb-[10px] font-medium">
+                    Get our emails for info on new items, sales and much more.
+                </h3>
+                <p class="text-14px text-gray w-[350px]">
+                    Register now to get latest updates on promotions & coupons.
+                    Don’t worry, we not spam!
+                </p>
+            </div>
+        </div>
+
+        <div class="email-right flex flex-col items-start mid:items-end justify-center">
+            <div>
+                <div class="email-right-top">
+                    <form action="">
+                        <div class="input-email flex justify-between border border-border rounded-[12px] gap-[15px] py-1 pr-1 mt-5 mid:mt-0">
+                            <input type="email"
+                                   name="email"
+                                   placeholder="Enter your email address"
+                                   class="text-[18px] w-full focus:outline-none py-2 pl-3 pr-[10px] rounded-[12px]" />
+                            <button type="submit"
+                                    class="bg-red text-[16px] font-bold w-[40%] text-white py-2 rounded-[8px]">
+                                Subscribe
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="email-right-bottom mt-[10px]">
+                    <p class="text-[12px]">
+                        By subscribing you agree to our
+                        <a href="" class="text-red underline">Terms & Conditions and Privacy & Cookies Policy.</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- Main End -->
+
+@section scripts{
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
+
+    @*<script src="~/Users/styles/js/basket.js"></script>*@
+    <script src="~/Users/styles/js/cart.js"></script>
+    
+}

@@ -22,7 +22,7 @@ namespace DataAccess.Repositories.Concrete.Users
 
         public async Task<BasketProduct> GetBasketProductByIdAsync(int id, Basket basket)
         {
-            var basketProduct = await _context.BasketProducts.FirstOrDefaultAsync(bp => bp.Id == id && bp.BasketId == basket.Id);
+            var basketProduct = await _context.BasketProducts.Where(bp => !bp.IsDeleted).FirstOrDefaultAsync(bp => bp.Id == id && bp.BasketId == basket.Id);
             return basketProduct;
         }
     }

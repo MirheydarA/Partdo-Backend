@@ -40,7 +40,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
 
+    <!-- Toastr -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
+    <!-- Error Toatr -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
     <title>Home - Partdo</title>
 
@@ -186,7 +193,7 @@
                         <span class="bg-red rounded-[50%] absolute w-[17px] h-[17px] text-[15px] right-[-11px] top-[-7px] flex items-center justify-center text-[white] font-semibold">0</span>
                     </a>
 
-                    <a class="relative" href="./cart.html">
+                    <a class="relative" asp-action="index" asp-controller="basket">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart2" viewBox="0 0 16 16">
                             <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
                         </svg>
@@ -508,7 +515,6 @@
                                         @Model.Categories[i].Name
                                     </a>
                                 }
-
                             </div>
 
                         </div>
@@ -598,7 +604,6 @@
 
         </section>
 
-
         <section class="LatestDeals">
             <div class="latest-deals mt-[50px]">
                 <div class="latest-deals-header flex justify-between">
@@ -609,11 +614,14 @@
                         </a>
                     </div>
                 </div>
-
+                @*<p class="authorizeInfo hidden">
+                @(
+                User.Identity.IsAuthenticated ? "Authenticate" : "NOO"
+                )
+                </p>*@
                 <div class="grayline border-b border-border my-5"></div>
 
                 <div class="products mid:grid mid:grid-cols-3 gap-1">
-
                     <div class="products-left">
                         <div class="product-container grid grid-cols-2 ">
                             @foreach (var product in Model.AllProducts.Take(4))
@@ -661,7 +669,7 @@
 
                                                 <div class="stock mt-[8px]">
                                                     <span class="text-[12px] font-semibold text-[#257c25]">
-                                                        <i class="fa-solid fa-cube package mr-[5px]"></i> In Stock
+                                                        <i class="fa-solid fa-cube package mr-[5px]"></i> @product.StockType
                                                     </span>
                                                 </div>
 
@@ -673,12 +681,12 @@
                                                             <li class="leading-tight text-[13px] text-gray">Visual Alignment Indicators</li>
                                                         </ul>
 
-                                                        <button class="bg-partdored px-4 py-[8px] w-full rounded-xl text-white font-semibold mt-5 group-hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_70px]">Add to Cart</button>
+                                                        <button class="addToCart bg-partdored px-4 py-[8px] w-full rounded-xl text-white font-semibold mt-5 group-hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_70px]" data-id="@product.Id">Add to Cart</button>
                                                     </div>
                                                 </div>
 
-                                                <div class="w-full text-center bg-partdored text-white py-2 rounded-xl mt-4 block mid:hidden">
-                                                    <a href="" class="font-medium">Add to cart</a>
+                                                <div class="addToCart  w-full text-center bg-partdored text-white py-2 rounded-xl mt-4 block mid:hidden" data-id="@product.Id">
+                                                    <a class="font-medium">Add to cart</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -831,11 +839,11 @@
                                                             <li class="leading-tight text-[13px] text-gray">Visual Alignment Indicators</li>
                                                         </ul>
 
-                                                        <button class="bg-partdored px-4 py-[8px] w-full rounded-xl text-white font-semibold mt-5 group-hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_70px]">Add to Cart</button>
+                                                        <button class="addToCart bg-partdored px-4 py-[8px] w-full rounded-xl text-white font-semibold mt-5 group-hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_70px]" data-id="@product.Id">Add to Cart</button>
                                                     </div>
                                                 </div>
 
-                                                <div class="w-full text-center bg-partdored text-white py-2 rounded-xl mt-4 block mid:hidden">
+                                                <div class="addToCart  w-full text-center bg-partdored text-white py-2 rounded-xl mt-4 block mid:hidden" data-id="@product.Id">
                                                     <a href="" class="font-medium">Add to cart</a>
                                                 </div>
                                             </div>
@@ -869,7 +877,6 @@
             </a>
         </section>
 
-
         <section id="FeaturedProducts-2">
             <div class="featured-products2 mt-[30px]">
 
@@ -890,66 +897,68 @@
 
                     <div class="products">
 
-                        <div class="products-content  p-[24px] border border-border rounded-xl">
+                        @foreach (var mainProduct in Model.AllProducts.Where(p => p.IsMain).Where(p => p.NewPrice != null).Where(p => !p.IsSpecial).Take(1))
+                        {
+                            <div class="products-content  p-[24px] border border-border rounded-xl">
 
-                            <a href="">
-                                <div class="img relative cursor-pointer border border-border">
-                                    <img src="https://klbtheme.com/partdo/wp-content/uploads/2022/10/1-37-500x500.jpg"
-                                         alt="1000X1000"
-                                         class="rounded-[10px] " />
-                                    <span class="sale absolute bg-[#ff1900] text-[13px] font-bold text-white py-[2px] px-[9px] rounded-[22%] top-5 left-5">8%</span>
-                                    <a class="heart-btn flex items-center justify-center w-[30px] h-[30px] absolute text-[20px] p-[15px] top-5 right-5  border border-border rounded-full hover:text-red hover:bg-[#ffe3e3] duration-300 cursor-pointer"><i class="fa-solid fa-heart"></i></a>
-                                </div>
-                            </a>
-
-                            <div class="image-desc flex flex-col mt-[15px] ">
-
-                                <div class="star-rating text-[12px] mt-[10px] text-[#e1e1e1]">
-                                    <span class="fa fa-star checked star-icon text-yellow-500"></span>
-                                    <span class="fa fa-star checked star-icon text-yellow-500"></span>
-                                    <span class="fa fa-star checked star-icon text-yellow-500"></span>
-                                    <span class="fa fa-star star-icon text-yellow-500"></span>
-                                    <span class="fa fa-star star-icon text-yellow-500"></span>
-                                    <span class="review text-[12px] font-semibold ml-[10px] text-black">1 review</span>
-                                </div>
-
-                                <a href="" class="img-title text-[16px] font-bold hover:text-red duration-200 mt-2 ">
-                                    Thinkware F770 Dash Cam Dual Channel Wifi
+                                <a href="">
+                                    <div class="img relative cursor-pointer border border-border">
+                                        <img src="~/Users/assets/images/@mainProduct.MainPhoto"
+                                             alt="1000X1000"
+                                             class="rounded-[10px] " />
+                                        <span class="sale absolute bg-[#ff1900] text-[13px] font-bold text-white py-[2px] px-[9px] rounded-[22%] top-5 left-5">@mainProduct.Status</span>
+                                        <a class="heart-btn flex items-center justify-center w-[30px] h-[30px] absolute text-[20px] p-[15px] top-5 right-5  border border-border rounded-full hover:text-red hover:bg-[#ffe3e3] duration-300 cursor-pointer"><i class="fa-solid fa-heart"></i></a>
+                                    </div>
                                 </a>
 
-                                <div class="priceandbasket flex justify-between items-center">
-                                    <div class="price flex flex-row items-end gap-2">
-                                        <span class="old-price line-through text-[#787878]">
-                                            $268.99
-                                        </span>
-                                        <span class="new-price text-red text-[19px] font-medium mt-[5px]">
-                                            $249.99
-                                        </span>
+                                <div class="image-desc flex flex-col mt-[15px] ">
+
+                                    <div class="star-rating text-[12px] mt-[10px] text-[#e1e1e1]">
+                                        <span class="fa fa-star checked star-icon text-yellow-500"></span>
+                                        <span class="fa fa-star checked star-icon text-yellow-500"></span>
+                                        <span class="fa fa-star checked star-icon text-yellow-500"></span>
+                                        <span class="fa fa-star star-icon text-yellow-500"></span>
+                                        <span class="fa fa-star star-icon text-yellow-500"></span>
+                                        <span class="review text-[12px] font-semibold ml-[10px] text-black">1 review</span>
                                     </div>
-                                </div>
 
-                                <div class="stock mt-[8px]">
-                                    <span class="text-green-900 text-[14px] font-medium">
-                                        <i class="fa-solid fa-cube package taxt-[12px]  mr-2"></i> In Stock
-                                    </span>
-                                </div>
+                                    <a href="" class="img-title text-[16px] font-bold hover:text-red duration-200 mt-2 ">
+                                        @mainProduct.Name
+                                    </a>
 
-                                <div class="progress-container mt-3">
-                                    <div class="w-full bg-white rounded-full h-1.5 mt-3">
-                                        <div class="bg-gradient-to-tr to-[rgb(255,200,0)] from-[rgb(255,0,0)] h-2 rounded-full" style="width: 80%"></div>
+                                    <div class="priceandbasket flex justify-between items-center">
+                                        <div class="price flex flex-row items-end gap-2">
+                                            <span class="old-price line-through text-[#787878]">
+                                                $@mainProduct.Price
+                                            </span>
+                                            <span class="new-price text-red text-[19px] font-medium mt-[5px]">
+                                                $@mainProduct.NewPrice
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div class="quantity flex justify-between mt-2">
-                                        <span class="text-[13px]">Available: <strong>98</strong></span>
-                                        <span class="text-[13px]">Sold: <strong>58</strong></span>
+
+                                    <div class="stock mt-[8px]">
+                                        <span class="text-green-900 text-[14px] font-medium">
+                                            <i class="fa-solid fa-cube package taxt-[12px]  mr-2"></i> @mainProduct.StockType </span>
                                     </div>
-                                </div>
 
-                                <div class="mt-3">
-                                    <p class="text-[12px] text-gray">Take advantage now before the offer runs out</p>
-                                </div>
+                                    <div class="progress-container mt-3">
+                                        <div class="w-full bg-white rounded-full h-1.5 mt-3">
+                                            <div class="bg-gradient-to-tr to-[rgb(255,200,0)] from-[rgb(255,0,0)] h-2 rounded-full" style="width: 80%"></div>
+                                        </div>
+                                        <div class="quantity flex justify-between mt-2">
+                                            <span class="text-[13px]">Available: <strong>98</strong></span>
+                                            <span class="text-[13px]">Sold: <strong>58</strong></span>
+                                        </div>
+                                    </div>
 
+                                    <div class="mt-3">
+                                        <p class="text-[12px] text-gray">Take advantage now before the offer runs out</p>
+                                    </div>
+
+                                </div>
                             </div>
-                        </div>
+                        }
 
                     </div>
 
@@ -1009,66 +1018,70 @@
 
                     <div class="products ">
 
-                        <div class="products-content  p-[24px] border border-border rounded-xl">
+                        @foreach (var mainProduct in Model.AllProducts.Where(p => p.IsMain).Where(p => p.NewPrice != null).Where(p => !p.IsSpecial).Skip(1).Take(1))
+                        {
+                            <div class="products-content  p-[24px] border border-border rounded-xl">
 
-                            <a href="">
-                                <div class="img relative cursor-pointer border border-border">
-                                    <img src="https://klbtheme.com/partdo/wp-content/uploads/2022/10/1-37-500x500.jpg"
-                                         alt="1000X1000"
-                                         class="rounded-[10px] " />
-                                    <span class="sale absolute bg-[#ff1900] text-[13px] font-bold text-white py-[2px] px-[9px] rounded-[22%] top-5 left-5">8%</span>
-                                    <a class="heart-btn flex items-center justify-center w-[30px] h-[30px] absolute text-[20px] p-[15px] top-5 right-5  border border-border rounded-full hover:text-red hover:bg-[#ffe3e3] duration-300 cursor-pointer"><i class="fa-solid fa-heart"></i></a>
-                                </div>
-                            </a>
-
-                            <div class="image-desc flex flex-col mt-[15px] ">
-
-                                <div class="star-rating text-[12px] mt-[10px] text-[#e1e1e1]">
-                                    <span class="fa fa-star checked star-icon text-yellow-500"></span>
-                                    <span class="fa fa-star checked star-icon text-yellow-500"></span>
-                                    <span class="fa fa-star checked star-icon text-yellow-500"></span>
-                                    <span class="fa fa-star star-icon text-yellow-500"></span>
-                                    <span class="fa fa-star star-icon text-yellow-500"></span>
-                                    <span class="review text-[12px] font-semibold ml-[10px] text-black">1 review</span>
-                                </div>
-
-                                <a href="" class="img-title text-[16px] font-bold hover:text-red duration-200 mt-2">
-                                    Thinkware F770 Dash Cam Dual Channel Wifi
+                                <a href="">
+                                    <div class="img relative cursor-pointer border border-border">
+                                        <img src="~/Users/assets/images/@mainProduct.MainPhoto"
+                                             alt="1000X1000"
+                                             class="rounded-[10px] " />
+                                        <span class="sale absolute bg-[#ff1900] text-[13px] font-bold text-white py-[2px] px-[9px] rounded-[22%] top-5 left-5">@mainProduct.Status</span>
+                                        <a class="heart-btn flex items-center justify-center w-[30px] h-[30px] absolute text-[20px] p-[15px] top-5 right-5  border border-border rounded-full hover:text-red hover:bg-[#ffe3e3] duration-300 cursor-pointer"><i class="fa-solid fa-heart"></i></a>
+                                    </div>
                                 </a>
 
-                                <div class="priceandbasket flex justify-between items-center">
-                                    <div class="price flex flex-row items-end gap-2">
-                                        <span class="old-price line-through text-[#787878]">
-                                            $268.99
+                                <div class="image-desc flex flex-col mt-[15px] ">
+
+                                    <div class="star-rating text-[12px] mt-[10px] text-[#e1e1e1]">
+                                        <span class="fa fa-star checked star-icon text-yellow-500"></span>
+                                        <span class="fa fa-star checked star-icon text-yellow-500"></span>
+                                        <span class="fa fa-star checked star-icon text-yellow-500"></span>
+                                        <span class="fa fa-star star-icon text-yellow-500"></span>
+                                        <span class="fa fa-star star-icon text-yellow-500"></span>
+                                        <span class="review text-[12px] font-semibold ml-[10px] text-black">1 review</span>
+                                    </div>
+
+                                    <a href="" class="img-title text-[16px] font-bold hover:text-red duration-200 mt-2 ">
+                                        @mainProduct.Name
+                                    </a>
+
+                                    <div class="priceandbasket flex justify-between items-center">
+                                        <div class="price flex flex-row items-end gap-2">
+                                            <span class="old-price line-through text-[#787878]">
+                                                $@mainProduct.Price
+                                            </span>
+                                            <span class="new-price text-red text-[19px] font-medium mt-[5px]">
+                                                $@mainProduct.NewPrice
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="stock mt-[8px]">
+                                        <span class="text-green-900 text-[14px] font-medium">
+                                            <i class="fa-solid fa-cube package taxt-[12px]  mr-2"></i> @mainProduct.StockType
                                         </span>
-                                        <span class="new-price text-red text-[19px] font-medium mt-[5px]">
-                                            $249.99
-                                        </span>
                                     </div>
-                                </div>
 
-                                <div class="stock mt-[8px]">
-                                    <span class="text-green-900 text-[14px] font-medium">
-                                        <i class="fa-solid fa-cube package taxt-[12px]  mr-2"></i> In Stock
-                                    </span>
-                                </div>
-
-                                <div class="progress-container mt-3">
-                                    <div class="w-full bg-white rounded-full h-1.5 mt-3">
-                                        <div class="bg-gradient-to-tr to-[rgb(255,200,0)] from-[rgb(255,0,0)] h-2 rounded-full" style="width: 80%"></div>
+                                    <div class="progress-container mt-3">
+                                        <div class="w-full bg-white rounded-full h-1.5 mt-3">
+                                            <div class="bg-gradient-to-tr to-[rgb(255,200,0)] from-[rgb(255,0,0)] h-2 rounded-full" style="width: 80%"></div>
+                                        </div>
+                                        <div class="quantity flex justify-between mt-2">
+                                            <span class="text-[13px]">Available: <strong>98</strong></span>
+                                            <span class="text-[13px]">Sold: <strong>58</strong></span>
+                                        </div>
                                     </div>
-                                    <div class="quantity flex justify-between mt-2">
-                                        <span class="text-[13px]">Available: <strong>98</strong></span>
-                                        <span class="text-[13px]">Sold: <strong>58</strong></span>
+
+                                    <div class="mt-3">
+                                        <p class="text-[12px] text-gray">Take advantage now before the offer runs out</p>
                                     </div>
-                                </div>
 
-                                <div class="mt-3">
-                                    <p class="text-[12px] text-gray">Take advantage now before the offer runs out</p>
                                 </div>
-
                             </div>
-                        </div>
+                        }
+
 
                     </div>
 
@@ -1178,7 +1191,7 @@
             </div>
         </section>
 
-        <section id="news">
+        <section id="news blogs">
             @if (Model.Blogs is not null)
             {
                 <div class="news mt-[30px] mb-5">
@@ -1229,7 +1242,6 @@
                     </div>
                 </div>
             }
-
         </section>
 
         <div class="grayline border border-border my-[60px]"></div>
@@ -1564,7 +1576,8 @@
 </body>
 </html>
 
-
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
 
 <!-- Swiper Js Start -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
@@ -1592,6 +1605,7 @@
 </script>
 <!-- Swiper Js Ends -->
 
+<script src="~/Users/styles/js/cart.js"></script>
 <script src="~/Users/styles/js/index.js"></script>
 
 <script>
@@ -1608,43 +1622,8 @@
     })
 
     //document.getElementsByClassName("defaultOpen")[0].click();
-
 </script>
 
-
-@foreach (var category in Model.Categories)
-{
-    <script>
-        jQuery("#carousel@(category.Id)").owlCarousel({
-            autoplay: false,
-            rewind: true,
-            margin: 20,
-            responsiveClass: true,
-            autoHeight: true,
-            autoplayTimeout: 7000,
-            smartSpeed: 800,
-            nav: true,
-            responsive: {
-                0: {
-                    items: 1
-                },
-
-                600: {
-                    items: 3
-                },
-
-                1024: {
-                    items: 3
-                },
-
-                1366: {
-                    items: 5
-                }
-            }
-        });
-    </script>
-
-}
 <script>
     jQuery("#carousel").owlCarousel({
         autoplay: false,
@@ -1674,3 +1653,63 @@
         }
     });
 </script>
+
+<script>
+    $(document).ready(function () {
+        $('.addToCart').on('click', function () {
+            var id = $(this).data('id');
+
+            $.ajax({
+                type: 'GET',
+                url: '/basket/add',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    // Handle success response here
+                    toastr.success('Product added successfully', '', { positionClass: 'toast-bottom-right' });
+                },
+                error: function (data) {
+                    alert()
+                    // Handle error response here
+                    toastr.error('Error: ' + error, '', { positionClass: 'toast-bottom-right' });
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
+
+@*<script type="text/javascript">
+    // Default Configuration
+    $(document).ready(function () {
+        toastr.options = {
+            'closeButton': true,
+            'debug': false,
+            'newestOnTop': false,
+            'progressBar': false,
+            'positionClass': 'toast-bottom-right',
+            'preventDuplicates': false,
+            'showDuration': '1000',
+            'hideDuration': '1000',
+            'timeOut': '5000',
+            'extendedTimeOut': '1000',
+            'showEasing': 'swing',
+            'hideEasing': 'linear',
+            'showMethod': 'fadeIn',
+            'hideMethod': 'fadeOut',
+        }
+    });
+    // Toast Type
+    $('.success').click(function (event) {
+        toastr.success('Product added successfully ');
+    });
+</script>*@
+
+
+
+
+

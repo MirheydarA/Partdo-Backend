@@ -15,5 +15,6 @@ namespace DataAccess.Repositories.Abstract.Admin
         Task<bool> GetProductByNameAsync(string name);
         Task<Product> GetProductWithIncludeById(int id);
         Task<List<Product>> FilterByIdAsync(int id);
+        Task<Product> GetByIdCustom(int id);
     }
 }

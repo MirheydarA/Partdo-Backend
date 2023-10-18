@@ -53,5 +53,11 @@ namespace DataAccess.Repositories.Concrete.Admin
             var products = _context.Products.Where(p => !p.IsDeleted).Include(p => p.Photos).Include(p => p.SubCategory).ThenInclude(s => s.Category).Where(p => p.SubCategory.CategoryId == id).ToListAsync();
             return products;
         }
+
+        public async Task<Product> GetByIdCustom(int id)
+        {
+            var product = await _context.Products.Where(p => !p.IsDeleted).FirstOrDefaultAsync(p => p.Id == id);
+            return product;
+        }
     }
 }

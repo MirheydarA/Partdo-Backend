@@ -7553,6 +7553,10 @@
       "PackagePath": "staticwebassets\\Users\\assets\\images\\e58d7cd2-dcc7-4d50-a8c0-b8a450ffb09a_background.png"
     },
     {
+      "Id": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\Users\\assets\\images\\empty-cart.svg",
+      "PackagePath": "staticwebassets\\Users\\assets\\images\\empty-cart.svg"
+    },
+    {
       "Id": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\Users\\assets\\images\\error-image.png",
       "PackagePath": "staticwebassets\\Users\\assets\\images\\error-image.png"
     },
@@ -7623,6 +7627,14 @@
     {
       "Id": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\Users\\styles\\css\\shop.css",
       "PackagePath": "staticwebassets\\Users\\styles\\css\\shop.css"
+    },
+    {
+      "Id": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\Users\\styles\\js\\basket.js",
+      "PackagePath": "staticwebassets\\Users\\styles\\js\\basket.js"
+    },
+    {
+      "Id": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\Users\\styles\\js\\cart.js",
+      "PackagePath": "staticwebassets\\Users\\styles\\js\\cart.js"
     },
     {
       "Id": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\Users\\styles\\js\\index.js",

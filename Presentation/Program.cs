@@ -10,6 +10,7 @@ using DataAccess.DbInitializer;
 using DataAccess.Repositories.Abstract.Admin;
 using DataAccess.Repositories.Abstract.Users;
 using DataAccess.Repositories.Concrete.Admin;
+using DataAccess.Repositories.Concrete.Users;
 using DataAccess.UnitOfWork;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -54,6 +55,8 @@ builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 /////////////////////Users Repositories/////////////////////
 builder.Services.AddScoped<DataAccess.Repositories.Abstract.Users.IProductRepository, DataAccess.Repositories.Concrete.Users.ProductRepository>();
 builder.Services.AddScoped<DataAccess.Repositories.Abstract.Users.ICategoryRepository, DataAccess.Repositories.Concrete.Users.CategoryRepository>();
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.AddScoped<IBasketProductRepository, BasketProductRepository>();
 ////////////////////////////////////////////////////////
 
 
@@ -74,6 +77,7 @@ builder.Services.AddScoped<Business.Services.Abstract.Admin.IAccountService, Bus
 builder.Services.AddScoped<IHomeService, HomeService>();
 builder.Services.AddScoped<Business.Services.Abstract.Users.IBlogService, Business.Services.Concrete.Users.BlogService>();
 builder.Services.AddScoped<Business.Services.Abstract.Users.IAccountService, Business.Services.Concrete.Users.AccountService>();
+builder.Services.AddScoped<IBasketService, BasketService>();
 ////////////////////////////////////////////////////////
 
 
@@ -108,15 +112,15 @@ var app = builder.Build();
 
 app.UseStaticFiles();
 
-app.UseAuthentication();
-app.UseAuthorization();
-
 app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=dashboard}/{action=Index}/{id?}"
     );
 
 app.MapDefaultControllerRoute();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 using (var scope = app.Services.CreateScope())
 {

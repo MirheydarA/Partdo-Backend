@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "omLNsxouc+mRDW2229iYiOwu/dPuFgWNUtewV/Ch/Jk=",
+  "Hash": "bd5xXrzUcnv9PMJXMxtwHUywZMHwEBz0eoRMC5XXVQE=",
   "Source": "Presentation",
   "BasePath": "_content/Presentation",
   "Mode": "Default",
@@ -32096,6 +32096,23 @@
       "OriginalItemSpec": "wwwroot\\Users\\assets\\images\\e58d7cd2-dcc7-4d50-a8c0-b8a450ffb09a_background.png"
     },
     {
+      "Identity": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\Users\\assets\\images\\empty-cart.svg",
+      "SourceId": "Presentation",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\",
+      "BasePath": "_content/Presentation",
+      "RelativePath": "Users/assets/images/empty-cart.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Users\\assets\\images\\empty-cart.svg"
+    },
+    {
       "Identity": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\Users\\assets\\images\\error-image.png",
       "SourceId": "Presentation",
       "SourceType": "Discovered",
@@ -32417,6 +32434,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Users\\styles\\css\\shop.css"
+    },
+    {
+      "Identity": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\Users\\styles\\js\\basket.js",
+      "SourceId": "Presentation",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\",
+      "BasePath": "_content/Presentation",
+      "RelativePath": "Users/styles/js/basket.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Users\\styles\\js\\basket.js"
+    },
+    {
+      "Identity": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\Users\\styles\\js\\cart.js",
+      "SourceId": "Presentation",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\",
+      "BasePath": "_content/Presentation",
+      "RelativePath": "Users/styles/js/cart.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Users\\styles\\js\\cart.js"
     },
     {
       "Identity": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\Users\\styles\\js\\index.js",

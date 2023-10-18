@@ -34,6 +34,7 @@ namespace Business.Services.Concrete.Users
             _productRepository = productRepository;
             _basketProductRepository = basketProductRepository;
         }
+
         public async Task<List<BasketVM>> IndexGetBasket(ClaimsPrincipal user)
         {
             var authUser = await _userManager.GetUserAsync(user);
@@ -51,7 +52,7 @@ namespace Business.Services.Concrete.Users
                 return null;
             }
 
-            foreach (var basketProduct in basket.BasketProducts)
+            foreach (var basketProduct in basket.BasketProducts.Where(bp => !bp.IsDeleted))
             {
                 var basketItem = new BasketVM
                 {
@@ -91,7 +92,7 @@ namespace Business.Services.Concrete.Users
 
             var basketProduct = await _basketRepository.GetProductByBasketProductIdAsync(id, authUser);
 
-            if (basketProduct is null)
+            if (basketProduct is null )
             {
                 basketProduct = new BasketProduct
                 {
@@ -100,6 +101,11 @@ namespace Business.Services.Concrete.Users
                     Count = 1
                 };
                 await _basketProductRepository.CreateAsync(basketProduct);
+            }
+            else if (basketProduct.IsDeleted)
+            {
+                basketProduct.IsDeleted = false;
+                basketProduct.Count = 1;
             }
 
             else
@@ -163,7 +169,10 @@ namespace Business.Services.Concrete.Users
             }
 
             if (basketProduct.Count == 0)
+            {
+                basketProduct.IsDeleted = true;
                 return false;
+            }
 
             basketProduct.Count--;
 
@@ -189,13 +198,14 @@ namespace Business.Services.Concrete.Users
                 return false;
             }
 
-            var product = await _productRepository.GetByIdAsync(id);
+            var product = await _productRepository.GetByIdCustom(basketProduct.ProductId);
             if (product == null)
             {
                 return false;
             }
 
             _basketProductRepository.Delete(basketProduct);
+            basketProduct.IsDeleted = true;
             await _unitOfWork.CommitAsync();
             return true;
         }

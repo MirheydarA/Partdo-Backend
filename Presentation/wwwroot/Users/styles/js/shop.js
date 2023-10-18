@@ -36,4 +36,5 @@
             100 - ((this.maxprice - this.min) / (this.max - this.min)) * 100;
         },
       };
-    }
+}
+

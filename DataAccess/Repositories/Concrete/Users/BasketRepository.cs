@@ -20,21 +20,21 @@ namespace DataAccess.Repositories.Concrete.Users
             _context = context;
         }
 
-        public Task<Basket> GetBasketById(User user)
+        public async Task<Basket> GetBasketById(User user)
         {
-            var basket = _context.Baskets.Where(b => !b.IsDeleted).FirstOrDefaultAsync(b => b.UserId == user.Id);
+            var basket = await _context.Baskets.Where(b => !b.IsDeleted).FirstOrDefaultAsync(b => b.UserId == user.Id);
             return basket;
         }
 
-        public Task<Basket> GetBasketWithProductsAsync(User user)
+        public async Task<Basket> GetBasketWithProductsAsync(User user)
         {
-            var basket = _context.Baskets.Include(b => b.BasketProducts).ThenInclude(bp => bp.Product).Where(b => !b.IsDeleted).FirstOrDefaultAsync(b => b.UserId == user.Id);
+            var basket = await _context.Baskets.Include(b => b.BasketProducts).ThenInclude(bp => bp.Product).Where(b => !b.IsDeleted).FirstOrDefaultAsync(b => b.UserId == user.Id);
             return basket;
         }
 
-        public Task<BasketProduct>? GetProductByBasketProductIdAsync(int id, User user)
+        public async Task<BasketProduct>? GetProductByBasketProductIdAsync(int id, User user)
         {
-            var basketProduct = _context.BasketProducts.FirstOrDefaultAsync(bp => bp.ProductId == id && bp.Basket.UserId == user.Id);
+            var basketProduct = await _context.BasketProducts.Where(bp => !bp.IsDeleted).FirstOrDefaultAsync(bp => bp.ProductId == id && bp.Basket.UserId == user.Id);
             return basketProduct;
         }
     }
