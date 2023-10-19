@@ -1,9 +1,10 @@
-﻿ @using Business.ViewModels.Users.Home
+﻿@using Business.ViewModels.Users.Home
 @model HomeIndexVM
 
 @using Common.Entities;
 @using Microsoft.AspNetCore.Identity
-
+@using Business.Services.Utilities
+@using Business.ViewModels.Users.Wishlist
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 @{
@@ -624,8 +625,19 @@
                 <div class="products mid:grid mid:grid-cols-3 gap-1">
                     <div class="products-left">
                         <div class="product-container grid grid-cols-2 ">
-                            @foreach (var product in Model.AllProducts.Take(4))
+                            @foreach (var product in Model.AllProducts.Take(4).Where(p => !p.IsMain && !p.IsSpecial))
                             {
+                                var productStockType = product.StockType; // Replace with your actual enum value
+                                string stockbyString = EnumHelper.GetEnumDisplayName(productStockType);
+                                var heartType = "fa-regular";
+                                foreach (var wishlistProduct in Model.WishlistProducts.Where(w => w.ProductId == product.Id))
+                                {
+                                    if (wishlistProduct.IsInWishlist)
+                                    {
+                                         heartType = "fa-solid";
+                                    }
+                                }
+
                                 <div class="product mid:hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_90px] px-4 py-6 hover:rounded-t-2xl translate-y-[-10px]  hover:bg-white group relative mid:hover:z-50 ">
                                     <a href="">
                                         <div class="px-[10px] my-auto ">
@@ -636,8 +648,8 @@
                                                          class="rounded-[10px]" />
                                                 </a>
                                                 <a class="sale absolute bg-red text-[12px] font-bold text-white py-[2px] px-[9px] rounded-[22%] top-[10px] left-[10px]">8%</a>
-                                                <span class="heart absolute flex justify-center items-center w-[30px] h-[30px] bg-[#ffffff] border-[1px] border-border shadow-lg text-[16px] font-bold text-[black] py-[2px] px-[9px] rounded-[50%] top-[10px] right-[10px]">
-                                                    <i class="fa-regular fa-heart heart-icon"></i>
+                                                <span class="absolute flex justify-center items-center w-[25px] h-[25px] bg-[#ffffff] border-[1px] hover:bg-[#ffe3e3] border-border cursor-pointer shadow-lg text-[16px] font-bold text-[black] py-[2px] px-[9px] rounded-[50%] top-[10px] right-[10px]">
+                                                    <i data-id="@product.Id" class="addToWishlist @heartType heart fa-heart heart-icon hover:text-red duration-200"></i>
                                                 </span>
                                             </div>
 
@@ -669,7 +681,7 @@
 
                                                 <div class="stock mt-[8px]">
                                                     <span class="text-[12px] font-semibold text-[#257c25]">
-                                                        <i class="fa-solid fa-cube package mr-[5px]"></i> @product.StockType
+                                                        <i class="fa-solid fa-cube package mr-[5px]"></i> @stockbyString
                                                     </span>
                                                 </div>
 
@@ -701,6 +713,16 @@
                         <div class="img-container-big flex flex-col p-10  rounded-[15px] border-[4px] border-red">
                             @foreach (var product1 in Model.AllProducts.Where(p => p.IsSpecial == true).Take(1))
                             {
+                                var productStockType = product1.StockType; // Replace with your actual enum value
+                                string stockbyString = EnumHelper.GetEnumDisplayName(productStockType);
+                                var heartType = "fa-regular";
+                                foreach (var wishlistProduct in Model.WishlistProducts.Where(w => w.ProductId == product1.Id))
+                                {
+                                    if (wishlistProduct.IsInWishlist)
+                                    {
+                                        heartType = "fa-solid";
+                                    }
+                                }
                                 <div class="header">
 
                                     <h4 class="text-[22px] font-bold text-[#e33100]">Timed special offer for you</h4>
@@ -730,8 +752,10 @@
                                     <img src="~/Users/assets/images/@product1.MainPhoto"
                                          alt="1000X1000"
                                          class="rounded-[10px] border border-border mt-5 w-full" />
-                                    <a class="heart-btn flex items-center justify-center w-[30px] h-[30px] absolute text-[20px] p-[15px] top-9 right-5  border border-border rounded-full hover:text-red hover:bg-[#ffe3e3] cursor-pointer"><i class="fa-solid fa-heart"></i></a>
-
+                                    @*<a class="heart-btn flex items-center justify-center w-[30px] h-[30px] absolute text-[20px] p-[15px] top-9 right-5  border border-border rounded-full hover:text-red hover:bg-[#ffe3e3] cursor-pointer"><i class="fa-solid fa-heart"></i></a>*@
+                                    <span class="absolute flex justify-center items-center w-[25px] h-[25px] bg-[#ffffff] border-[1px] border-border cursor-pointer shadow-lg text-[16px] font-bold hover:bg-[#ffe3e3] text-[black] py-[2px] px-[9px] rounded-[50%] top-9 right-5 ">
+                                        <i data-id="@product1.Id" class="addToWishlist @heartType   heart fa-heart heart-icon hover:text-red duration-200"></i>
+                                    </span>
                                 </div>
 
                                 <div class="image-desc flex flex-col mt-[15px] ">
@@ -762,7 +786,7 @@
 
                                     <div class="stock mt-[8px]">
                                         <span class="text-green-900 text-[14px] font-medium">
-                                            <i class="fa-solid fa-cube package taxt-[12px]  mr-2"></i> @product1.StockType
+                                            <i class="fa-solid fa-cube package taxt-[12px]  mr-2"></i> @stockbyString
                                         </span>
                                     </div>
                                 </div>
@@ -780,10 +804,22 @@
                         </div>
                     </div>
 
+
                     <div class="products-right">
                         <div class="product-container grid grid-cols-2 ">
-                            @foreach (var product in Model.AllProducts.Skip(4).Take(4))
+                            @foreach (var product in Model.AllProducts.Skip(4).Take(4).Where(p => !p.IsMain && !p.IsSpecial))
                             {
+                                var productStockType = product.StockType; // Replace with your actual enum value
+                                string stockbyString = EnumHelper.GetEnumDisplayName(productStockType);
+                                var heartType = "fa-regular";
+                                foreach (var wishlistProduct in Model.WishlistProducts.Where(w => w.ProductId == product.Id))
+                                {
+                                    if (wishlistProduct.IsInWishlist)
+                                    {
+                                         heartType = "fa-solid";
+                                    }
+                                }
+
                                 <div class="product mid:hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_90px] px-4 py-6 hover:rounded-t-2xl translate-y-[-10px]  hover:bg-white group relative mid:hover:z-50 ">
                                     <a href="">
                                         <div class="px-[10px] my-auto ">
@@ -794,8 +830,8 @@
                                                          class="rounded-[10px]" />
                                                 </a>
                                                 <a class="sale absolute bg-red text-[12px] font-bold text-white py-[2px] px-[9px] rounded-[22%] top-[10px] left-[10px]">8%</a>
-                                                <span class="heart absolute flex justify-center items-center w-[30px] h-[30px] bg-[#ffffff] border-[1px] border-border shadow-lg text-[16px] font-bold text-[black] py-[2px] px-[9px] rounded-[50%] top-[10px] right-[10px]">
-                                                    <i class="fa-regular fa-heart heart-icon"></i>
+                                                <span class="absolute flex justify-center items-center w-[25px] h-[25px] bg-[#ffffff] hover:bg-[#ffe3e3] border-[1px] border-border cursor-pointer shadow-lg text-[16px] font-bold text-[black] py-[2px] px-[9px] rounded-[50%] top-[10px] right-[10px]">
+                                                    <i data-id="@product.Id" class="addToWishlist @heartType   heart fa-heart heart-icon hover:text-red duration-200"></i>
                                                 </span>
                                             </div>
 
@@ -827,7 +863,7 @@
 
                                                 <div class="stock mt-[8px]">
                                                     <span class="text-[12px] font-semibold text-[#257c25]">
-                                                        <i class="fa-solid fa-cube package mr-[5px]"></i> In Stock
+                                                        <i class="fa-solid fa-cube package mr-[5px]"></i> @stockbyString
                                                     </span>
                                                 </div>
 
@@ -844,7 +880,7 @@
                                                 </div>
 
                                                 <div class="addToCart  w-full text-center bg-partdored text-white py-2 rounded-xl mt-4 block mid:hidden" data-id="@product.Id">
-                                                    <a href="" class="font-medium">Add to cart</a>
+                                                    <a class="font-medium">Add to cart</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -939,7 +975,8 @@
 
                                     <div class="stock mt-[8px]">
                                         <span class="text-green-900 text-[14px] font-medium">
-                                            <i class="fa-solid fa-cube package taxt-[12px]  mr-2"></i> @mainProduct.StockType </span>
+                                            <i class="fa-solid fa-cube package taxt-[12px]  mr-2"></i> @mainProduct.StockType
+                                        </span>
                                     </div>
 
                                     <div class="progress-container mt-3">
@@ -1679,8 +1716,39 @@
     });
 </script>
 
+<script>
+    $(document).ready(function () {
+        $('.addToWishlist').on('click', function () {
+            var id = $(this).data('id');
 
+            var element = $(this);
+            $.ajax({
+                type: 'GET',
+                url: '/wishlist/add',
+                data: {
+                    id: id
+                },
 
+                success: function (data) {
+                    // Toggle the classes after a successful response
+                    element.removeClass('fa-regular').addClass('fa-solid');
+
+                    if (clickCount === 0) { // Check if the click count is odd
+                        toastr.error('Product already in wishlist', '', { positionClass: 'toast-bottom-right' });
+                    }
+                    else {
+                        toastr.success('Product added successfully', '', { positionClass: 'toast-bottom-right' });
+                    }
+
+                },
+                error: function (data) {
+                    alert("error")
+                    toastr.error('Error: ' + error, '', { positionClass: 'toast-bottom-right' });
+                }
+            });
+        });
+    });
+</script>
 
 
 @*<script type="text/javascript">

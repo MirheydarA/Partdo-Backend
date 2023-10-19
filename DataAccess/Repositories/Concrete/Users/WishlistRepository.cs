@@ -28,7 +28,7 @@ namespace DataAccess.Repositories.Concrete.Users
 
         public async Task<Wishlist> GetWishlistWithProductsAsync(User user)
         {
-            var wishlist = await _context.Wishlists.Include(w => w.WishlistProducts).ThenInclude(wp => wp.Product).Where(w => !w.IsDeleted).FirstOrDefaultAsync(w => w.UserId != user.Id);
+            var wishlist = await _context.Wishlists.Include(w => w.WishlistProducts).ThenInclude(wp => wp.Product).Where(w => !w.IsDeleted).FirstOrDefaultAsync(w => w.UserId == user.Id);
             return wishlist;
         }
     }

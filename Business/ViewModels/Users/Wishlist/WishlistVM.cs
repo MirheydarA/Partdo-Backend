@@ -17,5 +17,6 @@ namespace Business.ViewModels.Users.Wishlist
         [EnumDataType(typeof(ProductStock))]
         public ProductStock StockType { get; set; }
         public string PhotoName { get; set; }
+        //public bool IsInWishlist { get; set;}
     }
 }

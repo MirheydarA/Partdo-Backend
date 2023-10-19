@@ -44,7 +44,7 @@ namespace Business.Services.Concrete.Users
             }
 
             var basket = await _basketRepository.GetBasketWithProductsAsync(authUser);
-
+    
             var model = new List<BasketVM>();
 
             if (basket is null)

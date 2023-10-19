@@ -17,6 +17,7 @@ namespace Business.ViewModels.Users.Home
         public List<OnSale_2Component> onSale_2Components { get; set; }
         public List<Common.Entities.Blog> Blogs { get; set; }
         public List<Product> AllProducts { get; set; }
+        public List<WishlistProduct> WishlistProducts { get; set; }
         //public Category Category { get; set; }
 
 

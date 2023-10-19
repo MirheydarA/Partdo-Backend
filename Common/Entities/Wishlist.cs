@@ -11,6 +11,6 @@ namespace Common.Entities
     {
         public User User { get; set; }
         public string UserId { get; set; }
-        public ICollection<WishlistProduct> WishlistProducts { get; set; }
+        public ICollection<WishlistProduct>? WishlistProducts { get; set; }
     }
 }

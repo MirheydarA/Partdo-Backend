@@ -15,5 +15,6 @@ namespace Business.Services.Abstract.Users
         Task<List<WishlistVM>> IndexGetWishlist(ClaimsPrincipal user);
         Task<bool> AddAsync(ClaimsPrincipal user, int id);
         Task<bool> DeleteAsync(ClaimsPrincipal user, int id);
+        //Task<bool> IsInWishlistAsync(ClaimsPrincipal user, int id);
     }
 }

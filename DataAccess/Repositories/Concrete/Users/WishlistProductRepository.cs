@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,7 +22,7 @@ namespace DataAccess.Repositories.Concrete.Users
         }
         public async Task<WishlistProduct> GetWishlistProductByIdAsync(int id, Wishlist wishlist)
         {
-            var wishlistProduct = await _context.WishlistProducts.Where(wp => !wp.IsDeleted).FirstOrDefaultAsync(wp => wp.Id == id && wp.BasketId == wishlist.Id);
+            var wishlistProduct = await _context.WishlistProducts.Where(wp => !wp.IsDeleted).FirstOrDefaultAsync(wp => wp.Id == id && wp.WishlistId == wishlist.Id);
             return wishlistProduct;
         }
 
@@ -31,6 +32,22 @@ namespace DataAccess.Repositories.Concrete.Users
             return wishlistproduct;
         }
 
+        public async Task<List<WishlistProduct>> GetWishlistProductsByUser(User user)
+        {
+            var wishlistproducts = await _context.WishlistProducts.Where(wp => !wp.IsDeleted && wp.Wishlist.UserId == user.Id).ToListAsync();
+            
+            return wishlistproducts;
+        }
 
+        //public async Task<bool> IsInWishlistAsync(int id, User user)
+        //{
+        //    var wishlistproduct = await _context.WishlistProducts.Where(wp => wp.IsInWishlist).FirstOrDefaultAsync(wp => wp.ProductId == id && wp.Wishlist.UserId == user.Id);
+        //    if (wishlistproduct is not null)
+        //    {
+        //        return true;
+        //    }
+
+        //    return false;
+        //}
     }
 }

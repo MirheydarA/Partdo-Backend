@@ -21,6 +21,7 @@ namespace Presentation.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+
             return View(await _wishlistService.IndexGetWishlist(User));
         }
 

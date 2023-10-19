@@ -4,6 +4,7 @@ using Common.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,5 +20,6 @@ namespace Business.Services.Abstract.Users
         Task<List<OnSale_1Component>> GetOnSaleComponentsAsync();
         Task<List<OnSale_2Component>> GetOnSale_2ComponentsAsync();
         Task<List<Blog>> GetBlogsAsync();
+        Task<List<WishlistProduct>> GetWishlistProductsAsync(ClaimsPrincipal user);
     }
 }

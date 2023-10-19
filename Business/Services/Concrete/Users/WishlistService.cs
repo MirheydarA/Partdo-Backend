@@ -51,11 +51,20 @@ namespace Business.Services.Concrete.Users
 
             if (wishlist is null)
             {
-                return null;
+                wishlist = new Wishlist();
+            }
+
+            if (wishlist.WishlistProducts is null)
+            {
+                return model;
             }
 
             foreach (var wishlistProduct in wishlist.WishlistProducts.Where(wp => !wp.IsDeleted))
             {
+                if (wishlistProduct is null)
+                {
+                    return model;
+                }
                 var wishlistItem = new WishlistVM
                 {
                     Id = wishlistProduct.Id,
@@ -64,6 +73,7 @@ namespace Business.Services.Concrete.Users
                     NewPrice = wishlistProduct.Product.NewPrice,
                     StockType = wishlistProduct.Product.StockType,
                     Title = wishlistProduct.Product.Name,
+                    
                 };
                 model.Add(wishlistItem);
             }
@@ -100,7 +110,8 @@ namespace Business.Services.Concrete.Users
                 {
                     Wishlist = wishlist,
                     ProductId = product.Id,
-                    Count = 1
+                    Count = 1,
+                    IsInWishlist = true
                 };
 
                 await _wishlistProductRepository.CreateAsync(wishlistProduct);
@@ -142,5 +153,20 @@ namespace Business.Services.Concrete.Users
             await _unitOfWork.CommitAsync();
             return true;
         }
+
+        //public async Task<bool> IsInWishlistAsync(ClaimsPrincipal user, int id)
+        //{
+        //    var authUser = await _userManager.GetUserAsync(user);
+        //    if (authUser is null)
+        //    {
+        //        return false;
+        //    }
+
+        //    var wishlist = await _wishlistRepository.GetWishlistById(authUser);
+        //    if (wishlist is null) return false;
+
+        //    var wishlistProduct = await _wishlistProductRepository.IsInWishlistAsync(id, authUser);
+        //    if (wishlistProduct is false) return false;
+        //}
     }
 }

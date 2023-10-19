@@ -3,10 +3,13 @@ using Business.ViewModels.Users.Home;
 using Common.Entities;
 using DataAccess.Repositories.Abstract.Admin;
 using DataAccess.Repositories.Abstract.Users;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,13 +23,17 @@ namespace Business.Services.Concrete.Users
         private readonly IOnSale_1Repository _onSale_1Repository;
         private readonly IOnSale_2Repository _onSale_2Repository;
         private readonly IBlogRepository _blogRepository;
+        private readonly IWishlistProductRepository _wishlistProductRepository;
+        private readonly UserManager<User> _userManager;
 
         public HomeService(ISliderRepository sliderRepository,
                            DataAccess.Repositories.Abstract.Users.ICategoryRepository categoryRepository,
                            DataAccess.Repositories.Abstract.Admin.IProductRepository productRepository,
                            IOnSale_1Repository onSale_1Repository,
                            IOnSale_2Repository onSale_2Repository,
-                           IBlogRepository blogRepository)
+                           IBlogRepository blogRepository,
+                           IWishlistProductRepository wishlistProductRepository,
+                           UserManager<User> userManager)
         {
             _sliderRepository = sliderRepository;
             _categoryRepository = categoryRepository;
@@ -34,6 +41,8 @@ namespace Business.Services.Concrete.Users
             _onSale_1Repository = onSale_1Repository;
             _onSale_2Repository = onSale_2Repository;
             _blogRepository = blogRepository;
+            _wishlistProductRepository = wishlistProductRepository;
+            _userManager = userManager;
         }
 
         public async Task<List<Category>> GetCategoryWithSubcategoryAsync()
@@ -61,6 +70,7 @@ namespace Business.Services.Concrete.Users
         }
         public async Task<List<Product>> GetProductsAsync()
         {
+
             var products = await _productRepository.GetAllAsync();
             return products;
         }
@@ -82,5 +92,11 @@ namespace Business.Services.Concrete.Users
             return  blogs;
         }
 
+        public async Task<List<WishlistProduct>> GetWishlistProductsAsync(ClaimsPrincipal user)
+        {
+            var authUser = await _userManager.GetUserAsync(user);
+            var wishlistProducts = await _wishlistProductRepository.GetWishlistProductsByUser(authUser);
+            return wishlistProducts;
+        }
     }
 }

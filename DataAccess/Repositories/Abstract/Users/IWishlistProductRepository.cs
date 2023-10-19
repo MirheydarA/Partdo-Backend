@@ -3,6 +3,7 @@ using DataAccess.Repositories.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,5 +13,7 @@ namespace DataAccess.Repositories.Abstract.Users
     {
         Task<WishlistProduct>? GetProductByWishlistProductIdAsync(int id, User user);
         Task<WishlistProduct> GetWishlistProductByIdAsync(int id, Wishlist wishlist);
+        Task<List<WishlistProduct>> GetWishlistProductsByUser(User user);
+        //Task<bool> IsInWishlistAsync(int id, User user);
     }
 }
