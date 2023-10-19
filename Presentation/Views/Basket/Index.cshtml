@@ -21,6 +21,7 @@
                     }
                     @{
                         decimal widthPercentage = subTotalprice / 500 * 100;
+                        var c = 0;
                     }
                    
                     <p class="text-[13px]">
@@ -33,8 +34,10 @@
                         </span> @(
                     subTotalprice < 500 ? "to cart and get free shipping!" : "")
                     </p>
-
-                    <div class="h-1 rounded-full mt-2 @(widthPercentage >=100 ? "bg-green-600" : "bg-red" ) " style="width: @widthPercentage%">
+                    @{
+                        int formattedWidthPercentage = Convert.ToInt32(widthPercentage);
+                    }
+                    <div style="width: @(formattedWidthPercentage)%;" class="h-1 rounded-full mt-2 @(widthPercentage >=100 ? "bg-green-600" : "bg-red" )">
                     </div>
 
                 </div>

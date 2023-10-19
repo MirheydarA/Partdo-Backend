@@ -57,6 +57,8 @@ builder.Services.AddScoped<DataAccess.Repositories.Abstract.Users.IProductReposi
 builder.Services.AddScoped<DataAccess.Repositories.Abstract.Users.ICategoryRepository, DataAccess.Repositories.Concrete.Users.CategoryRepository>();
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.AddScoped<IBasketProductRepository, BasketProductRepository>();
+builder.Services.AddScoped<IWishlistRepository, WishlistRepository>();
+builder.Services.AddScoped<IWishlistProductRepository, WishlistProductRepository>();
 ////////////////////////////////////////////////////////
 
 
@@ -78,6 +80,7 @@ builder.Services.AddScoped<IHomeService, HomeService>();
 builder.Services.AddScoped<Business.Services.Abstract.Users.IBlogService, Business.Services.Concrete.Users.BlogService>();
 builder.Services.AddScoped<Business.Services.Abstract.Users.IAccountService, Business.Services.Concrete.Users.AccountService>();
 builder.Services.AddScoped<IBasketService, BasketService>();
+builder.Services.AddScoped<IWishlistService, WishlistService>();
 ////////////////////////////////////////////////////////
 
 

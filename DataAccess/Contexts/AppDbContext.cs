@@ -1,4 +1,5 @@
-﻿using Common.Entities;
+﻿using Azure.Core.Pipeline;
+using Common.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -27,5 +28,7 @@ namespace DataAccess.Contexts
         public DbSet<OnSale_2Component> OnSale_2Components { get; set; }
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<BasketProduct> BasketProducts { get; set; }
+        public DbSet<Wishlist> Wishlists { get; set; }
+        public DbSet<WishlistProduct> WishlistProducts { get; set; }
     }
 }
