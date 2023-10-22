@@ -1,6 +1,7 @@
 ﻿using Business.Services.Abstract.Users;
 using Business.Services.Concrete.Users;
 using Business.ViewModels.Users.Basket;
+using Business.ViewModels.Users.Shop;
 using Business.ViewModels.Users.Wishlist;
 using Common.Constants;
 using Microsoft.AspNetCore.Authorization;
@@ -21,8 +22,8 @@ namespace Presentation.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-
-            return View(await _wishlistService.IndexGetWishlist(User));
+            var x = await _wishlistService.IndexGetWishlist(User);
+            return View(x);
         }
 
         [HttpGet]

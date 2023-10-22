@@ -14,6 +14,6 @@ namespace DataAccess.Repositories.Abstract.Users
         Task<WishlistProduct>? GetProductByWishlistProductIdAsync(int id, User user);
         Task<WishlistProduct> GetWishlistProductByIdAsync(int id, Wishlist wishlist);
         Task<List<WishlistProduct>> GetWishlistProductsByUser(User user);
-        //Task<bool> IsInWishlistAsync(int id, User user);
+        Task<bool> IsInWishlistAsync(int id, User user);
     }
 }

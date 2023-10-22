@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Business.ViewModels.Users.Shop
+@model ShopIndexVM
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -32,11 +35,11 @@
                                class="hover:text-red transition duration-300 ease-in-out">About Us</a>
                         </li>
                         <li>
-                            <a asp-action="index" asp-controller="muaccount"
+                            <a asp-action="login" asp-controller="account"
                                class="hover:text-red transition duration-300 ease-in-out">My Account</a>
                         </li>
                         <li>
-                            <a asp-action="index" asp-controller="ordertracing"
+                            <a asp-action="index" asp-controller="ordertracking"
                                class="hover:text-red transition duration-300 ease-in-out">Order Tracking</a>
                         </li>
                         <li>
@@ -83,7 +86,7 @@
 
         <div class="header-bottom flex justify-around container mx-auto py-[20px]">
             <div class="logo w-[200px]">
-                <a href="./index.html">
+                <a asp-action="index" asp-controller="home">
                     <img src="~/Users/assets/images/PartDo-Logo.png" alt="" />
                 </a>
             </div>
@@ -92,17 +95,20 @@
                 <i class="fa-solid fa-warehouse text-[20px] bg-[#ededed] flex items-center p-[13px] rounded-2xl"></i>
             </a>
 
-            <label class="relative w-[50%] flex">
-                <span class="absolute inset-y-0 flex items-center right-4">
-                    <i class="fa-solid fa-magnifying-glass text-[22px]"></i>
-                </span>
+            <form method="get" asp-action="index" asp-controller="shop" id="myForm" class="w-[50%]">
+                <div class="relative w-[100%] flex">
+                    <span class="absolute inset-y-0 flex items-center right-4">
+                        <i class="fa-solid fa-magnifying-glass text-[22px]"></i>
+                    </span>
 
 
-                <input class="placeholder placeholder:text-slate-400 block bg-white w-full border border-[#cccccc] rounded-xl py-2 pl-4 pr-3 shadow-sm focus:outline-none focus:border-red focus:ring-red focus:ring-1 sm:text-sm"
-                       placeholder="Search for products..."
-                       type="text"
-                       name="search" />
-            </label>
+                    <input class="placeholder placeholder:text-slate-400 block bg-white w-full border border-[#cccccc] rounded-xl py-2 pl-4 pr-3 shadow-sm focus:outline-none focus:border-red focus:ring-red focus:ring-1 sm:text-sm"
+                           placeholder="Search for products..."
+                           type="text"
+                           asp-for="Name"
+                           id="myInput" />
+                </div>
+            </form>
 
             <div class="flex flex-col relative group">
                 <div class="flex flex-col justify-center cursor-pointer">
@@ -289,7 +295,7 @@
         </div>
     </header>
     <!-- Responsive Header Ends -->
-        @RenderBody()
+    @RenderBody()
     <!-- Footer Start -->
     <footer>
         <div class="footer bg-[#212126] mb-[40px] md:mb-0">
@@ -454,11 +460,26 @@
         </div>
     </footer>
     <!-- Footer End -->
-<script src="~/Users/styles/js/shop.js"></script>
+    <script src="~/Users/styles/js/shop.js"></script>
 </body>
 
 </html>
 
+
 @RenderSection("scripts", required: false)
 
 
+<script>
+    let timeout = null;
+
+    document.getElementById('myInput').addEventListener('keyup', function (e) {
+        clearTimeout(timeout); // Clear the previous timeout
+        timeout = setTimeout(submitForm, 1500); // Set a new timeout
+    });
+
+    function submitForm() {
+        document.getElementById('myForm').submit();
+        e.preventDefault()
+
+    }
+</script>

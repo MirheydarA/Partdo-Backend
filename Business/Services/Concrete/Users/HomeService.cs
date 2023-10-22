@@ -95,6 +95,7 @@ namespace Business.Services.Concrete.Users
         public async Task<List<WishlistProduct>> GetWishlistProductsAsync(ClaimsPrincipal user)
         {
             var authUser = await _userManager.GetUserAsync(user);
+            if (authUser == null) return null;
             var wishlistProducts = await _wishlistProductRepository.GetWishlistProductsByUser(authUser);
             return wishlistProducts;
         }

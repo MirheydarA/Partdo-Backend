@@ -1,4 +1,4 @@
-﻿using Common.Entities;
+﻿    using Common.Entities;
 using DataAccess.Contexts;
 using DataAccess.Repositories.Abstract.Users;
 using DataAccess.Repositories.Base;
@@ -39,15 +39,14 @@ namespace DataAccess.Repositories.Concrete.Users
             return wishlistproducts;
         }
 
-        //public async Task<bool> IsInWishlistAsync(int id, User user)
-        //{
-        //    var wishlistproduct = await _context.WishlistProducts.Where(wp => wp.IsInWishlist).FirstOrDefaultAsync(wp => wp.ProductId == id && wp.Wishlist.UserId == user.Id);
-        //    if (wishlistproduct is not null)
-        //    {
-        //        return true;
-        //    }
-
-        //    return false;
-        //}
+        public async Task<bool> IsInWishlistAsync(int id, User user)
+        {
+            var wishlistproduct = await _context.WishlistProducts.Where(wp => wp.IsInWishlist).FirstOrDefaultAsync(wp => wp.ProductId == id && wp.Wishlist.UserId == user.Id);
+            if (wishlistproduct is not null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

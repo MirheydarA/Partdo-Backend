@@ -40,10 +40,9 @@ namespace Business.Services.Concrete.Users
         {
             var authUser = await _userManager.GetUserAsync(user);
             if (authUser is null)
-            {
+            {   
                 return null;
             }
-
 
             var wishlist = await _wishlistRepository.GetWishlistWithProductsAsync(authUser);
 
@@ -59,7 +58,7 @@ namespace Business.Services.Concrete.Users
                 return model;
             }
 
-            foreach (var wishlistProduct in wishlist.WishlistProducts.Where(wp => !wp.IsDeleted))
+            foreach (var wishlistProduct in wishlist.WishlistProducts.Where(wp => !wp.IsDeleted && wp.IsInWishlist))
             {
                 if (wishlistProduct is null)
                 {
@@ -73,7 +72,8 @@ namespace Business.Services.Concrete.Users
                     NewPrice = wishlistProduct.Product.NewPrice,
                     StockType = wishlistProduct.Product.StockType,
                     Title = wishlistProduct.Product.Name,
-                    
+                    ProductId = wishlistProduct.ProductId,
+                    //IsInWishlist = true
                 };
                 model.Add(wishlistItem);
             }
@@ -117,16 +117,16 @@ namespace Business.Services.Concrete.Users
                 await _wishlistProductRepository.CreateAsync(wishlistProduct);
             }
 
-            else if (wishlistProduct.IsDeleted)
-            {
-                wishlistProduct.IsDeleted = false;
-                wishlistProduct.Count = 1;
-            }
-            else
-            {
-                wishlistProduct.Count++;
-                _wishlistProductRepository.Update(wishlistProduct);
-            }
+            //else if (wishlistProduct.IsDeleted)
+            //{
+            //    wishlistProduct.IsDeleted = false;
+            //    wishlistProduct.Count = 1;
+            //}
+            //else
+            //{
+            //    wishlistProduct.Count++;
+            //    _wishlistProductRepository.Update(wishlistProduct);
+            //}
 
             await _unitOfWork.CommitAsync();
             return true;
@@ -145,10 +145,11 @@ namespace Business.Services.Concrete.Users
             var wishlistProduct = await _wishlistProductRepository.GetWishlistProductByIdAsync(id, wishlist);
             if (wishlistProduct is null) return false;
 
-            var product = await _productRepository.GetByIdCustom(wishlistProduct.Id);
+            var product = await _productRepository.GetByIdCustom(wishlistProduct.ProductId);
             if (product is null) return false;
 
             _wishlistProductRepository.Delete(wishlistProduct);
+            wishlistProduct.IsInWishlist = false;
             wishlistProduct.IsDeleted = true;
             await _unitOfWork.CommitAsync();
             return true;

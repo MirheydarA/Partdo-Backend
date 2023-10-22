@@ -630,81 +630,85 @@
                                 var productStockType = product.StockType; // Replace with your actual enum value
                                 string stockbyString = EnumHelper.GetEnumDisplayName(productStockType);
                                 var heartType = "fa-regular";
-                                foreach (var wishlistProduct in Model.WishlistProducts.Where(w => w.ProductId == product.Id))
+                                if (Model.WishlistProducts != null)
                                 {
-                                    if (wishlistProduct.IsInWishlist)
+                                    foreach (var wishlistProduct in Model.WishlistProducts.Where(w => w.ProductId == product.Id))
                                     {
-                                         heartType = "fa-solid";
+                                        if (wishlistProduct.IsInWishlist)
+                                        {
+                                            heartType = "fa-solid";
+                                        }
                                     }
-                                }
 
-                                <div class="product mid:hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_90px] px-4 py-6 hover:rounded-t-2xl translate-y-[-10px]  hover:bg-white group relative mid:hover:z-50 ">
-                                    <a href="">
-                                        <div class="px-[10px] my-auto ">
-                                            <div class="img rounded-[10px] relative border-[1px] border-border">
-                                                <a href="">
-                                                    <img src="~/Users/assets/images/@product.MainPhoto"
-                                                         alt="1000X1000"
-                                                         class="rounded-[10px]" />
-                                                </a>
-                                                <a class="sale absolute bg-red text-[12px] font-bold text-white py-[2px] px-[9px] rounded-[22%] top-[10px] left-[10px]">8%</a>
-                                                <span class="absolute flex justify-center items-center w-[25px] h-[25px] bg-[#ffffff] border-[1px] hover:bg-[#ffe3e3] border-border cursor-pointer shadow-lg text-[16px] font-bold text-[black] py-[2px] px-[9px] rounded-[50%] top-[10px] right-[10px]">
-                                                    <i data-id="@product.Id" class="addToWishlist @heartType heart fa-heart heart-icon hover:text-red duration-200"></i>
-                                                </span>
-                                            </div>
-
-                                            <div class="image-desc flex flex-col mt-[15px]">
-                                                <a href=""
-                                                   class="img-title text-[14px] font-bold hover:text-red mmid:text-ellipsis mmid:whitespace-nowrap overflow-hidden product-name-minify">
-                                                    @product.Name
-                                                </a>
-
-                                                <div class="star-rating">
-                                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
-                                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
-                                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
-                                                    <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
-                                                    <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
-                                                    <span class="review text-[12px] font-semibold ml-[10px]">1 review</span>
-                                                </div>
-
-                                                <div class="priceandbasket flex justify-between items-center">
-                                                    <div class="price flex items-end gap-3">
-                                                        <span class="old-price line-through text-[#555555] text-[16px] mt-[15px]">
-                                                            $@product.Price
-                                                        </span>
-                                                        <span class="new-price text-[#df1616] text-[19px] font-semibold">
-                                                            $@product.NewPrice
-                                                        </span>
-                                                    </div>
-                                                </div>
-
-                                                <div class="stock mt-[8px]">
-                                                    <span class="text-[12px] font-semibold text-[#257c25]">
-                                                        <i class="fa-solid fa-cube package mr-[5px]"></i> @stockbyString
+                                    <div class="product mid:hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_90px] px-4 py-6 hover:rounded-t-2xl translate-y-[-10px]  hover:bg-white group relative mid:hover:z-50 ">
+                                        <a href="">
+                                            <div class="px-[10px] my-auto ">
+                                                <div class="img rounded-[10px] relative border-[1px] border-border">
+                                                    <a href="">
+                                                        <img src="~/Users/assets/images/@product.MainPhoto"
+                                                             alt="1000X1000"
+                                                             class="rounded-[10px]" />
+                                                    </a>
+                                                    <a class="sale absolute bg-red text-[12px] font-bold text-white py-[2px] px-[9px] rounded-[22%] top-[10px] left-[10px]">8%</a>
+                                                    <span class="absolute flex justify-center items-center w-[25px] h-[25px] bg-[#ffffff] border-[1px] hover:bg-[#ffe3e3] border-border cursor-pointer shadow-lg text-[16px] font-bold text-[black] py-[2px] px-[9px] rounded-[50%] top-[10px] right-[10px]">
+                                                        <i data-id="@product.Id" class="addToWishlist @heartType heart fa-heart heart-icon hover:text-red duration-200"></i>
                                                     </span>
                                                 </div>
 
-                                                <div class="border-t border-border hidden mid:group-hover:block translate-y-[40px] top-[85%] left-0 px-3 py-2 absolute bg-white rounded-b-xl">
-                                                    <div class="px-2 ">
-                                                        <ul class="list-disc mt-2 px-4">
-                                                            <li class="leading-tight text-[13px] text-gray">Best-in-class all-around performance</li>
-                                                            <li class="leading-tight text-[13px] text-gray">Confident driving in all weather conditions</li>
-                                                            <li class="leading-tight text-[13px] text-gray">Visual Alignment Indicators</li>
-                                                        </ul>
+                                                <div class="image-desc flex flex-col mt-[15px]">
+                                                    <a href=""
+                                                       class="img-title text-[14px] font-bold hover:text-red mmid:text-ellipsis mmid:whitespace-nowrap overflow-hidden product-name-minify">
+                                                        @product.Name
+                                                    </a>
 
-                                                        <button class="addToCart bg-partdored px-4 py-[8px] w-full rounded-xl text-white font-semibold mt-5 group-hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_70px]" data-id="@product.Id">Add to Cart</button>
+                                                    <div class="star-rating">
+                                                        <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
+                                                        <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
+                                                        <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
+                                                        <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
+                                                        <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
+                                                        <span class="review text-[12px] font-semibold ml-[10px]">1 review</span>
+                                                    </div>
+
+                                                    <div class="priceandbasket flex justify-between items-center">
+                                                        <div class="price flex items-end gap-3">
+                                                            <span class="old-price line-through text-[#555555] text-[16px] mt-[15px]">
+                                                                $@product.Price
+                                                            </span>
+                                                            <span class="new-price text-[#df1616] text-[19px] font-semibold">
+                                                                $@product.NewPrice
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="stock mt-[8px]">
+                                                        <span class="text-[12px] font-semibold text-[#257c25]">
+                                                            <i class="fa-solid fa-cube package mr-[5px]"></i> @stockbyString
+                                                        </span>
+                                                    </div>
+
+                                                    <div class="border-t border-border hidden mid:group-hover:block translate-y-[40px] top-[85%] left-0 px-3 py-2 absolute bg-white rounded-b-xl">
+                                                        <div class="px-2 ">
+                                                            <ul class="list-disc mt-2 px-4">
+                                                                <li class="leading-tight text-[13px] text-gray">Best-in-class all-around performance</li>
+                                                                <li class="leading-tight text-[13px] text-gray">Confident driving in all weather conditions</li>
+                                                                <li class="leading-tight text-[13px] text-gray">Visual Alignment Indicators</li>
+                                                            </ul>
+
+                                                            <button class="addToCart bg-partdored px-4 py-[8px] w-full rounded-xl text-white font-semibold mt-5 group-hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_70px]" data-id="@product.Id">Add to Cart</button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="addToCart  w-full text-center bg-partdored text-white py-2 rounded-xl mt-4 block mid:hidden" data-id="@product.Id">
+                                                        <a class="font-medium">Add to cart</a>
                                                     </div>
                                                 </div>
-
-                                                <div class="addToCart  w-full text-center bg-partdored text-white py-2 rounded-xl mt-4 block mid:hidden" data-id="@product.Id">
-                                                    <a class="font-medium">Add to cart</a>
-                                                </div>
                                             </div>
-                                        </div>
-                                    </a>
+                                        </a>
 
-                                </div>
+                                    </div>
+
+                                }
                             }
                         </div>
                     </div>
@@ -716,12 +720,16 @@
                                 var productStockType = product1.StockType; // Replace with your actual enum value
                                 string stockbyString = EnumHelper.GetEnumDisplayName(productStockType);
                                 var heartType = "fa-regular";
-                                foreach (var wishlistProduct in Model.WishlistProducts.Where(w => w.ProductId == product1.Id))
+                                if (Model.WishlistProducts is not null)
                                 {
-                                    if (wishlistProduct.IsInWishlist)
+                                    foreach (var wishlistProduct in Model.WishlistProducts.Where(w => w.ProductId == product1.Id))
                                     {
-                                        heartType = "fa-solid";
+                                        if (wishlistProduct.IsInWishlist)
+                                        {
+                                            heartType = "fa-solid";
+                                        }
                                     }
+
                                 }
                                 <div class="header">
 
@@ -812,11 +820,14 @@
                                 var productStockType = product.StockType; // Replace with your actual enum value
                                 string stockbyString = EnumHelper.GetEnumDisplayName(productStockType);
                                 var heartType = "fa-regular";
-                                foreach (var wishlistProduct in Model.WishlistProducts.Where(w => w.ProductId == product.Id))
+                                if (Model.WishlistProducts is not null)
                                 {
-                                    if (wishlistProduct.IsInWishlist)
+                                    foreach (var wishlistProduct in Model.WishlistProducts.Where(w => w.ProductId == product.Id))
                                     {
-                                         heartType = "fa-solid";
+                                        if (wishlistProduct.IsInWishlist)
+                                        {
+                                            heartType = "fa-solid";
+                                        }
                                     }
                                 }
 
@@ -1654,7 +1665,34 @@
                 //console.log(html)
                 let tab_content = document.getElementById('tab-content');
                 tab_content.innerHTML = html
-            })
+            }).then(initializeCarousel())
+
+            function initializeCarousel() {
+                $("#carousel").owlCarousel({
+                    autoplay: false,
+                    rewind: true,
+                    margin: 20,
+                    responsiveClass: true,
+                    autoHeight: true,
+                    autoplayTimeout: 7000,
+                    smartSpeed: 800,
+                    nav: true,
+                    responsive: {
+                        0: {
+                            items: 1
+                        },
+                        600: {
+                            items: 3
+                        },
+                        1024: {
+                            items: 3
+                        },
+                        1366: {
+                            items: 5
+                        }
+                    }
+                });
+            }
         })
     })
 
@@ -1717,6 +1755,7 @@
 </script>
 
 <script>
+    var clickCount = 0
     $(document).ready(function () {
         $('.addToWishlist').on('click', function () {
             var id = $(this).data('id');

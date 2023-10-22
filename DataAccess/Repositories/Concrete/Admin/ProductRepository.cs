@@ -59,5 +59,29 @@ namespace DataAccess.Repositories.Concrete.Admin
             var product = await _context.Products.Where(p => !p.IsDeleted).FirstOrDefaultAsync(p => p.Id == id);
             return product;
         }
+
+        public IQueryable<Product> FilterByName(string? name)
+        {
+            var products = !string.IsNullOrEmpty(name) ? _context.Products.Include(p => p.SubCategory).ThenInclude(s => s.Category).Where(p => p.Name.Contains(name)) : _context.Products.Include(p => p.SubCategory).ThenInclude(s => s.Category).Where(p => !p.IsDeleted);
+            return products;
+        }
+
+        public IQueryable<Product> FilterByCategory(int? id)
+        {
+            var products = id != null ? _context.Products.Include(p => p.SubCategory).ThenInclude(s => s.Category).Where(p => p.SubCategory.CategoryId == id) : _context.Products.Include(p => p.SubCategory).ThenInclude(s => s.Category).Where(p => !p.IsDeleted);
+            return products;
+        }
+
+        public IQueryable<Product> FilterByPrice(IQueryable<Product> products, decimal? minPrice, decimal? maxPrice)
+        {
+            return products.Where(p => minPrice != null ? p.Price >= minPrice || p.NewPrice >= minPrice : true && maxPrice != null ? p.Price <= maxPrice : true);
+        }
+
+        public IQueryable<Product> FilterByStockType(string? stock)
+        {
+            var products = stock != null ? _context.Products.Include(p => p.SubCategory).ThenInclude(s => s.Category).Where(p => p.StockType.ToString() == stock) : _context.Products.Include(p => p.SubCategory).ThenInclude(s => s.Category).Where(p => !p.IsDeleted);
+            return products;
+        }
+
     }
 }

@@ -21,18 +21,25 @@ namespace Business.Services.Concrete.Users
         private readonly IBasketRepository _basketRepository;
         private readonly DataAccess.Repositories.Abstract.Admin.IProductRepository _productRepository;
         private readonly IBasketProductRepository _basketProductRepository;
+        private readonly IWishlistService _wishlistService;
+        private readonly IWishlistProductRepository _wishlistProductRepository;
 
         public BasketService(UserManager<User> userManager,
                              IUnitOfWork unitOfWork,
                              IBasketRepository basketRepository,
                              DataAccess.Repositories.Abstract.Admin.IProductRepository productRepository,
-                             IBasketProductRepository basketProductRepository)
+                             IBasketProductRepository basketProductRepository,
+                             IWishlistService wishlistService,
+                             IWishlistProductRepository wishlistProductRepository)
+                              
         {
             _userManager = userManager;
             _unitOfWork = unitOfWork;
             _basketRepository = basketRepository;
             _productRepository = productRepository;
             _basketProductRepository = basketProductRepository;
+            _wishlistService = wishlistService;
+            _wishlistProductRepository = wishlistProductRepository;
         }
 
         public async Task<List<BasketVM>> IndexGetBasket(ClaimsPrincipal user)
@@ -113,7 +120,10 @@ namespace Business.Services.Concrete.Users
                 basketProduct.Count ++;
                 _basketProductRepository.Update(basketProduct);
             }
-
+            var wishlistProducts = await _wishlistProductRepository.GetWishlistProductsByUser(authUser);
+            var wishlistProduct = wishlistProducts.FirstOrDefault(wp => wp.ProductId == id);
+            wishlistProduct.IsInWishlist = false;
+            //_wishlistService.DeleteAsync(authUser, wishlistProduct.Id);
             await _unitOfWork.CommitAsync();
             return true;
         }

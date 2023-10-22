@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "bd5xXrzUcnv9PMJXMxtwHUywZMHwEBz0eoRMC5XXVQE=",
+  "Hash": "6Ch77HipyrSBT//Z7dKUJQx+8LqfkFnCte4V5EtTVjo=",
   "Source": "Presentation",
   "BasePath": "_content/Presentation",
   "Mode": "Default",
@@ -31314,6 +31314,23 @@
       "OriginalItemSpec": "wwwroot\\Users\\assets\\images\\12c97513-7cab-4de9-9221-a7c736633883_9.jpg"
     },
     {
+      "Identity": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\Users\\assets\\images\\1-37.jpg",
+      "SourceId": "Presentation",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\",
+      "BasePath": "_content/Presentation",
+      "RelativePath": "Users/assets/images/1-37.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Users\\assets\\images\\1-37.jpg"
+    },
+    {
       "Identity": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\Users\\assets\\images\\17330edc-b133-4d10-bffb-0ecc3d952768_logo.png",
       "SourceId": "Presentation",
       "SourceType": "Discovered",
@@ -31346,6 +31363,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Users\\assets\\images\\185e115d-edac-4234-89f9-f879c77b9c77_slider-06.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\Users\\assets\\images\\21b6e864-641e-4a2c-8e58-f06acd1c55e7_2-36.jpg",
+      "SourceId": "Presentation",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\",
+      "BasePath": "_content/Presentation",
+      "RelativePath": "Users/assets/images/21b6e864-641e-4a2c-8e58-f06acd1c55e7_2-36.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Users\\assets\\images\\21b6e864-641e-4a2c-8e58-f06acd1c55e7_2-36.jpg"
     },
     {
       "Identity": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\Users\\assets\\images\\22354cc0-518a-48a7-8d3f-9fbf03a1dd84_istockphoto-610855984-612x612.jpg",
@@ -31399,6 +31433,23 @@
       "OriginalItemSpec": "wwwroot\\Users\\assets\\images\\27417a4f-0f3f-4f29-ab0f-89abf1e41b9b_slider-05.jpg"
     },
     {
+      "Identity": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\Users\\assets\\images\\27a97aa1-62f0-451e-be8e-d6b8ae4cabdb_1-37 (1).jpg",
+      "SourceId": "Presentation",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\",
+      "BasePath": "_content/Presentation",
+      "RelativePath": "Users/assets/images/27a97aa1-62f0-451e-be8e-d6b8ae4cabdb_1-37 (1).jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Users\\assets\\images\\27a97aa1-62f0-451e-be8e-d6b8ae4cabdb_1-37 (1).jpg"
+    },
+    {
       "Identity": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\Users\\assets\\images\\27d274f0-05d7-4721-a6b1-8c4c81181f80_rocket.png",
       "SourceId": "Presentation",
       "SourceType": "Discovered",
@@ -31448,6 +31499,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Users\\assets\\images\\2b217899-6759-423a-927f-21e62d4f44ae_istockphoto-610855984-612x612.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\Users\\assets\\images\\30d5f2ed-35a8-4660-87bd-2cfb68150979_3-30-150x150.jpg",
+      "SourceId": "Presentation",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\",
+      "BasePath": "_content/Presentation",
+      "RelativePath": "Users/assets/images/30d5f2ed-35a8-4660-87bd-2cfb68150979_3-30-150x150.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Users\\assets\\images\\30d5f2ed-35a8-4660-87bd-2cfb68150979_3-30-150x150.jpg"
     },
     {
       "Identity": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\Users\\assets\\images\\37e4c212-85d0-4568-8d31-8ea4ccad2708_PartDo-Logo.png",
@@ -32417,6 +32485,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Users\\styles\\css\\main.css.map"
+    },
+    {
+      "Identity": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\Users\\styles\\css\\Pagination.css",
+      "SourceId": "Presentation",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\",
+      "BasePath": "_content/Presentation",
+      "RelativePath": "Users/styles/css/Pagination.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Users\\styles\\css\\Pagination.css"
     },
     {
       "Identity": "C:\\Users\\ASUS\\Desktop\\projects\\PartDoApp\\Presentation\\wwwroot\\Users\\styles\\css\\shop.css",

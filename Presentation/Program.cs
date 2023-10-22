@@ -81,6 +81,7 @@ builder.Services.AddScoped<Business.Services.Abstract.Users.IBlogService, Busine
 builder.Services.AddScoped<Business.Services.Abstract.Users.IAccountService, Business.Services.Concrete.Users.AccountService>();
 builder.Services.AddScoped<IBasketService, BasketService>();
 builder.Services.AddScoped<IWishlistService, WishlistService>();
+builder.Services.AddScoped<IShopService, ShopService>();
 ////////////////////////////////////////////////////////
 
 
@@ -89,7 +90,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 
 builder.Services.AddScoped<IUnitOfWork,  UnitOfWork>();
-
+builder.Services.AddScoped<IPaginator, Paginator>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

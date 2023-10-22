@@ -1,18 +1,24 @@
-input[type=range]::-webkit-slider-thumb {
-	pointer-events: all;
-	width: 24px;
-	height: 24px;
-	-webkit-appearance: none;
+input[type="range"]::-webkit-slider-thumb {
+  pointer-events: all;
+  width: 24px;
+  height: 24px;
+  -webkit-appearance: none;
 }
 
-
-
-
-.product{
-	transition: 0.3s;
+.product {
+  transition: 0.3s;
 }
 
-.product-container:hover > :not(:hover){
-	/* filter: blur(2px); */
-	opacity: .2;
+.product-container:hover > :not(:hover) {
+  /* filter: blur(2px); */
+  opacity: 0.2;
+}
+
+.pagination > ul {
+  display: flex;
+}
+
+.pagination > ul > li {
+  padding: 0 5px;
+  background-color: rgb(255, 106, 0);
 }

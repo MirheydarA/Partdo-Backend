@@ -16,5 +16,9 @@ namespace DataAccess.Repositories.Abstract.Admin
         Task<Product> GetProductWithIncludeById(int id);
         Task<List<Product>> FilterByIdAsync(int id);
         Task<Product> GetByIdCustom(int id);
+        IQueryable<Product> FilterByName(string? name);
+        IQueryable<Product> FilterByCategory(int? id);
+        IQueryable<Product> FilterByPrice(IQueryable<Product> products, decimal? minPrice, decimal? maxPrice);
+        IQueryable<Product> FilterByStockType(string? stock);
     }
 }
