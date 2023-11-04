@@ -11,10 +11,10 @@ namespace Business.ViewModels.Admin.OnSale_2
     public class OnSale_2UpdateVM
     {
         [MinLength(5, ErrorMessage = "Title must be at least 5 characters")]
-        [MaxLength(38, ErrorMessage = "Title must be maximum 60 characters")]
+        [MaxLength(80, ErrorMessage = "Title must be maximum 80 characters")]
         public string Title { get; set; }
         [MinLength(5, ErrorMessage = "Description must be at least 5 characters")]
-        [MaxLength(38, ErrorMessage = "Description must be maximum 60 characters")]
+        [MaxLength(80, ErrorMessage = "Description must be maximum 80 characters")]
         public string Description { get; set; }
         public IFormFile? Photo { get; set; }
         public string? PhotoPath { get; set; }

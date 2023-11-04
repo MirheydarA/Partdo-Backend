@@ -4,10 +4,12 @@ using Business.ViewModels.Admin.Slider;
 using Microsoft.AspNetCore.Mvc;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Security.Policy;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Presentation.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Superadmin, Admin, HR")]
     public class SliderController : Controller
     {
         private readonly ISliderService _sliderService;

@@ -10,7 +10,7 @@ using System.Data;
 namespace Presentation.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize(Roles = "Superadmin")]
+    [Authorize(Roles = "Superadmin, Admin, HR")]
 
     public class RoleController : Controller
     {

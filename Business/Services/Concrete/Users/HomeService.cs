@@ -24,6 +24,7 @@ namespace Business.Services.Concrete.Users
         private readonly IOnSale_2Repository _onSale_2Repository;
         private readonly IBlogRepository _blogRepository;
         private readonly IWishlistProductRepository _wishlistProductRepository;
+        private readonly IBasketProductRepository _basketProductRepository;
         private readonly UserManager<User> _userManager;
 
         public HomeService(ISliderRepository sliderRepository,
@@ -33,6 +34,7 @@ namespace Business.Services.Concrete.Users
                            IOnSale_2Repository onSale_2Repository,
                            IBlogRepository blogRepository,
                            IWishlistProductRepository wishlistProductRepository,
+                           IBasketProductRepository basketProductRepository,
                            UserManager<User> userManager)
         {
             _sliderRepository = sliderRepository;
@@ -42,6 +44,7 @@ namespace Business.Services.Concrete.Users
             _onSale_2Repository = onSale_2Repository;
             _blogRepository = blogRepository;
             _wishlistProductRepository = wishlistProductRepository;
+            _basketProductRepository = basketProductRepository;
             _userManager = userManager;
         }
 
@@ -74,6 +77,12 @@ namespace Business.Services.Concrete.Users
             var products = await _productRepository.GetAllAsync();
             return products;
         }
+        public async Task<List<Product>> GetProductsIncludedAsync(int id)
+        {
+
+            var products = await _productRepository.GetProductWithIncludeByCategoryIdTake5(id);
+            return products;
+        }
 
         public async Task<List<OnSale_1Component>> GetOnSaleComponentsAsync()
         {
@@ -98,6 +107,20 @@ namespace Business.Services.Concrete.Users
             if (authUser == null) return null;
             var wishlistProducts = await _wishlistProductRepository.GetWishlistProductsByUser(authUser);
             return wishlistProducts;
+        }
+
+        public async Task<Product> GetProductById(int id)
+        {
+            var product = await _productRepository.GetProductWithIncludeById(id);
+            return product;
+        }
+
+        public async Task<List<BasketProduct>> GetBasketProductsAsync(ClaimsPrincipal user)
+        {
+            var authUser = await _userManager.GetUserAsync(user);
+            if (authUser == null) return null;
+            var basketProducts = await _basketProductRepository.GetBasketProductsByUser(authUser);
+            return basketProducts;
         }
     }
 }

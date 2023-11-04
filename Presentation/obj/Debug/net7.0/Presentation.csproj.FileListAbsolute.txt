@@ -272,3 +272,7 @@ C:\Users\ASUS\Desktop\projects\PartDoApp\Presentation\obj\Debug\net7.0\refint\Pr
 C:\Users\ASUS\Desktop\projects\PartDoApp\Presentation\obj\Debug\net7.0\Presentation.pdb
 C:\Users\ASUS\Desktop\projects\PartDoApp\Presentation\obj\Debug\net7.0\Presentation.genruntimeconfig.cache
 C:\Users\ASUS\Desktop\projects\PartDoApp\Presentation\obj\Debug\net7.0\ref\Presentation.dll
+C:\Users\ASUS\Desktop\projects\PartDoApp\Presentation\bin\Debug\net7.0\MailKit.dll
+C:\Users\ASUS\Desktop\projects\PartDoApp\Presentation\bin\Debug\net7.0\MimeKit.dll
+C:\Users\ASUS\Desktop\projects\PartDoApp\Presentation\bin\Debug\net7.0\NETCore.MailKit.dll
+C:\Users\ASUS\Desktop\projects\PartDoApp\Presentation\bin\Debug\net7.0\BouncyCastle.Crypto.dll

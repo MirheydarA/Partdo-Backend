@@ -25,5 +25,12 @@ namespace DataAccess.Repositories.Concrete.Users
             var basketProduct = await _context.BasketProducts.Where(bp => !bp.IsDeleted).FirstOrDefaultAsync(bp => bp.Id == id && bp.BasketId == basket.Id);
             return basketProduct;
         }
+
+        public async Task<List<BasketProduct>> GetBasketProductsByUser(User user)
+        {
+            var basketproducts = await _context.BasketProducts.Where(wp => !wp.IsDeleted && wp.Basket.UserId == user.Id).ToListAsync();
+
+            return basketproducts;
+        }
     }
 }

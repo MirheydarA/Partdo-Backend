@@ -9,6 +9,7 @@ namespace Business.Services.Abstract.Admin
 {
     public interface IAccountService
     {
-        public Task<bool> LoginAsync(AccountLoginVM model);
+        Task<bool> LoginAsync(AccountLoginVM model);
+        Task<bool> Logout();
     }
 }

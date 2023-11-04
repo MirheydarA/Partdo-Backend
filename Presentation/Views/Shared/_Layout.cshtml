@@ -1,5 +1,15 @@
 ﻿@using Business.ViewModels.Users.Shop
+@using Business.ViewModels.Users.Home
 @model ShopIndexVM
+
+@using Microsoft.AspNetCore.Identity
+@using Common.Entities;
+@using Microsoft.AspNetCore.Identity
+@using Business.Services.Utilities
+@using Business.ViewModels.Users.Wishlist
+@using Business.ViewModels.Users.Basket
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +28,15 @@
           integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
           crossorigin="anonymous"
           referrerpolicy="no-referrer" />
+
+    <!-- Toastr -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+          
+    <!-- Error Toatr -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
     <!-- Multi Range Slider -->
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
@@ -127,14 +146,27 @@
             </div>
 
             <div class="header-bottom-right flex items-center">
-                <a href="" class="text-[25px] mr-7 relative">
+                <a asp-action="index" asp-controller="wishlist" class="text-[25px] mr-7 relative">
+
                     <i class="fa-regular fa-heart icons"></i>
-                    <span class="bg-red rounded-[50%] absolute w-[17px] h-[17px] text-[15px] right-[-9px] top-0 flex items-center justify-center text-[white] font-semibold">0</span>
+                    <span class="bg-red rounded-[50%] absolute w-[17px] h-[17px] text-[15px] right-[-9px] top-0 flex items-center justify-center text-[white] font-semibold">@(SignInManager.IsSignedIn(User) ? ViewBag.ListWishlistProducts.Count : 0)</span>
                 </a>
 
-                <a href="" class="text-[25px] mr-6 relative">
+                <a asp-action="index" asp-controller="basket" class="text-[25px] mr-6 relative">
+                    @{
+                        var count = 0;
+                    }
+                    @if (ViewBag.ListBasketProducts != null)
+                    {
+                        @foreach (var basketP in ViewBag.ListBasketProducts)
+                        {
+                            count = count + basketP.Count;
+                        }
+
+                    }
+
                     <i class="fa-solid fa-cart-shopping icons"></i>
-                    <span class="bg-red rounded-[50%] absolute w-[17px] h-[17px] text-[15px] right-[-9px] top-0 flex items-center justify-center text-[white] font-semibold">0</span>
+                    <span class="bg-red rounded-[50%] absolute w-[17px] h-[17px] text-[15px] right-[-9px] top-0 flex items-center justify-center text-[white] font-semibold"> @(SignInManager.IsSignedIn(User) ? count : 0)</span>
                 </a>
 
                 <div class="flex flex-col">

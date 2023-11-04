@@ -1,4 +1,5 @@
 ﻿using Business.Services.Abstract.Users;
+using Business.Services.Utilities.Abstract;
 using Business.ViewModels.Users.Account;
 using Common.Constants;
 using Common.Entities;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Routing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,18 +25,21 @@ namespace Business.Services.Concrete.Users
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IEmailSender _emailSender;
 
         public AccountService(IActionContextAccessor actionContextAccessor,
                               IUnitOfWork unitOfWork,
                               UserManager<Common.Entities.User> userManager,
                               SignInManager<Common.Entities.User> signInManager,
-                              RoleManager<IdentityRole> roleManager)
+                              RoleManager<IdentityRole> roleManager,
+                              IEmailSender emailSender)
         {
             _modelState = actionContextAccessor.ActionContext.ModelState;
             _unitOfWork = unitOfWork;
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _emailSender = emailSender;
         }
         public async Task<bool> RegisterAsync(AccountRegisterVM model)
         {
@@ -43,7 +48,7 @@ namespace Business.Services.Concrete.Users
             var user = new User
             {
                 Email = model.Email,
-                UserName = model.Username,
+                UserName = model.Username, 
             };
 
             string emailpattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
@@ -63,6 +68,7 @@ namespace Business.Services.Concrete.Users
                 }
                 return false;
             }
+
 
             await _userManager.AddToRoleAsync(user, Roles.User.ToString());
             return true;

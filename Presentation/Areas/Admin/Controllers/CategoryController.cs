@@ -2,11 +2,15 @@
 using Business.Services.Concrete.Admin;
 using Business.ViewModels.Admin.Category;
 using Business.ViewModels.Admin.Slider;
+using Common.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Superadmin, Admin, HR")]
+
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;

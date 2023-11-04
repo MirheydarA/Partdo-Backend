@@ -5,6 +5,7 @@
 @using Microsoft.AspNetCore.Identity
 @using Business.Services.Utilities
 @using Business.ViewModels.Users.Wishlist
+@using Business.ViewModels.Users.Basket
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 @{
@@ -34,8 +35,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Product Slider End -->
     <!-- Main Slider Starts -->
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <!-- Main Slider Ends -->
     <!-- Tailwind Flowbite cdn-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />
@@ -96,10 +96,10 @@
             <div class="header-top flex justify-around items-center">
                 <div class="header-top-left mr-[50px]">
                     <ul class="flex my-[9px]">
-                        <li class="mx-[10px]"><a href="./about-us.html" class="hover:no-underline hover:text-red duration-300 text-[12px]">About Us</a></li>
-                        <li class="mx-[10px]"><a href="./my-account.html" class="hover:no-underline hover:text-red duration-300 text-[12px]">My Account</a></li>
-                        <li class="mx-[10px]"><a href="./order-tracking.html" class="hover:no-underline hover:text-red duration-300 text-[12px]">Order Tracking</a></li>
-                        <li class="mx-[10px]"><a href="./wishlist.html" class="hover:no-underline hover:text-red duration-300 text-[12px]">Wishlist</a></li>
+                        <li class="mx-[10px]"><a asp-action="index" asp-controller="aboutus" class="hover:no-underline hover:text-red duration-300 text-[12px]">About Us</a></li>
+                        <li class="mx-[10px]"><a asp-action="login" asp-controller="account" class="hover:no-underline hover:text-red duration-300 text-[12px]">My Account</a></li>
+                        <li class="mx-[10px]"><a asp-action="index" asp-controller="ordertracking" class="hover:no-underline hover:text-red duration-300 text-[12px]">Order Tracking</a></li>
+                        <li class="mx-[10px]"><a asp-action="index" asp-controller="wishlist" class="hover:no-underline hover:text-red duration-300 text-[12px]">Wishlist</a></li>
                     </ul>
                 </div>
 
@@ -154,7 +154,7 @@
             <div class="header-bottom flex justify-around">
                 <div class="header-bottom-left flex">
                     <div class="logo flex items-center py-[21px]">
-                        <a href="./index.html">
+                        <a asp-action="index" asp-controller="home">
                             <img src="~/Users/assets/images/PartDo-Logo.png" class="w-[164px]" alt="" />
                         </a>
                     </div>
@@ -163,42 +163,62 @@
                         <ul class="flex items-center">
                             <li class="px-[15px]"><a class="font-medium hover:text-red duration-200" asp-action="index" asp-controller="home">Home</a></li>
                             <li class="px-[15px]"><a class="font-medium hover:text-red duration-200" asp-action="index" asp-controller="shop">Shop</a></li>
-                            <li class="px-[15px]"><a class="font-medium hover:text-red duration-200" href="./shop.html"> Tires & Wheels</a></li>
+                            <li class="px-[15px]"><a class="font-medium hover:text-red duration-200" asp-action="index" asp-controller="shop" id="menu-item"> Tires & Wheels</a></li>
                             <li class="px-[15px]"><a class="font-medium hover:text-red duration-200" href="./shop.html">Interior Accesories</a></li>
                             <li class="px-[15px]"><a class="font-medium hover:text-red duration-200" asp-action="index" asp-controller="blog">Blog</a></li>
-                            <li class="px-[15px]"><a class="font-medium hover:text-red duration-200" href="./contact.html">Contact</a></li>
+                            <li class="px-[15px]"><a class="font-medium hover:text-red duration-200" asp-action="index" asp-controller="contact">Contact</a></li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="header-bottom-right flex items-center gap-5">
-                    @if (!SignInManager.IsSignedIn(User))
-                    {
-                        <a asp-action="login" asp-controller="account">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
-                            </svg>
-                        </a>
-                    }
+                <div class="header-bottom-right flex items-center gap-6">
 
-                    <span href="" data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    <a asp-action="login" asp-controller="account">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
                         </svg>
-                    </span>
+                    </a>
 
-                    <a class="relative" href="./wishlist.html">
+                    @* <span href="" data-modal-target="defaultModal" data-modal-toggle="defaultModal" class="cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                    </span>*@
+
+                    <a class="relative" asp-action="index" asp-controller="wishlist">
+                        @{
+                            var count = 0;
+                        }
+                        @if (Model.WishlistProducts != null)
+                        {
+                            @foreach (var basketP in Model.WishlistProducts)
+                            {
+                                count = count + basketP.Count;
+                            }
+
+                        }
                         <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
                             <path d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" />
                         </svg>
-                        <span class="bg-red rounded-[50%] absolute w-[17px] h-[17px] text-[15px] right-[-11px] top-[-7px] flex items-center justify-center text-[white] font-semibold">0</span>
+                        <span class="bg-red rounded-[50%] absolute w-[17px] h-[17px] text-[15px] right-[-11px] top-[-7px] flex items-center justify-center text-[white] font-semibold">@(SignInManager.IsSignedIn(User) ? count : 0)</span>
                     </a>
 
                     <a class="relative" asp-action="index" asp-controller="basket">
+                        @{
+                            var basketcount = 0;
+                        }
+                        @if (Model.BasketProducts != null)
+                        {
+                        @foreach (var basketP in Model.BasketProducts)
+                        {
+                            basketcount = basketcount + basketP.Count;
+                        }
+                            
+                        }
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart2" viewBox="0 0 16 16">
                             <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
                         </svg>
-                        <span class="bg-red rounded-[50%] absolute w-[17px] h-[17px] text-[15px] right-[-11px] top-[-7px] flex items-center justify-center text-[white] font-semibold">0</span>
+                        <span class="bg-red rounded-[50%] absolute w-[17px] h-[17px] text-[15px] right-[-11px] top-[-7px] flex items-center justify-center text-[white] font-semibold">@(SignInManager.IsSignedIn(User) ? basketcount : 0)</span>
                     </a>
                     @if (SignInManager.IsSignedIn(User))
                     {
@@ -464,7 +484,7 @@
 
                             </div>
 
-                            <a class="text-red text-[14px] font-semibold text-center" href="">All Headlights & Lighting <i class="fa-solid fa-arrow-right"></i></a>
+                            <a class="text-red text-[14px] font-semibold text-center" href="">All @category.Name <i class="fa-solid fa-arrow-right"></i></a>
 
                         </div>
                     </div>
@@ -484,7 +504,7 @@
                                 <span class="red-bgc bg-[#ff0022] text-white rounded-xl text-[12px] font-bold py-[3px] px-[10px]">On Sale This Week</span>
                                 <span class="title text-black text-[22px] mid:text-[26px] md:w-[300px] mt-[12px] font-bold leading-tight">@onSaleComponent.Title</span>
                                 <span class="desc text-[13px] text-[#6f6f6f] mt-[10px]">@onSaleComponent.Description</span>
-                                <a class="shopnow text-[14px] mt-[10px] font-semibold" href="">Shop Now <i class="fa-solid fa-arrow-right ml-2"></i></a>
+                                <a class="shopnow text-[14px] mt-[10px] font-semibold" asp-action="index" asp-controller="shop">Shop Now <i class="fa-solid fa-arrow-right ml-2"></i></a>
                             </div>
 
                         </div>
@@ -506,11 +526,7 @@
 
                                 @for (int i = 0; i < Model.Categories.Count; i++)
                                 {
-                                    var id = "";
-                                    @if (i == 1)
-                                    {
-                                        id = "defaultOpen";
-                                    }
+                                    var id = i == 0 ? "defaultOpen" : "";
                                     <a class="tablinks rounded-[8px] cursor-pointer px-3 py-[5px] transition-[0.3s] hover:bg-[#ddd] tabs @id"
                                        asp-controller="home" asp-action="tabmenu" asp-route-id="@Model.Categories[i].Id">
                                         @Model.Categories[i].Name
@@ -534,7 +550,7 @@
 
                 <div class="tab-content  py-[6px] px-3" id="tab-content">
 
-                    @await Html.PartialAsync("_TabMenuContentPartial", Model.FilteredProducts)
+                    @*@await Html.PartialAsync("_TabMenuContentPartial", Model.FilteredProducts)*@
 
                 </div>
             </div>
@@ -553,52 +569,39 @@
 
                 <div class="on-sale-left mid:w-[42%]">
 
-                    <div class="rounded-xl overflow-hidden h-full">
-                        @for (int i = 0; i < Model.onSale_2Components.Count; i++)
-                        {
-                            <div style="background-image: url(/Users/assets/images/@Model.onSale_2Components[0].Photo)" class="cards bg-cover h-full hover:scale-110 duration-500 cursor-pointer rounded-xl">
+                    @foreach (var onSaleComponent in Model.onSale_2Components.Take(1))
+                    {
+                        <div class="rounded-xl overflow-hidden h-full">
+                            <div style="background-image: url(/Users/assets/images/@onSaleComponent.Photo)" class="cards bg-cover h-full hover:scale-110 duration-500 cursor-pointer rounded-xl">
                                 <div class="card-content flex flex-col items-start rounded-[5px] text-[16px] p-[40px]">
                                     <span class="red-bgc bg-partdored text-white rounded-[40px] text-[13px] font-bold py-[3px] px-[10px]">On Sale This Week</span>
-                                    <span class="title text-[22px] mid:text-[28px] font-bold mid:w-[350px] mt-[15px] leading-tight">@Model.onSale_2Components[0].Title</span>
-                                    <span class="desc text-[13px] text-[#646464] mt-[10px]">@Model.onSale_2Components[0].Description</span>
+                                    <span class="title text-[22px] mid:text-[28px] font-bold mid:w-[350px] mt-[15px] leading-tight">@onSaleComponent.Title</span>
+                                    <span class="desc text-[13px] text-[#646464] mt-[10px]">@onSaleComponent.Description</span>
                                     <span class="shopnow text-[14px] mt-[10px] font-semibold"><a href="">Shop Now <i class="fa-solid fa-arrow-right ml-2"></i></a></span>
                                 </div>
 
                             </div>
-                        }
-                    </div>
+                        </div>
+                    }
                 </div>
 
                 <div class="on-sale-right mid:grid mid:grid-rows-2 mid:overflow-hidden mid:w-[58%] gap-8">
 
-                    @for (int i = 0; i < Model.onSale_2Components.Count; i++)
+                    @foreach (var onSaleComponent in Model.onSale_2Components.Skip(1))
                     {
-                        if (i != 0)
-                        {
-                            <div class="rounded-xl overflow-hidden">
-                                <div style="background-image: url(/Users/assets/images/@Model.onSale_2Components[i].Photo)" class="cards bg-[url('https://klbtheme.com/partdo/wp-content/uploads/2022/10/banner-11.jpg')]  bg-cover mid:h-full hover:scale-110 duration-500 cursor-pointer rounded-xl">
-                                    <div class="card-content flex flex-col items-start text-[16px] p-[40px] rounded-xl">
-                                        <span class="red-bgc bg-partdored text-white rounded-[40px] text-[13px] font-bold py-1 px-[10px]">On Sale This Week</span>
-                                        <span class="title text-[22px] mid:text-[28px] font-bold mid:w-[350px] mt-[15px] leading-tight">@Model.onSale_2Components[0].Title</span>
-                                        <span class="desc text-[13px] text-[#646464] mt-[10px] mid:w-[350px]">@Model.onSale_2Components[0].Description</span>
-                                        <span class="shopnow text-[14px] mt-[10px] font-semibold"><a href="">Shop Now <i class="fa-solid fa-arrow-right"></i></a></span>
-                                    </div>
+                        <div class="overflow-hidden rounded-xl">
+                            <div style="background-image: url(/Users/assets/images/@onSaleComponent.Photo); height: 100%" class="card bg-cover hover:scale-110 duration-500 cursor-pointer">
+
+                                <div class="card-content flex flex-col items-start rounded-xl p-10">
+                                    <span class="red-bgc bg-[#ff0022] text-white rounded-xl text-[12px] font-bold py-[3px] px-[10px]">On Sale This Week</span>
+                                    <span class="title text-black text-[22px] mid:text-[26px] md:w-[300px] mt-[12px] font-bold leading-tight">@onSaleComponent.Title</span>
+                                    <span class="desc text-[13px] text-[#6f6f6f] mt-[10px]">@onSaleComponent.Description</span>
+                                    <a class="shopnow text-[14px] mt-[10px] font-semibold" asp-action="index" asp-controller="shop">Shop Now <i class="fa-solid fa-arrow-right ml-2"></i></a>
                                 </div>
+
                             </div>
-                        }
+                        </div>
                     }
-
-                    @*<div class="rounded-xl overflow-hidden mt-8 mid:mt-0">
-                    <div class="cards bg-[url('https://klbtheme.com/partdo/wp-content/uploads/2022/10/banner-14.jpg')] bg-cover mid:h-full hover:scale-110 duration-500 cursor-pointer rounded-xl">
-                    <div class="card-content flex flex-col items-start rounded-[5px] text-[16px] p-[40px]">
-                    <span class="red-bgc bg-partdored text-white rounded-[40px] text-[13px] font-bold py-1 px-[10px]">On Sale This Week</span>
-                    <span class="title text-[22px] mid:text-[28px] font-bold mid:w-[350px] mt-[15px] leading-tight">A New Level Of Comfort Tested For Your Safety</span>
-                    <span class="desc text-[13px] text-[#646464] mt-[10px] mid:w-[350px]">Plakrore mahetan.Astronens ultranirad.Dod.</span>
-                    <span class="shopnow text-[14px] mt-[10px] font-semibold"><a href="">Shop Now <i class="fa-solid fa-arrow-right"></i></a></span>
-                    </div>
-                    </div>
-                    </div>*@
-
                 </div>
 
             </div>
@@ -615,22 +618,17 @@
                         </a>
                     </div>
                 </div>
-                @*<p class="authorizeInfo hidden">
-                @(
-                User.Identity.IsAuthenticated ? "Authenticate" : "NOO"
-                )
-                </p>*@
                 <div class="grayline border-b border-border my-5"></div>
 
                 <div class="products mid:grid mid:grid-cols-3 gap-1">
                     <div class="products-left">
                         <div class="product-container grid grid-cols-2 ">
-                            @foreach (var product in Model.AllProducts.Take(4).Where(p => !p.IsMain && !p.IsSpecial))
+                            @foreach (var product in Model.AllProducts.Take(6).Where(p => !p.IsMain && !p.IsSpecial))
                             {
                                 var productStockType = product.StockType; // Replace with your actual enum value
                                 string stockbyString = EnumHelper.GetEnumDisplayName(productStockType);
                                 var heartType = "fa-regular";
-                                if (Model.WishlistProducts != null)
+                                if (Model.WishlistProducts is not null)
                                 {
                                     foreach (var wishlistProduct in Model.WishlistProducts.Where(w => w.ProductId == product.Id))
                                     {
@@ -639,76 +637,79 @@
                                             heartType = "fa-solid";
                                         }
                                     }
+                                }
 
-                                    <div class="product mid:hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_90px] px-4 py-6 hover:rounded-t-2xl translate-y-[-10px]  hover:bg-white group relative mid:hover:z-50 ">
-                                        <a href="">
-                                            <div class="px-[10px] my-auto ">
-                                                <div class="img rounded-[10px] relative border-[1px] border-border">
-                                                    <a href="">
-                                                        <img src="~/Users/assets/images/@product.MainPhoto"
-                                                             alt="1000X1000"
-                                                             class="rounded-[10px]" />
-                                                    </a>
-                                                    <a class="sale absolute bg-red text-[12px] font-bold text-white py-[2px] px-[9px] rounded-[22%] top-[10px] left-[10px]">8%</a>
-                                                    <span class="absolute flex justify-center items-center w-[25px] h-[25px] bg-[#ffffff] border-[1px] hover:bg-[#ffe3e3] border-border cursor-pointer shadow-lg text-[16px] font-bold text-[black] py-[2px] px-[9px] rounded-[50%] top-[10px] right-[10px]">
-                                                        <i data-id="@product.Id" class="addToWishlist @heartType heart fa-heart heart-icon hover:text-red duration-200"></i>
+                                <div class="product mid:hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_90px] px-4 py-6 hover:rounded-t-2xl translate-y-[-10px]  hover:bg-white group relative mid:hover:z-50 ">
+                                    <a href="">
+                                        <div class="px-[10px] my-auto ">
+                                            <div class="img rounded-[10px] relative border-[1px] border-border">
+                                                <a asp-action="details" asp-controller="shop" asp-route-id="@product.Id">
+                                                    <img src="~/Users/assets/images/@product.MainPhoto"
+                                                         alt="1000X1000"
+                                                         class="rounded-[10px]" />
+                                                </a>
+                                                @if (product.Status is not null)
+                                                {
+                                                    <span class="absolute top-3 left-3 text-[11px] bg-[#ff6f00] text-white px-2 py-[2px] rounded-md font-bold">@product.Status</span>
+                                                }
+
+                                                <span class="absolute flex justify-center items-center w-[25px] h-[25px] bg-[#ffffff] hover:bg-[#ffe3e3] border-[1px] border-border cursor-pointer shadow-lg text-[16px] font-bold text-[black] py-[2px] px-[9px] rounded-[50%] top-[10px] right-[10px]">
+                                                    <i data-id="@product.Id" class="addToWishlist @heartType   heart fa-heart heart-icon hover:text-red duration-200"></i>
+                                                </span>
+                                            </div>
+
+                                            <div class="image-desc flex flex-col mt-[15px]">
+                                                <a href=""
+                                                   class="img-title text-[14px] font-bold hover:text-red mmid:text-ellipsis mmid:whitespace-nowrap overflow-hidden product-name-minify">
+                                                    @product.Name
+                                                </a>
+
+                                                <div class="star-rating">
+                                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
+                                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
+                                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
+                                                    <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
+                                                    <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
+                                                    <span class="review text-[12px] font-semibold ml-[10px]">1 review</span>
+                                                </div>
+
+                                                <div class="priceandbasket flex justify-between items-center">
+                                                    <div class="price flex items-end @(product.NewPrice is null ? "" : "gap-3")">
+                                                        <span class="old-price line-through text-[#555555] text-[16px] mt-[15px]">
+                                                            @(product.NewPrice is null ? "" : "$" + product.Price)
+                                                        </span>
+                                                        <span class="new-price text-[#df1616] text-[19px] font-semibold">
+                                                            $@(product.NewPrice is null ? product.Price : product.NewPrice)
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="stock mt-[8px]">
+                                                    <span class="text-[12px] font-semibold text-[#257c25]">
+                                                        <i class="fa-solid fa-cube package mr-[5px]"></i> @stockbyString
                                                     </span>
                                                 </div>
 
-                                                <div class="image-desc flex flex-col mt-[15px]">
-                                                    <a href=""
-                                                       class="img-title text-[14px] font-bold hover:text-red mmid:text-ellipsis mmid:whitespace-nowrap overflow-hidden product-name-minify">
-                                                        @product.Name
-                                                    </a>
+                                                <div class="border-t border-border hidden mid:group-hover:block translate-y-[40px] top-[85%] left-0 px-3 py-2 absolute bg-white rounded-b-xl">
+                                                    <div class="px-2 ">
+                                                        <ul class="list-disc mt-2 px-4">
+                                                            <li class="leading-tight text-[13px] text-gray">Best-in-class all-around performance</li>
+                                                            <li class="leading-tight text-[13px] text-gray">Confident driving in all weather conditions</li>
+                                                            <li class="leading-tight text-[13px] text-gray">Visual Alignment Indicators</li>
+                                                        </ul>
 
-                                                    <div class="star-rating">
-                                                        <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
-                                                        <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
-                                                        <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
-                                                        <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
-                                                        <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
-                                                        <span class="review text-[12px] font-semibold ml-[10px]">1 review</span>
-                                                    </div>
-
-                                                    <div class="priceandbasket flex justify-between items-center">
-                                                        <div class="price flex items-end gap-3">
-                                                            <span class="old-price line-through text-[#555555] text-[16px] mt-[15px]">
-                                                                $@product.Price
-                                                            </span>
-                                                            <span class="new-price text-[#df1616] text-[19px] font-semibold">
-                                                                $@product.NewPrice
-                                                            </span>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="stock mt-[8px]">
-                                                        <span class="text-[12px] font-semibold text-[#257c25]">
-                                                            <i class="fa-solid fa-cube package mr-[5px]"></i> @stockbyString
-                                                        </span>
-                                                    </div>
-
-                                                    <div class="border-t border-border hidden mid:group-hover:block translate-y-[40px] top-[85%] left-0 px-3 py-2 absolute bg-white rounded-b-xl">
-                                                        <div class="px-2 ">
-                                                            <ul class="list-disc mt-2 px-4">
-                                                                <li class="leading-tight text-[13px] text-gray">Best-in-class all-around performance</li>
-                                                                <li class="leading-tight text-[13px] text-gray">Confident driving in all weather conditions</li>
-                                                                <li class="leading-tight text-[13px] text-gray">Visual Alignment Indicators</li>
-                                                            </ul>
-
-                                                            <button class="addToCart bg-partdored px-4 py-[8px] w-full rounded-xl text-white font-semibold mt-5 group-hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_70px]" data-id="@product.Id">Add to Cart</button>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="addToCart  w-full text-center bg-partdored text-white py-2 rounded-xl mt-4 block mid:hidden" data-id="@product.Id">
-                                                        <a class="font-medium">Add to cart</a>
+                                                        <button class="addToCart bg-partdored px-4 py-[8px] w-full rounded-xl text-white font-semibold mt-5 group-hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_70px]" data-id="@product.Id">Add to Cart</button>
                                                     </div>
                                                 </div>
+
+                                                <div class="addToCart  w-full text-center bg-partdored text-white py-2 rounded-xl mt-4 block mid:hidden" data-id="@product.Id">
+                                                    <a class="font-medium">Add to cart</a>
+                                                </div>
                                             </div>
-                                        </a>
+                                        </div>
+                                    </a>
 
-                                    </div>
-
-                                }
+                                </div>
                             }
                         </div>
                     </div>
@@ -757,13 +758,20 @@
                                 </div>
 
                                 <div class="img relative ">
-                                    <img src="~/Users/assets/images/@product1.MainPhoto"
-                                         alt="1000X1000"
-                                         class="rounded-[10px] border border-border mt-5 w-full" />
-                                    @*<a class="heart-btn flex items-center justify-center w-[30px] h-[30px] absolute text-[20px] p-[15px] top-9 right-5  border border-border rounded-full hover:text-red hover:bg-[#ffe3e3] cursor-pointer"><i class="fa-solid fa-heart"></i></a>*@
-                                    <span class="absolute flex justify-center items-center w-[25px] h-[25px] bg-[#ffffff] border-[1px] border-border cursor-pointer shadow-lg text-[16px] font-bold hover:bg-[#ffe3e3] text-[black] py-[2px] px-[9px] rounded-[50%] top-9 right-5 ">
-                                        <i data-id="@product1.Id" class="addToWishlist @heartType   heart fa-heart heart-icon hover:text-red duration-200"></i>
-                                    </span>
+                                    <a asp-action="details" asp-controller="shop" asp-route-id="@product1.Id">
+                                        <img src="~/Users/assets/images/@product1.MainPhoto"
+                                             alt="1000X1000"
+                                             class="rounded-[10px] border border-border mt-5 w-full" />
+                                        @if (product1.Status is not null)
+                                        {
+                                            <span class="absolute top-9 left-3 text-[11px] bg-[#ff6f00] text-white px-2 py-[2px] rounded-md font-bold">@product1.Status</span>
+                                        }
+
+                                        <span class="absolute flex justify-center items-center w-[25px] h-[25px] bg-[#ffffff] border-[1px] border-border cursor-pointer shadow-lg text-[16px] font-bold hover:bg-[#ffe3e3] text-[black] py-[2px] px-[9px] rounded-[50%] top-9 right-5 ">
+                                            <i data-id="@product1.Id" class="addToWishlist @heartType heart fa-heart heart-icon hover:text-red duration-200"></i>
+                                        </span>
+
+                                    </a>
                                 </div>
 
                                 <div class="image-desc flex flex-col mt-[15px] ">
@@ -835,12 +843,16 @@
                                     <a href="">
                                         <div class="px-[10px] my-auto ">
                                             <div class="img rounded-[10px] relative border-[1px] border-border">
-                                                <a href="">
+                                                <a asp-action="details" asp-controller="shop" asp-route-id="@product.Id">
                                                     <img src="~/Users/assets/images/@product.MainPhoto"
                                                          alt="1000X1000"
                                                          class="rounded-[10px]" />
                                                 </a>
-                                                <a class="sale absolute bg-red text-[12px] font-bold text-white py-[2px] px-[9px] rounded-[22%] top-[10px] left-[10px]">8%</a>
+                                                @if (product.Status is not null)
+                                                {
+                                                    <span class="absolute top-3 left-3 text-[11px] bg-[#ff6f00] text-white px-2 py-[2px] rounded-md font-bold">@product.Status</span>
+                                                }
+
                                                 <span class="absolute flex justify-center items-center w-[25px] h-[25px] bg-[#ffffff] hover:bg-[#ffe3e3] border-[1px] border-border cursor-pointer shadow-lg text-[16px] font-bold text-[black] py-[2px] px-[9px] rounded-[50%] top-[10px] right-[10px]">
                                                     <i data-id="@product.Id" class="addToWishlist @heartType   heart fa-heart heart-icon hover:text-red duration-200"></i>
                                                 </span>
@@ -862,12 +874,12 @@
                                                 </div>
 
                                                 <div class="priceandbasket flex justify-between items-center">
-                                                    <div class="price flex items-end gap-3">
+                                                    <div class="price flex items-end @(product.NewPrice is null ? "" : "gap-3")">
                                                         <span class="old-price line-through text-[#555555] text-[16px] mt-[15px]">
-                                                            $@product.Price
+                                                            @(product.NewPrice is null ? "" : "$" + product.Price)
                                                         </span>
                                                         <span class="new-price text-[#df1616] text-[19px] font-semibold">
-                                                            $@product.NewPrice
+                                                            $@(product.NewPrice is null ? product.Price : product.NewPrice)
                                                         </span>
                                                     </div>
                                                 </div>
@@ -946,17 +958,36 @@
 
                         @foreach (var mainProduct in Model.AllProducts.Where(p => p.IsMain).Where(p => p.NewPrice != null).Where(p => !p.IsSpecial).Take(1))
                         {
+                            var productStockType = mainProduct.StockType; // Replace with your actual enum value
+                            string stockbyString = EnumHelper.GetEnumDisplayName(productStockType);
+                            var heartType = "fa-regular";
+                            if (Model.WishlistProducts is not null)
+                            {
+                                foreach (var wishlistProduct in Model.WishlistProducts.Where(w => w.ProductId == mainProduct.Id))
+                                {
+                                    if (wishlistProduct.IsInWishlist)
+                                    {
+                                        heartType = "fa-solid";
+                                    }
+                                }
+                            }
+
                             <div class="products-content  p-[24px] border border-border rounded-xl">
 
-                                <a href="">
-                                    <div class="img relative cursor-pointer border border-border">
-                                        <img src="~/Users/assets/images/@mainProduct.MainPhoto"
-                                             alt="1000X1000"
-                                             class="rounded-[10px] " />
-                                        <span class="sale absolute bg-[#ff1900] text-[13px] font-bold text-white py-[2px] px-[9px] rounded-[22%] top-5 left-5">@mainProduct.Status</span>
-                                        <a class="heart-btn flex items-center justify-center w-[30px] h-[30px] absolute text-[20px] p-[15px] top-5 right-5  border border-border rounded-full hover:text-red hover:bg-[#ffe3e3] duration-300 cursor-pointer"><i class="fa-solid fa-heart"></i></a>
-                                    </div>
-                                </a>
+                                <div class="img relative cursor-pointer border border-border">
+                                    <img src="~/Users/assets/images/@mainProduct.MainPhoto"
+                                         alt="1000X1000"
+                                         class="rounded-[10px] " />
+                                    @if (mainProduct.Status is not null)
+                                    {
+                                        <span class="absolute top-3 left-3 text-[11px] bg-[#ff6f00] text-white px-2 py-[2px] rounded-md font-bold">@mainProduct.Status</span>
+                                    }
+                                    @*<a class="heart-btn flex items-center justify-center w-[30px] h-[30px] absolute text-[20px] p-[15px] top-5 right-5  border border-border rounded-full hover:text-red hover:bg-[#ffe3e3] duration-300 cursor-pointer"><i class="fa-solid fa-heart"></i></a>*@
+                                    <span class="absolute flex justify-center items-center w-[25px] h-[25px] bg-[#ffffff] border-[1px] hover:bg-[#ffe3e3] border-border cursor-pointer shadow-lg text-[16px] font-bold text-[black] py-[2px] px-[9px] rounded-[50%] top-[10px] right-[10px]">
+                                        <i data-id="@mainProduct.Id" class="addToWishlist @heartType heart fa-heart heart-icon hover:text-red duration-200"></i>
+                                    </span>
+                                </div>
+
 
                                 <div class="image-desc flex flex-col mt-[15px] ">
 
@@ -969,24 +1000,24 @@
                                         <span class="review text-[12px] font-semibold ml-[10px] text-black">1 review</span>
                                     </div>
 
-                                    <a href="" class="img-title text-[16px] font-bold hover:text-red duration-200 mt-2 ">
+                                    <a asp-action="details" asp-controller="shop" asp-route-id="@mainProduct.Id" class="img-title text-[16px] font-bold hover:text-red duration-200 mt-2 ">
                                         @mainProduct.Name
                                     </a>
 
                                     <div class="priceandbasket flex justify-between items-center">
                                         <div class="price flex flex-row items-end gap-2">
-                                            <span class="old-price line-through text-[#787878]">
-                                                $@mainProduct.Price
+                                            <span class="old-price line-through text-[#787878] text-[20px] mr-3">
+                                                @(mainProduct.NewPrice is null ? "" : "$" + mainProduct.Price)
                                             </span>
-                                            <span class="new-price text-red text-[19px] font-medium mt-[5px]">
-                                                $@mainProduct.NewPrice
+                                            <span class="new-price text-red text-[24px] font-medium mt-[5px]">
+                                                $@(mainProduct.NewPrice is null ? mainProduct.Price : mainProduct.NewPrice)
                                             </span>
                                         </div>
                                     </div>
 
                                     <div class="stock mt-[8px]">
                                         <span class="text-green-900 text-[14px] font-medium">
-                                            <i class="fa-solid fa-cube package taxt-[12px]  mr-2"></i> @mainProduct.StockType
+                                            <i class="fa-solid fa-cube package taxt-[12px]  mr-2"></i> @stockbyString
                                         </span>
                                     </div>
 
@@ -1006,18 +1037,22 @@
 
                                 </div>
                             </div>
+
+
                         }
 
                     </div>
 
-                    <div class="products-parts flex flex-col justify-between my-5 mid:my-0">
+                    <div class="products-parts flex flex-col justify-between my-5 mid:my-0 py-2">
                         @foreach (var product in Model.AllProducts.Where(p => p.NewPrice != null).Where(p => !p.IsMain).Where(p => !p.IsSpecial).Take(3))
                         {
                             <div class="product border-b border-border pb-8">
                                 <div class="products-content flex">
-                                    <div class="img border border-border rounded-xl w-[94px]">
-                                        <img src="~/Users/assets/images/@product.MainPhoto" alt="" class="rounded-xl">
-                                    </div>
+                                    <a asp-action="details" asp-controller="shop" asp-route-id="@product.Id">
+                                        <div class="img border border-border rounded-xl w-[94px]">
+                                            <img src="~/Users/assets/images/@product.MainPhoto" alt="" class="rounded-xl">
+                                        </div>
+                                    </a>
 
                                     <div class="image-desc flex flex-col justify-around w-[65%] ml-4">
 
@@ -1030,33 +1065,37 @@
                                             <span class="review text-[12px] font-semibold ml-[10px] text-black">1 review</span>
                                         </div>
 
-                                        <a href="" class="img-title text-[13px] font-bold mt-2 hover:text-red duration-200 leading-tight">
+                                        <a asp-action="details" asp-controller="shop" asp-route-id="@product.Id" class="img-title text-[13px] font-bold mt-2 hover:text-red duration-200 leading-tight">
                                             @product.Name
                                         </a>
 
                                         <div class="priceandbasket flex justify-between items-center">
                                             <div class="price flex items-end gap-2">
-                                                <span class="old-price line-through text-[#787878] text-[14px]">$@product.Price</span>
-                                                <span class="new-price text-red text-[16px] font-medium ">$@product.NewPrice</span>
+                                                <span class="old-price line-through text-[#787878] text-[14px] mr-3">
+                                                    @(product.NewPrice is null ? "" : "$" + product.Price)
+                                                </span>
+                                                <span class="new-price text-red text-[16px] font-medium mt-[5px]">
+                                                    $@(product.NewPrice is null ? product.Price : product.NewPrice)
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="main flex items-center leading-tight text-[gray] gap-2 mt-[15px]">
-                                    <div id="countdown ">
-                                        <ul class="flex items-center gap-2">
-                                            <li class="timer bg-[#e3e3e3] rounded-[5px] text-white py-[5px] px-2 font-semibold"><span id="days" class="text-[18px]"></span></li>
-                                            <li>:</li>
-                                            <li class="timer bg-[#e3e3e3] rounded-[5px] text-white py-[5px] px-2 font-semibold"><span id="hours" class="text-[18px]"></span></li>
-                                            <li>:</li>
-                                            <li class="timer bg-[#e3e3e3] rounded-[5px] text-white py-[5px] px-2 font-semibold"><span id="minutes" class="text-[18px]"></span></li>
-                                            <li>:</li>
-                                            <li class="timer bg-[#e3e3e3] rounded-[5px] text-white py-[5px] px-2 font-semibold"><span id="seconds" class="text-[18px]"></span></li>
-                                        </ul>
-                                    </div>
+                                    @*<div id="countdown ">
+                                <ul class="flex items-center gap-2">
+                                <li class="timer bg-[#e3e3e3] rounded-[5px] text-white py-[5px] px-2 font-semibold"><span id="days" class="text-[18px]"></span></li>
+                                <li>:</li>
+                                <li class="timer bg-[#e3e3e3] rounded-[5px] text-white py-[5px] px-2 font-semibold"><span id="hours" class="text-[18px]"></span></li>
+                                <li>:</li>
+                                <li class="timer bg-[#e3e3e3] rounded-[5px] text-white py-[5px] px-2 font-semibold"><span id="minutes" class="text-[18px]"></span></li>
+                                <li>:</li>
+                                <li class="timer bg-[#e3e3e3] rounded-[5px] text-white py-[5px] px-2 font-semibold"><span id="seconds" class="text-[18px]"></span></li>
+                                </ul>
+                                </div>*@
 
-                                    <p class="text-[10px]">Remains until the end of the offer</p>
+                                    <p class="text-[12px]">Remains until the end of the offer</p>
                                 </div>
 
                             </div>
@@ -1064,21 +1103,40 @@
 
                     </div>
 
-                    <div class="products ">
+                    <div class="products">
 
                         @foreach (var mainProduct in Model.AllProducts.Where(p => p.IsMain).Where(p => p.NewPrice != null).Where(p => !p.IsSpecial).Skip(1).Take(1))
                         {
+                            var productStockType = mainProduct.StockType; // Replace with your actual enum value
+                            string stockbyString = EnumHelper.GetEnumDisplayName(productStockType);
+                            var heartType = "fa-regular";
+                            if (Model.WishlistProducts is not null)
+                            {
+                                foreach (var wishlistProduct in Model.WishlistProducts.Where(w => w.ProductId == mainProduct.Id))
+                                {
+                                    if (wishlistProduct.IsInWishlist)
+                                    {
+                                        heartType = "fa-solid";
+                                    }
+                                }
+                            }
+
                             <div class="products-content  p-[24px] border border-border rounded-xl">
 
-                                <a href="">
-                                    <div class="img relative cursor-pointer border border-border">
-                                        <img src="~/Users/assets/images/@mainProduct.MainPhoto"
-                                             alt="1000X1000"
-                                             class="rounded-[10px] " />
-                                        <span class="sale absolute bg-[#ff1900] text-[13px] font-bold text-white py-[2px] px-[9px] rounded-[22%] top-5 left-5">@mainProduct.Status</span>
-                                        <a class="heart-btn flex items-center justify-center w-[30px] h-[30px] absolute text-[20px] p-[15px] top-5 right-5  border border-border rounded-full hover:text-red hover:bg-[#ffe3e3] duration-300 cursor-pointer"><i class="fa-solid fa-heart"></i></a>
-                                    </div>
-                                </a>
+                                <div class="img relative cursor-pointer border border-border">
+                                    <img src="~/Users/assets/images/@mainProduct.MainPhoto"
+                                         alt="1000X1000"
+                                         class="rounded-[10px] " />
+                                    @if (mainProduct.Status is not null)
+                                    {
+                                        <span class="absolute top-3 left-3 text-[11px] bg-[#ff6f00] text-white px-2 py-[2px] rounded-md font-bold">@mainProduct.Status</span>
+                                    }
+                                    @*<a class="heart-btn flex items-center justify-center w-[30px] h-[30px] absolute text-[20px] p-[15px] top-5 right-5  border border-border rounded-full hover:text-red hover:bg-[#ffe3e3] duration-300 cursor-pointer"><i class="fa-solid fa-heart"></i></a>*@
+                                    <span class="absolute flex justify-center items-center w-[25px] h-[25px] bg-[#ffffff] border-[1px] hover:bg-[#ffe3e3] border-border cursor-pointer shadow-lg text-[16px] font-bold text-[black] py-[2px] px-[9px] rounded-[50%] top-[10px] right-[10px]">
+                                        <i data-id="@mainProduct.Id" class="addToWishlist @heartType heart fa-heart heart-icon hover:text-red duration-200"></i>
+                                    </span>
+                                </div>
+
 
                                 <div class="image-desc flex flex-col mt-[15px] ">
 
@@ -1091,24 +1149,24 @@
                                         <span class="review text-[12px] font-semibold ml-[10px] text-black">1 review</span>
                                     </div>
 
-                                    <a href="" class="img-title text-[16px] font-bold hover:text-red duration-200 mt-2 ">
+                                    <a asp-action="details" asp-controller="shop" asp-route-id="@mainProduct.Id" class="img-title text-[16px] font-bold hover:text-red duration-200 mt-2 ">
                                         @mainProduct.Name
                                     </a>
 
                                     <div class="priceandbasket flex justify-between items-center">
                                         <div class="price flex flex-row items-end gap-2">
-                                            <span class="old-price line-through text-[#787878]">
-                                                $@mainProduct.Price
+                                            <span class="old-price line-through text-[#787878] text-[20px] mr-3">
+                                                @(mainProduct.NewPrice is null ? "" : "$" + mainProduct.Price)
                                             </span>
-                                            <span class="new-price text-red text-[19px] font-medium mt-[5px]">
-                                                $@mainProduct.NewPrice
+                                            <span class="new-price text-red text-[24px] font-medium mt-[5px]">
+                                                $@(mainProduct.NewPrice is null ? mainProduct.Price : mainProduct.NewPrice)
                                             </span>
                                         </div>
                                     </div>
 
                                     <div class="stock mt-[8px]">
                                         <span class="text-green-900 text-[14px] font-medium">
-                                            <i class="fa-solid fa-cube package taxt-[12px]  mr-2"></i> @mainProduct.StockType
+                                            <i class="fa-solid fa-cube package taxt-[12px]  mr-2"></i> @stockbyString
                                         </span>
                                     </div>
 
@@ -1128,8 +1186,9 @@
 
                                 </div>
                             </div>
-                        }
 
+
+                        }
 
                     </div>
 
@@ -1139,9 +1198,11 @@
                         {
                             <div class="product border-b border-border pb-8">
                                 <div class="products-content flex">
-                                    <div class="img border border-border rounded-xl w-[94px]">
-                                        <img src="~/Users/assets/images/@product.MainPhoto" alt="" class="rounded-xl">
-                                    </div>
+                                    <a asp-action="details" asp-controller="shop" asp-route-id="@product.Id">
+                                        <div class="img border border-border rounded-xl w-[94px]">
+                                            <img src="~/Users/assets/images/@product.MainPhoto" alt="" class="rounded-xl">
+                                        </div>
+                                    </a>
 
                                     <div class="image-desc flex flex-col justify-around w-[65%] ml-4">
 
@@ -1154,33 +1215,37 @@
                                             <span class="review text-[12px] font-semibold ml-[10px] text-black">1 review</span>
                                         </div>
 
-                                        <a href="" class="img-title text-[13px] font-bold mt-2 hover:text-red duration-200 leading-tight">
+                                        <a asp-action="details" asp-controller="shop" asp-route-id="@product.Id" class="img-title text-[13px] font-bold mt-2 hover:text-red duration-200 leading-tight">
                                             @product.Name
                                         </a>
 
                                         <div class="priceandbasket flex justify-between items-center">
                                             <div class="price flex items-end gap-2">
-                                                <span class="old-price line-through text-[#787878] text-[14px]">$@product.Price</span>
-                                                <span class="new-price text-red text-[16px] font-medium ">$@product.NewPrice</span>
+                                                <span class="old-price line-through text-[#787878] text-[14px] mr-3">
+                                                    @(product.NewPrice is null ? "" : "$" + product.Price)
+                                                </span>
+                                                <span class="new-price text-red text-[16px] font-medium mt-[5px]">
+                                                    $@(product.NewPrice is null ? product.Price : product.NewPrice)
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="main flex items-center leading-tight text-[gray] gap-2 mt-[15px]">
-                                    <div id="countdown ">
-                                        <ul class="flex items-center gap-2">
-                                            <li class="timer bg-[#e3e3e3] rounded-[5px] text-white py-[5px] px-2 font-semibold"><span id="days" class="text-[18px]"></span></li>
-                                            <li>:</li>
-                                            <li class="timer bg-[#e3e3e3] rounded-[5px] text-white py-[5px] px-2 font-semibold"><span id="hours" class="text-[18px]"></span></li>
-                                            <li>:</li>
-                                            <li class="timer bg-[#e3e3e3] rounded-[5px] text-white py-[5px] px-2 font-semibold"><span id="minutes" class="text-[18px]"></span></li>
-                                            <li>:</li>
-                                            <li class="timer bg-[#e3e3e3] rounded-[5px] text-white py-[5px] px-2 font-semibold"><span id="seconds" class="text-[18px]"></span></li>
-                                        </ul>
-                                    </div>
+                                    @*<div id="countdown ">
+                                <ul class="flex items-center gap-2">
+                                <li class="timer bg-[#e3e3e3] rounded-[5px] text-white py-[5px] px-2 font-semibold"><span id="days" class="text-[18px]"></span></li>
+                                <li>:</li>
+                                <li class="timer bg-[#e3e3e3] rounded-[5px] text-white py-[5px] px-2 font-semibold"><span id="hours" class="text-[18px]"></span></li>
+                                <li>:</li>
+                                <li class="timer bg-[#e3e3e3] rounded-[5px] text-white py-[5px] px-2 font-semibold"><span id="minutes" class="text-[18px]"></span></li>
+                                <li>:</li>
+                                <li class="timer bg-[#e3e3e3] rounded-[5px] text-white py-[5px] px-2 font-semibold"><span id="seconds" class="text-[18px]"></span></li>
+                                </ul>
+                                </div>*@
 
-                                    <p class="text-[10px]">Remains until the end of the offer</p>
+                                    <p class="text-[12px]">Remains until the end of the offer</p>
                                 </div>
 
                             </div>
@@ -1257,11 +1322,11 @@
                     <div class="grayline border border-border my-5"></div>
 
                     <div class="news grid sm:grid-cols-2 mid:grid-cols-4 gap-7">
-                        @foreach (var blog in Model.Blogs)
+                        @foreach (var blog in Model.Blogs.Take(4))
                         {
                             <div class="news-content ">
                                 <div class="img relative w-full">
-                                    <a href="">
+                                    <a asp-action="details" asp-controller="blog" asp-route-id="@blog.Id">
                                         <img src="~/Users/assets/images/@blog.Photo" alt="" class="rounded-xl hover:brightness-75 duration-200 w-full">
                                         <span class="absolute left-4 top-4 bg-white py-[3px] px-[10px] rounded-3xl text-[12px] font-semibold">@blog.Category</span>
                                     </a>
@@ -1656,18 +1721,19 @@
 <script src="~/Users/styles/js/cart.js"></script>
 <script src="~/Users/styles/js/index.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
 <script>
     $(function () {
         $('.tabs').on('click', function (e) {
             e.preventDefault();
-            let link = $(this).attr("href")
-            fetch(link).then(res => res.text()).then(html => {
-                //console.log(html)
-                let tab_content = document.getElementById('tab-content');
-                tab_content.innerHTML = html
-            }).then(initializeCarousel())
 
-            function initializeCarousel() {
+
+            let link = $(this).attr("href");
+            fetch(link).then(res => res.text()).then(html => {
+                let tab_content = document.getElementById('tab-content');
+                tab_content.innerHTML = html;
+            }).then(() => {
                 $("#carousel").owlCarousel({
                     autoplay: false,
                     rewind: true,
@@ -1681,53 +1747,43 @@
                         0: {
                             items: 1
                         },
+
                         600: {
                             items: 3
                         },
+
                         1024: {
                             items: 3
                         },
+
                         1366: {
                             items: 5
                         }
                     }
                 });
-            }
-        })
-    })
+            });
+        });
 
-    //document.getElementsByClassName("defaultOpen")[0].click();
+        document.getElementsByClassName("defaultOpen")[0].click();
+    });
 </script>
 
 <script>
-    jQuery("#carousel").owlCarousel({
-        autoplay: false,
-        rewind: true,
-        margin: 20,
-        responsiveClass: true,
-        autoHeight: true,
-        autoplayTimeout: 7000,
-        smartSpeed: 800,
-        nav: true,
-        responsive: {
-            0: {
-                items: 1
-            },
+    var tabs = document.querySelectorAll('.tabs'); // Select all the tab links
 
-            600: {
-                items: 3
-            },
+    tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+            // Remove the 'active-tab' class from all tabs
+            tabs.forEach(function (t) {
+                t.classList.remove('active-tab');
+            });
 
-            1024: {
-                items: 3
-            },
-
-            1366: {
-                items: 5
-            }
-        }
+            // Add the 'active-tab' class to the clicked tab
+            this.classList.add('active-tab');
+        });
     });
 </script>
+
 
 <script>
     $(document).ready(function () {
@@ -1745,7 +1801,6 @@
                     toastr.success('Product added successfully', '', { positionClass: 'toast-bottom-right' });
                 },
                 error: function (data) {
-                    alert()
                     // Handle error response here
                     toastr.error('Error: ' + error, '', { positionClass: 'toast-bottom-right' });
                 }
@@ -1772,12 +1827,8 @@
                     // Toggle the classes after a successful response
                     element.removeClass('fa-regular').addClass('fa-solid');
 
-                    if (clickCount === 0) { // Check if the click count is odd
-                        toastr.error('Product already in wishlist', '', { positionClass: 'toast-bottom-right' });
-                    }
-                    else {
-                        toastr.success('Product added successfully', '', { positionClass: 'toast-bottom-right' });
-                    }
+
+                    toastr.success('Product added successfully', '', { positionClass: 'toast-bottom-right' });
 
                 },
                 error: function (data) {
@@ -1789,32 +1840,44 @@
     });
 </script>
 
-
-@*<script type="text/javascript">
-    // Default Configuration
+<script>
     $(document).ready(function () {
-        toastr.options = {
-            'closeButton': true,
-            'debug': false,
-            'newestOnTop': false,
-            'progressBar': false,
-            'positionClass': 'toast-bottom-right',
-            'preventDuplicates': false,
-            'showDuration': '1000',
-            'hideDuration': '1000',
-            'timeOut': '5000',
-            'extendedTimeOut': '1000',
-            'showEasing': 'swing',
-            'hideEasing': 'linear',
-            'showMethod': 'fadeIn',
-            'hideMethod': 'fadeOut',
-        }
+
+        $('#menu-item').click(function () {
+            window.location.href = '/Shop/Index'
+        });
     });
-    // Toast Type
-    $('.success').click(function (event) {
-        toastr.success('Product added successfully ');
+</script>
+
+<script>
+    $(document).ready(function () {
+
+        $('#menu-item').click(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/Shop/Index',
+                data: {
+                    categoryName: 'Tires & Wheels'
+                },
+                success: function (data) {
+                    // Handle success response here, you can update the product list with the filtered data
+                    $('#product-list-container').html(data); // Replace 'product-list-container' with the ID of the container where your product list is displayed
+                },
+                error: function (error) {
+                    // Handle error response here
+                    console.error(error);
+                }
+            });
+        });
     });
-</script>*@
+</script>
+
+
+
+
+
+
+
 
 
 

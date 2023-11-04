@@ -28,6 +28,7 @@ namespace Presentation.Controllers
                 onSale_2Components = await _homeService.GetOnSale_2ComponentsAsync(),
                 Blogs = await _homeService.GetBlogsAsync(),
                 WishlistProducts = await _homeService.GetWishlistProductsAsync(User),
+                BasketProducts = await _homeService.GetBasketProductsAsync(User),
             };
 
             return View(model);

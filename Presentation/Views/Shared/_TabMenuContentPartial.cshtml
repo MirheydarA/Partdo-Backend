@@ -1,26 +1,37 @@
-﻿@using Business.ViewModels.Users.Home
+﻿@using Business.Services.Utilities;
+@using Business.ViewModels.Users.Home
 @using Common.Entities;
 @model List<Product>
 
 
 
-<div id="" class=" tabcontent">
+<div id="" class="tabcontent">
     <div class="owl-slider">
         <div id="carousel" class="owl-carousel">
             @foreach (var product in Model)
             {
+                var productStockType = product.StockType; // Replace with your actual enum value
+                string stockbyString = EnumHelper.GetEnumDisplayName(productStockType);
+
                 <div class="item border-none">
 
                     <div class="img">
                         <img src="~/Users/assets/images/@product.MainPhoto"
                              alt="1000X1000"
                              class="rounded-[10px] " />
-                        <span class="sale absolute bg-[#ff1900] text-[12px] font-semibold text-white py-[2px] px-[9px] rounded-[22%] top-[10px] left-[10px]">8%</span>
-                        <span class="heart absolute flex justify-center items-center w-7 h-7 bg-[#f4f4f4] text-[16px] text-black py-[2px] px-[9px] rounded-full top-[10px] right-[10px] hover:bg-[#ffe2e2] hover:text-red cursor-pointer duration-200"><i class="fa-regular fa-heart heart-icon"></i></span>
+                       @* <span class="sale absolute bg-[#ff1900] text-[12px] font-semibold text-white py-[2px] px-[9px] rounded-[22%] top-[10px] left-[10px]">8%</span>
+                        <span class="heart absolute flex justify-center items-center w-7 h-7 bg-[#f4f4f4] text-[16px] text-black py-[2px] px-[9px] rounded-full top-[10px] right-[10px] hover:bg-[#ffe2e2] hover:text-red cursor-pointer duration-200"><i class="fa-regular fa-heart heart-icon"></i></span>*@
+                        @if (product.Status is not null)
+                        {
+                            <span class="absolute top-3 left-3 text-[11px] bg-[#ff6f00] text-white px-2 py-[2px] rounded-md font-bold">@product.Status</span>
+                        }
+                      @*  <span class="absolute flex justify-center items-center w-[25px] h-[25px] bg-[#ffffff] border-[1px] hover:bg-[#ffe3e3] border-border cursor-pointer shadow-lg text-[16px] font-bold text-[black] py-[2px] px-[9px] rounded-[50%] top-[10px] right-[10px]">
+                            <i data-id="@product.Id" class="addToWishlist heart fa-heart heart-icon hover:text-red duration-200"></i>
+                        </span>*@
                     </div>
 
                     <div class="image-desc flex flex-col mt-[15px]">
-                        <a href="" class="img-title text-[14px] font-semibold hover:text-red duration-200">
+                        <a asp-action="details" asp-controller="shop" asp-route-id="@product.Id" class="img-title text-[14px] font-semibold hover:text-red duration-200">
                             @product.Name
                         </a>
 
@@ -36,15 +47,15 @@
                         <div class="priceandbasket flex justify-between items-center">
                             <div class="price flex flex-col">
                                 <span class="old-price line-through text-[#787878]">
-                                    $@product.Price
+                                    @(product.NewPrice is null ? "" : "$" + product.Price)
                                 </span>
                                 <span class="new-price text-red text-[19px] font-medium mt-[5px]">
-                                    $@product.NewPrice
+                                    $@(product.NewPrice is null ? product.Price : product.NewPrice)
                                 </span>
                             </div>
 
-                            <div class="basket text-[20px] bg-[#f2f2f2] rounded-[30%] p-[5px] hover:bg-red hover:text-white duration-200">
-                                <a href="">
+                            <div class="addToCart basket text-[20px] bg-[#f2f2f2] rounded-[30%] p-[5px] hover:bg-red hover:text-white duration-200">
+                                <a>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart2" viewBox="0 0 16 16">
                                         <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
                                     </svg>
@@ -54,7 +65,7 @@
 
                         <div class="stock mt-[8px]">
                             <span class="text-green-900 text-[14px] font-medium">
-                                <i class="fa-solid fa-cube package taxt-[12px]  mr-2"></i> @product.StockType
+                                <i class="fa-solid fa-cube package taxt-[12px]  mr-2"></i> @stockbyString
                             </span>
                         </div>
                     </div>
@@ -67,32 +78,3 @@
     </div>
 </div>
 
-<script>
-    jQuery("#carousel").owlCarousel({
-        autoplay: false,
-        rewind: true,
-        margin: 20,
-        responsiveClass: true,
-        autoHeight: true,
-        autoplayTimeout: 7000,
-        smartSpeed: 800,
-        nav: true,
-        responsive: {
-            0: {
-                items: 1
-            },
-
-            600: {
-                items: 3
-            },
-
-            1024: {
-                items: 3
-            },
-
-            1366: {
-                items: 5
-            }
-        }
-    });
-</script>

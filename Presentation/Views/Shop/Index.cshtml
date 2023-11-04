@@ -48,8 +48,8 @@
         </div>
     </section>
 
-    <section>
-        <div class="mt-4 flex">
+    <section >
+        <div  class="mt-4 flex">
             <div class="LeftPart w-[29%] hidden md:block">
                 <div class="Find the Right Parts Faster">
                     <h4 class="font-semibold text-[15px]">
@@ -61,7 +61,7 @@
                         journey comfortably that you have been planning.
                     </p>
 
-                    <div class="">
+                    @*<div class="">
                         <select id="small"
                                 class="block + p-2 mb-4 mt-5 text-sm text-[gray] w-full border border-[#686868] rounded-xl outline-red bg-gray-50">
                             <option selected>Choose a country</option>
@@ -108,20 +108,24 @@
                     <button type="submit"
                             class="bg-partdored w-full rounded-xl py-2 text-[16px] text-white font-medium hover:bg-[#c51b1b] hover:duration-500">
                         Find Auto Parts
-                    </button>
+                    </button>*@
                 </div>
 
-                <form enctype="multipart/form-data" id="categoryForm">
-                    <div class="Categories mt-8">
+            
+
+                <form id="categoryForm" method="get">
+
+                    <div class="Categories mt-8" id="category-container">
                         <h2 class="font-semibold text-[15px]">Categories</h2>
 
                         @foreach (var category in Model.Categories)
                         {
                             <div class="flex gap-3 mt-3">
-                                <input name="categoryid" value="@category.Id" type="checkbox" class="filterByCategory h-4 w-4" @(Model.CategoryId == category.Id ? "checked" : "") />
+                                <input name="categoryid" value="@category.Id" type="checkbox" class="filterByCategory h-4 w-4" @(Model.CategoryIds != null && Model.CategoryIds.Contains(category.Id) ? "checked" : "") />
                                 <label class="text-[13px]">@category.Name</label>
                             </div>
                         }
+
                     </div>
 
                     <div class="FilterByPrice mt-8">
@@ -140,7 +144,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-8">
+@*                    <div class="mt-8">
                         <h2 class="font-semibold text-[15px]">Product Status</h2>
 
                         <div class="flex gap-3 mt-3">
@@ -154,13 +158,16 @@
                         </div>
                     </div>
 
-                    <button>submit</button>
+*@                    <input type="hidden" id="selectedCategories" name="selectedCategories" />
+
+
+                    @*<button type="submit" class="">submit</button>*@
                 </form>
 
             </div>
 
             <div class="RightPart w-full md:pl-[40px]">
-                <div class="bg-[#e6e6e6] py-2 px-4 rounded-xl flex justify-between md:hidden">
+                <div class="bg-[#e6e6e6] py-2 px-4 rounded-xl flex justify-between md:hidden" >
                     <div class="flex items-center">
 
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16">
@@ -351,7 +358,7 @@
                     </div>
                 </div>
 
-                <div class="">
+                <div >
                     <div id="product_content" class="grid grid-cols-2 mid:grid-cols-4 w-full mt-5">
                         @foreach (var product in Model.Products)
                         {
@@ -374,13 +381,15 @@
                                 <a href="">
                                     <div class="px-[10px] my-auto ">
                                         <div class="img rounded-[10px] relative border-[1px] border-border h-full">
-                                            <a href="" class="">
+                                            <a asp-action="details" asp-controller="shop" asp-route-id="@product.Id" class="">
                                                 <img src="~/Users/assets/images/@product.MainPhoto"
                                                      alt="1000X1000"
                                                      class="rounded-[10px]" />
                                             </a>
-                                            <a class="sale absolute bg-red text-[12px] font-bold text-white py-[2px] px-[9px] rounded-[22%] top-[10px] left-[10px]">8%</a>
-                                            <span class="absolute flex justify-center items-center w-[25px] h-[25px] bg-[#ffffff] border-[1px] hover:bg-[#ffe3e3] border-border cursor-pointer shadow-lg text-[16px] font-bold text-[black] py-[2px] px-[9px] rounded-[50%] top-[10px] right-[10px]">
+                                            @if (product.Status is not null)
+                                            {
+                                                <span class="absolute top-3 left-3 text-[11px] bg-[#ff6f00] text-white px-2 py-[2px] rounded-md font-bold">@product.Status</span>
+                                            }                                            <span class="absolute flex justify-center items-center w-[25px] h-[25px] bg-[#ffffff] border-[1px] hover:bg-[#ffe3e3] border-border cursor-pointer shadow-lg text-[16px] font-bold text-[black] py-[2px] px-[9px] rounded-[50%] top-[10px] right-[10px]">
                                                 <i data-id="@product.Id" class="addToWishlist @heartType heart fa-heart heart-icon hover:text-red duration-200"></i>
                                             </span>
                                         </div>
@@ -440,7 +449,7 @@
                         }
                     </div>
 
-                    @if (Model.Products.Count == 0)
+                        @if (Model.Products.Count != 0)
                     {
                         <div class="bottom-part">
                             @Html.PagedListPager(Model.Products, currentPage => Url.Action("index", new {CurrentPage = currentPage, PageSize = Model.Products.PageSize}),
@@ -466,345 +475,95 @@
             </div>
 
             <div class="product-container grid grid-cols-2 mid:grid-cols-5 ">
-                <div class="product mid:hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_90px] px-4 py-6 hover:rounded-2xl translate-y-[-10px]  hover:bg-white group relative mid:hover:z-50">
-                    <a href="">
-                        <div class="px-[10px] my-auto ">
-                            <div class="img rounded-[10px] relative border-[1px] border-border">
-                                <a href="">
-                                    <img src="https://klbtheme.com/partdo/wp-content/uploads/2022/10/1-37.jpg"
-                                         alt="1000X1000"
-                                         class="rounded-[10px]" />
-                                </a>
-                                <a class="sale absolute bg-red text-[12px] font-bold text-white py-[2px] px-[9px] rounded-[22%] top-[10px] left-[10px]">8%</a>
-                                <span class="heart absolute flex justify-center items-center w-[30px] h-[30px] bg-[#ffffff] border-[1px] border-border shadow-lg text-[16px] font-bold text-[black] py-[2px] px-[9px] rounded-[50%] top-[10px] right-[10px]">
-                                    <i class="fa-regular fa-heart heart-icon"></i>
-                                </span>
-                            </div>
 
-                            <div class="image-desc flex flex-col mt-[15px]">
-                                <a href=""
-                                   class="img-title text-[14px] font-bold hover:text-red mmid:text-ellipsis mmid:whitespace-nowrap overflow-hidden">
-                                    Thinkware F770 Dash Cam Dual Channel Wifi
-                                </a>
+                @foreach (var product in Model.Products.OrderByDescending(p => p.Id).Take(5))
+                {
+                    var productStockType = product.StockType; // Replace with your actual enum value
+                    string stockbyString = EnumHelper.GetEnumDisplayName(productStockType);
+                    var heartType = "fa-regular";
+                    if (ViewBag.ListWishlistProducts is not null)
+                    {
+                        foreach (var wishlistProduct in ViewBag.ListWishlistProducts)
+                        {
+                            if (wishlistProduct.ProductId == product.Id && wishlistProduct.IsInWishlist)
+                            {
+                                heartType = "fa-solid";
 
-                                <div class="star-rating">
-                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
-                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
-                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
-                                    <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
-                                    <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
-                                    <span class="review text-[12px] font-semibold ml-[10px]">1 review</span>
-                                </div>
+                            }
+                        }
+                    }
 
-                                <div class="priceandbasket flex justify-between items-center">
-                                    <div class="price flex items-end gap-3">
-                                        <span class="old-price line-through text-[#555555] text-[16px] mt-[15px]">
-                                            $268.99
-                                        </span>
-                                        <span class="new-price text-[#df1616] text-[19px] font-semibold">
-                                            $249.99
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="stock mt-[8px]">
-                                    <span class="text-[12px] font-semibold text-[#257c25]">
-                                        <i class="fa-solid fa-cube package mr-[5px]"></i> In Stock
+                    <div class="product mid:hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_90px] px-4 py-6 hover:rounded-t-2xl translate-y-[-10px]  hover:bg-white group relative mid:hover:z-50">
+                        <a href="">
+                            <div class="px-[10px] my-auto ">
+                                <div class="img rounded-[10px] relative border-[1px] border-border h-full">
+                                    <a asp-action="details" asp-controller="shop" asp-route-id="@product.Id" class="">
+                                        <img src="~/Users/assets/images/@product.MainPhoto"
+                                             alt="1000X1000"
+                                             class="rounded-[10px]" />
+                                    </a>
+                                    @if (product.Status is not null)
+                                    {
+                                        <span class="absolute top-3 left-3 text-[11px] bg-[#ff6f00] text-white px-2 py-[2px] rounded-md font-bold">@product.Status</span>
+                                    }                                            <span class="absolute flex justify-center items-center w-[25px] h-[25px] bg-[#ffffff] border-[1px] hover:bg-[#ffe3e3] border-border cursor-pointer shadow-lg text-[16px] font-bold text-[black] py-[2px] px-[9px] rounded-[50%] top-[10px] right-[10px]">
+                                        <i data-id="@product.Id" class="addToWishlist @heartType heart fa-heart heart-icon hover:text-red duration-200"></i>
                                     </span>
                                 </div>
 
-                                <div class="border-t border-border hidden mid:group-hover:block translate-y-[40px] top-[338px] left-0 px-3 py-2 absolute bg-white rounded-b-xl">
-                                    <div class="px-4 ">
-                                        <ul class="list-disc mt-2 px-4">
-                                            <li class="leading-tight text-[13px] text-gray">Best-in-class all-around performance</li>
-                                            <li class="leading-tight text-[13px] text-gray">Confident driving in all weather conditions</li>
-                                            <li class="leading-tight text-[13px] text-gray">Visual Alignment Indicators</li>
-                                        </ul>
+                                <div class="image-desc flex flex-col mt-[15px]">
+                                    <a href=""
+                                       class="img-title text-[14px] font-bold hover:text-red mmid:text-ellipsis mmid:whitespace-nowrap overflow-hidden">
+                                        @product.Name
+                                    </a>
 
-                                        <button class="bg-partdored px-4 py-[8px] w-full rounded-xl text-white font-semibold mt-5 group-hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_70px]">Add to Cart</button>
+                                    <div class="star-rating">
+                                        <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
+                                        <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
+                                        <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
+                                        <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
+                                        <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
+                                        <span class="review text-[12px] font-semibold ml-[10px]">1 review</span>
                                     </div>
-                                </div>
 
-                                <div class="w-full text-center bg-partdored text-white py-2 rounded-xl mt-4 block mid:hidden">
-                                    <a href="" class="font-medium">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+                                    <div class="priceandbasket flex justify-between items-center">
+                                        <div class="price flex items-end  @(product.NewPrice is null ? "" : "gap-3")">
+                                            <span class="old-price line-through text-[#555555] text-[16px] mt-[15px] ">
+                                                @(product.NewPrice is null ? "" : "$" + product.Price)
+                                            </span>
+                                            <span class="new-price text-[#df1616] text-[19px] font-semibold">
+                                                $@(product.NewPrice is null ? product.Price : product.NewPrice)
+                                            </span>
+                                        </div>
+                                    </div>
 
-                </div>
-
-                <div class=" mid:hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_90px] px-4 py-6 hover:rounded-2xl translate-y-[-10px]  hover:bg-white group relative mid:hover:z-50">
-                    <a href="">
-                        <div class="px-[10px] my-auto ">
-                            <div class="img rounded-[10px] relative border-[1px] border-border">
-                                <a href="">
-                                    <img src="https://klbtheme.com/partdo/wp-content/uploads/2022/10/1-37.jpg"
-                                         alt="1000X1000"
-                                         class="rounded-[10px]" />
-                                </a>
-                                <a class="sale absolute bg-red text-[12px] font-bold text-white py-[2px] px-[9px] rounded-[22%] top-[10px] left-[10px]">8%</a>
-                                <span class="heart absolute flex justify-center items-center w-[30px] h-[30px] bg-[#ffffff] border-[1px] border-border shadow-lg text-[16px] font-bold text-[black] py-[2px] px-[9px] rounded-[50%] top-[10px] right-[10px]">
-                                    <i class="fa-regular fa-heart heart-icon"></i>
-                                </span>
-                            </div>
-
-                            <div class="image-desc flex flex-col mt-[15px]">
-                                <a href=""
-                                   class="img-title text-[14px] font-bold hover:text-red mmid:text-ellipsis mmid:whitespace-nowrap overflow-hidden">
-                                    Thinkware F770 Dash Cam Dual Channel Wifi
-                                </a>
-
-                                <div class="star-rating">
-                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
-                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
-                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
-                                    <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
-                                    <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
-                                    <span class="review text-[12px] font-semibold ml-[10px]">1 review</span>
-                                </div>
-
-                                <div class="priceandbasket flex justify-between items-center">
-                                    <div class="price flex items-end gap-3">
-                                        <span class="old-price line-through text-[#555555] text-[16px] mt-[15px]">
-                                            $268.99
-                                        </span>
-                                        <span class="new-price text-[#df1616] text-[19px] font-semibold">
-                                            $249.99
+                                    <div class="stock mt-[8px]">
+                                        <span class="text-[12px] font-semibold text-[#257c25]">
+                                            <i class="fa-solid fa-cube package mr-[5px]"></i> @stockbyString
                                         </span>
                                     </div>
-                                </div>
 
-                                <div class="stock mt-[8px]">
-                                    <span class="text-[12px] font-semibold text-[#257c25]">
-                                        <i class="fa-solid fa-cube package mr-[5px]"></i> In Stock
-                                    </span>
-                                </div>
+                                    <div class="border-t border-border hidden mid:group-hover:block translate-y-[40px] top-[85%] left-0 px-3 py-2 absolute bg-white rounded-b-xl">
+                                        <div class="px-4 ">
+                                            <ul class="list-disc mt-2 px-4">
+                                                <li class="leading-tight text-[13px] text-gray">Best-in-class all-around performance</li>
+                                                <li class="leading-tight text-[13px] text-gray">Confident driving in all weather conditions</li>
+                                                <li class="leading-tight text-[13px] text-gray">Visual Alignment Indicators</li>
+                                            </ul>
 
-                                <div class="border-t border-border hidden mid:group-hover:block translate-y-[40px] top-[338px] left-0 px-3 py-2 absolute bg-white rounded-b-xl">
-                                    <div class="px-4 ">
-                                        <ul class="list-disc mt-2 px-4">
-                                            <li class="leading-tight text-[13px] text-gray">Best-in-class all-around performance</li>
-                                            <li class="leading-tight text-[13px] text-gray">Confident driving in all weather conditions</li>
-                                            <li class="leading-tight text-[13px] text-gray">Visual Alignment Indicators</li>
-                                        </ul>
+                                            <button class="addToCart bg-partdored px-4 py-[8px] w-full rounded-xl text-white font-semibold mt-5 group-hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_70px]" data-id="@product.Id">Add to Cart</button>
+                                        </div>
+                                    </div>
 
-                                        <button class="bg-partdored px-4 py-[8px] w-full rounded-xl text-white font-semibold mt-5 group-hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_70px]">Add to Cart</button>
+                                    <div data-id="@product.Id" class="addToCart w-full text-center bg-partdored text-white py-2 rounded-xl mt-4 block mid:hidden">
+                                        <a href="" class="font-medium">Add to cart</a>
                                     </div>
                                 </div>
-
-                                <div class="w-full text-center bg-partdored text-white py-2 rounded-xl mt-4 block mid:hidden">
-                                    <a href="" class="font-medium">Add to cart</a>
-                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
 
-                </div>
+                    </div>
+                }
 
-                <div class=" mid:hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_90px] px-4 py-6 hover:rounded-2xl translate-y-[-10px]  hover:bg-white group relative mid:hover:z-50">
-                    <a href="">
-                        <div class="px-[10px] my-auto ">
-                            <div class="img rounded-[10px] relative border-[1px] border-border">
-                                <a href="">
-                                    <img src="https://klbtheme.com/partdo/wp-content/uploads/2022/10/1-37.jpg"
-                                         alt="1000X1000"
-                                         class="rounded-[10px]" />
-                                </a>
-                                <a class="sale absolute bg-red text-[12px] font-bold text-white py-[2px] px-[9px] rounded-[22%] top-[10px] left-[10px]">8%</a>
-                                <span class="heart absolute flex justify-center items-center w-[30px] h-[30px] bg-[#ffffff] border-[1px] border-border shadow-lg text-[16px] font-bold text-[black] py-[2px] px-[9px] rounded-[50%] top-[10px] right-[10px]">
-                                    <i class="fa-regular fa-heart heart-icon"></i>
-                                </span>
-                            </div>
-
-                            <div class="image-desc flex flex-col mt-[15px]">
-                                <a href=""
-                                   class="img-title text-[14px] font-bold hover:text-red mmid:text-ellipsis mmid:whitespace-nowrap overflow-hidden">
-                                    Thinkware F770 Dash Cam Dual Channel Wifi
-                                </a>
-
-                                <div class="star-rating">
-                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
-                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
-                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
-                                    <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
-                                    <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
-                                    <span class="review text-[12px] font-semibold ml-[10px]">1 review</span>
-                                </div>
-
-                                <div class="priceandbasket flex justify-between items-center">
-                                    <div class="price flex items-end gap-3">
-                                        <span class="old-price line-through text-[#555555] text-[16px] mt-[15px]">
-                                            $268.99
-                                        </span>
-                                        <span class="new-price text-[#df1616] text-[19px] font-semibold">
-                                            $249.99
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="stock mt-[8px]">
-                                    <span class="text-[12px] font-semibold text-[#257c25]">
-                                        <i class="fa-solid fa-cube package mr-[5px]"></i> In Stock
-                                    </span>
-                                </div>
-
-                                <div class="border-t border-border hidden mid:group-hover:block translate-y-[40px] top-[338px] left-0 px-3 py-2 absolute bg-white rounded-b-xl">
-                                    <div class="px-4 ">
-                                        <ul class="list-disc mt-2 px-4">
-                                            <li class="leading-tight text-[13px] text-gray">Best-in-class all-around performance</li>
-                                            <li class="leading-tight text-[13px] text-gray">Confident driving in all weather conditions</li>
-                                            <li class="leading-tight text-[13px] text-gray">Visual Alignment Indicators</li>
-                                        </ul>
-
-                                        <button class="bg-partdored px-4 py-[8px] w-full rounded-xl text-white font-semibold mt-5 group-hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_70px]">Add to Cart</button>
-                                    </div>
-                                </div>
-
-                                <div class="w-full text-center bg-partdored text-white py-2 rounded-xl mt-4 block mid:hidden">
-                                    <a href="" class="font-medium">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                </div>
-
-                <div class=" mid:hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_90px] px-4 py-6 hover:rounded-2xl translate-y-[-10px]  hover:bg-white group relative mid:hover:z-50">
-                    <a href="">
-                        <div class="px-[10px] my-auto ">
-                            <div class="img rounded-[10px] relative border-[1px] border-border">
-                                <a href="">
-                                    <img src="https://klbtheme.com/partdo/wp-content/uploads/2022/10/1-37.jpg"
-                                         alt="1000X1000"
-                                         class="rounded-[10px]" />
-                                </a>
-                                <a class="sale absolute bg-red text-[12px] font-bold text-white py-[2px] px-[9px] rounded-[22%] top-[10px] left-[10px]">8%</a>
-                                <span class="heart absolute flex justify-center items-center w-[30px] h-[30px] bg-[#ffffff] border-[1px] border-border shadow-lg text-[16px] font-bold text-[black] py-[2px] px-[9px] rounded-[50%] top-[10px] right-[10px]">
-                                    <i class="fa-regular fa-heart heart-icon"></i>
-                                </span>
-                            </div>
-
-                            <div class="image-desc flex flex-col mt-[15px]">
-                                <a href=""
-                                   class="img-title text-[14px] font-bold hover:text-red mmid:text-ellipsis mmid:whitespace-nowrap overflow-hidden">
-                                    Thinkware F770 Dash Cam Dual Channel Wifi
-                                </a>
-
-                                <div class="star-rating">
-                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
-                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
-                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
-                                    <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
-                                    <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
-                                    <span class="review text-[12px] font-semibold ml-[10px]">1 review</span>
-                                </div>
-
-                                <div class="priceandbasket flex justify-between items-center">
-                                    <div class="price flex items-end gap-3">
-                                        <span class="old-price line-through text-[#555555] text-[16px] mt-[15px]">
-                                            $268.99
-                                        </span>
-                                        <span class="new-price text-[#df1616] text-[19px] font-semibold">
-                                            $249.99
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="stock mt-[8px]">
-                                    <span class="text-[12px] font-semibold text-[#257c25]">
-                                        <i class="fa-solid fa-cube package mr-[5px]"></i> In Stock
-                                    </span>
-                                </div>
-
-                                <div class="border-t border-border hidden mid:group-hover:block translate-y-[40px] top-[338px] left-0 px-3 py-2 absolute bg-white rounded-b-xl">
-                                    <div class="px-4 ">
-                                        <ul class="list-disc mt-2 px-4">
-                                            <li class="leading-tight text-[13px] text-gray">Best-in-class all-around performance</li>
-                                            <li class="leading-tight text-[13px] text-gray">Confident driving in all weather conditions</li>
-                                            <li class="leading-tight text-[13px] text-gray">Visual Alignment Indicators</li>
-                                        </ul>
-
-                                        <button class="bg-partdored px-4 py-[8px] w-full rounded-xl text-white font-semibold mt-5 group-hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_70px]">Add to Cart</button>
-                                    </div>
-                                </div>
-
-                                <div class="w-full text-center bg-partdored text-white py-2 rounded-xl mt-4 block mid:hidden">
-                                    <a href="" class="font-medium">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                </div>
-
-                <div class=" mid:hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_90px] px-4 py-6 hover:rounded-2xl translate-y-[-10px]  hover:bg-white group relative mid:hover:z-50">
-                    <a href="">
-                        <div class="px-[10px] my-auto ">
-                            <div class="img rounded-[10px] relative border-[1px] border-border">
-                                <a href="">
-                                    <img src="https://klbtheme.com/partdo/wp-content/uploads/2022/10/1-37.jpg"
-                                         alt="1000X1000"
-                                         class="rounded-[10px]" />
-                                </a>
-                                <a class="sale absolute bg-red text-[12px] font-bold text-white py-[2px] px-[9px] rounded-[22%] top-[10px] left-[10px]">8%</a>
-                                <span class="heart absolute flex justify-center items-center w-[30px] h-[30px] bg-[#ffffff] border-[1px] border-border shadow-lg text-[16px] font-bold text-[black] py-[2px] px-[9px] rounded-[50%] top-[10px] right-[10px]">
-                                    <i class="fa-regular fa-heart heart-icon"></i>
-                                </span>
-                            </div>
-
-                            <div class="image-desc flex flex-col mt-[15px]">
-                                <a href=""
-                                   class="img-title text-[14px] font-bold hover:text-red mmid:text-ellipsis mmid:whitespace-nowrap overflow-hidden">
-                                    Thinkware F770 Dash Cam Dual Channel Wifi
-                                </a>
-
-                                <div class="star-rating">
-                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
-                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
-                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
-                                    <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
-                                    <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
-                                    <span class="review text-[12px] font-semibold ml-[10px]">1 review</span>
-                                </div>
-
-                                <div class="priceandbasket flex justify-between items-center">
-                                    <div class="price flex items-end gap-3">
-                                        <span class="old-price line-through text-[#555555] text-[16px] mt-[15px]">
-                                            $268.99
-                                        </span>
-                                        <span class="new-price text-[#df1616] text-[19px] font-semibold">
-                                            $249.99
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div class="stock mt-[8px]">
-                                    <span class="text-[12px] font-semibold text-[#257c25]">
-                                        <i class="fa-solid fa-cube package mr-[5px]"></i> In Stock
-                                    </span>
-                                </div>
-
-                                <div class="border-t border-border hidden mid:group-hover:block translate-y-[40px] top-[338px] left-0 px-3 py-2 absolute bg-white rounded-b-xl">
-                                    <div class="px-4 ">
-                                        <ul class="list-disc mt-2 px-4">
-                                            <li class="leading-tight text-[13px] text-gray">Best-in-class all-around performance</li>
-                                            <li class="leading-tight text-[13px] text-gray">Confident driving in all weather conditions</li>
-                                            <li class="leading-tight text-[13px] text-gray">Visual Alignment Indicators</li>
-                                        </ul>
-
-                                        <button class="bg-partdored px-4 py-[8px] w-full rounded-xl text-white font-semibold mt-5 group-hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_70px]">Add to Cart</button>
-                                    </div>
-                                </div>
-
-                                <div class="w-full text-center bg-partdored text-white py-2 rounded-xl mt-4 block mid:hidden">
-                                    <a href="" class="font-medium">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                </div>
 
             </div>
         </div>
@@ -984,70 +743,47 @@
         });
     </script>
 
-
-
     <script>
-        // Listen for changes in the checkboxes
-        document.querySelectorAll('input[name="categoryid"]').forEach(function (checkbox) {
-            checkbox.addEventListener('change', function () {
-                var categoryId = this.value;
-                console.log(categoryId)
-                if (this.checked) {
-                    // Send the AJAX request when the checkbox is checked
-                    sendAjaxRequest(categoryId);
-                    document.getElementById('categoryForm').submit(); // Manually submit the form
+        var selectedCategories = []; // Array to store selected category IDs
 
+        // Function to handle checkbox changes
+        function handleCheckboxChange(event) {
+            selectedCategories = []; // Reset the array to avoid duplicates
+
+            // Collect the selected categories
+            document.querySelectorAll('input[name="categoryid"]').forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    selectedCategories.push(checkbox.value);
                 }
-                // Handle the logic for when the checkbox is unchecked
             });
+
+            sendAjaxRequest(selectedCategories);
+        }
+
+        // Attach the event listener using event delegation
+        document.addEventListener('change', function (event) {
+            if (event.target && event.target.name === 'categoryid') {
+                handleCheckboxChange(event);
+            }
+
         });
 
-        function sendAjaxRequest(categoryId) {
+        function sendAjaxRequest(categoryIds) {
+            var categoryIdsString = categoryIds.join(); // Convert the array of IDs to a comma-separated string
             $.ajax({
                 type: 'GET',
                 url: '/shop/index',
-                data: { categoryId: categoryId },
+                data: { categoryIds: categoryIds }, // Send the array of selected category IDs
+                traditional: true, // Ensure that the array is serialized correctly
                 success: function (data) {
-                    // Handle the successful response here
+                    $('html').html(data); // Update the product list container with the filtered products
                 },
                 error: function (error) {
-                    // Handle the error response here
+                    console.error(error); // Handle the error response here
                 }
             });
         }
     </script>
-
-    <script>
-        // listen for changes in the checkboxes
-        document.queryselectorall('input[name="categoryid"]').foreach(function (checkbox) {
-            checkbox.addeventlistener('change', function () {
-                var categoryıd = this.value;
-                console.log(categoryıd)
-                if (this.checked) {
-                    // send the ajax request when the checkbox is checked
-                    sendajaxrequest(categoryıd);
-                    document.getelementbyıd('categoryform').submit(); // manually submit the form
-
-                }
-                // handle the logic for when the checkbox is unchecked
-            });
-        });
-
-        function sendajaxrequest(categoryıd) {
-            $.ajax({
-                type: 'get',
-                url: '/shop/index',
-                data: { categoryıd: categoryıd },
-                success: function (data) {
-                    // handle the successful response here
-                },
-                error: function (error) {
-                    // handle the error response here
-                }
-            });
-        }
-    </script> 
-
 
 }
 

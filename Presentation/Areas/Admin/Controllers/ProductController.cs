@@ -1,12 +1,16 @@
 ﻿
 using Business.Services.Abstract.Admin;
 using Business.ViewModels.Admin.Product;
+using Common.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Presentation.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Superadmin, Admin, HR")]
+
     public class ProductController : Controller
     {
         private readonly IProductService _productService;

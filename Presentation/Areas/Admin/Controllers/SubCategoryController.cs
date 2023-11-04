@@ -1,10 +1,13 @@
 ﻿using Business.Services.Abstract.Admin;
 using Business.ViewModels.Admin.SubCategory;
+using Common.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Superadmin, Admin, HR")]
     public class SubCategoryController : Controller
     {
         private readonly ISubCategoryService _subCategoryService;

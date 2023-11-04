@@ -16,5 +16,6 @@ namespace Business.Services.Abstract.Users
         Task<bool> IncreaseAsync(ClaimsPrincipal user, int id);
         Task<bool> DecreaseAsync(ClaimsPrincipal user, int id);
         Task<bool> DeleteAsync(ClaimsPrincipal user, int id);
+        Task<bool> DeleteAllAsync(ClaimsPrincipal user);
     }
 }

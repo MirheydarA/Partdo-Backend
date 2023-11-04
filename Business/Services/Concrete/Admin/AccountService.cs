@@ -54,5 +54,10 @@ namespace Business.Services.Concrete.Admin
 
             return true;
         }
+        public async Task<bool> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return true;
+        }
     }
 }

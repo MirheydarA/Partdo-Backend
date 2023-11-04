@@ -2,6 +2,7 @@ using Business.Services.Abstract.Admin;
 using Business.Services.Abstract.Users;
 using Business.Services.Concrete.Admin;
 using Business.Services.Concrete.Users;
+using Business.Services.Utilities;
 using Business.Services.Utilities.Abstract;
 using Business.Services.Utilities.Concrete;
 using Common.Entities;
@@ -31,10 +32,19 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     options.Password.RequireUppercase = false;
     options.Password.RequiredUniqueChars = 0;
     options.User.RequireUniqueEmail = true;
+    options.SignIn.RequireConfirmedEmail = true;
 })
-    .AddEntityFrameworkStores<AppDbContext>();
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+
+
+/////////////////////Email Confirmation/////////////////////
+var confirmation = builder.Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
+builder.Services.AddSingleton(confirmation);
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
+///////////////////////////////////////////////////////////
 
 
 
@@ -59,6 +69,7 @@ builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.AddScoped<IBasketProductRepository, BasketProductRepository>();
 builder.Services.AddScoped<IWishlistRepository, WishlistRepository>();
 builder.Services.AddScoped<IWishlistProductRepository, WishlistProductRepository>();
+builder.Services.AddScoped<IMessageRepsository, MessageRepository>();
 ////////////////////////////////////////////////////////
 
 
@@ -71,6 +82,7 @@ builder.Services.AddScoped<Business.Services.Abstract.Admin.IBlogService, Busine
 builder.Services.AddScoped<IOnSale_1Service, OnSale_1Service>();
 builder.Services.AddScoped<IOnSale_2Service, OnSale_2Service>();
 builder.Services.AddScoped<Business.Services.Abstract.Admin.IAccountService, Business.Services.Concrete.Admin.AccountService>();
+builder.Services.AddScoped<Business.Services.Abstract.Admin.IMessageService, Business.Services.Concrete.Admin.MessageService>();
 ////////////////////////////////////////////////////////
 
 
@@ -82,6 +94,7 @@ builder.Services.AddScoped<Business.Services.Abstract.Users.IAccountService, Bus
 builder.Services.AddScoped<IBasketService, BasketService>();
 builder.Services.AddScoped<IWishlistService, WishlistService>();
 builder.Services.AddScoped<IShopService, ShopService>();
+builder.Services.AddScoped<Business.Services.Abstract.Users.IMessageService, Business.Services.Concrete.Users.MessageService>();
 ////////////////////////////////////////////////////////
 
 
@@ -94,12 +107,13 @@ builder.Services.AddScoped<IPaginator, Paginator>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
+    
     options.Events.OnRedirectToLogin = options.Events.OnRedirectToAccessDenied = context =>
     {
         if (context.HttpContext.Request.Path.Value.StartsWith("/admin") || context.HttpContext.Request.Path.Value.StartsWith("/Admin"))
         {
             var redirectPath = new Uri(context.RedirectUri);
-            context.Response.Redirect("/admin/account/login" + redirectPath.Query);
+            context.Response.Redirect("/admin/adminaccount/login" + redirectPath.Query);
         }
         else
         {

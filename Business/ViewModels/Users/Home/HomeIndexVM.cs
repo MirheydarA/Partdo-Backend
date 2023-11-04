@@ -18,6 +18,7 @@ namespace Business.ViewModels.Users.Home
         public List<Common.Entities.Blog> Blogs { get; set; }
         public List<Product> AllProducts { get; set; }
         public List<WishlistProduct> WishlistProducts { get; set; }
+        public List<BasketProduct> BasketProducts { get; set; }
         //public Category Category { get; set; }
 
 

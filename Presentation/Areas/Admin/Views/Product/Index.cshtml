@@ -6,9 +6,9 @@
 <a class="btn btn-info mb-3" asp-action="Create" asp-controller="product">Create</a>
 
 <form id="form">
-    <input type="checkbox" asp-for="IsChecked"  onchange="this.form.submit()"  />
-    @*<input type="checkbox" asp-for="IsChecked" value="false"> Include Checkbox Value
-    <button type="submit">Submit</button>*@
+    <input type="checkbox" asp-for="IsChecked"  onchange="this.form.submit()" style="margin-left: 10px" />
+   
+    <label asp-for="IsChecked">Show Deleted Products</label>
 </form>
 
     <table class="table">

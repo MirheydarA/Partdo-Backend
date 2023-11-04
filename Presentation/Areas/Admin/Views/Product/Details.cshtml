@@ -3,15 +3,19 @@
 <div class="px-4">
     @if (Model is not null)
     {
-        <h3>Special Product</h3>
+        <div class="d-flex align-items-center gap-4">
+        <h3>Special Product:</h3>
         <span>
             @Model.IsSpecial
         </span>
+        </div>
 
-        <h3>Main Product</h3>
-        <span>
-            @Model.IsSpecial
-        </span>
+        <div class="d-flex align-items-center gap-4">
+            <h3>Main Product:</h3>
+            <span>
+                @Model.IsSpecial
+            </span>
+        </div>
 
         <h3>Main Photo</h3>
         <span>

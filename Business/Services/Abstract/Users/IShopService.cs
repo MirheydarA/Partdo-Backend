@@ -11,5 +11,6 @@ namespace Business.Services.Abstract.Users
     public interface IShopService
     {
         Task<ShopIndexVM> IndexGetAllAsync(ShopIndexVM model);
+        Task<ShopDetailsVM> DetailsAsync(int id);
     }
 }

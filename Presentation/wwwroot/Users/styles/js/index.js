@@ -42,37 +42,37 @@ jQuery(function ($) {
     
 
       // <!-- tab-menu slider 
- jQuery("#carousel").owlCarousel({
-  autoplay: false,
-  rewind: true, /* use rewind if you don't want loop */
-  margin: 20,
-   /*
-  animateOut: 'fadeOut',
-  animateIn: 'fadeIn',
-  */
-  responsiveClass: true,
-  autoHeight: true,
-  autoplayTimeout: 7000,
-  smartSpeed: 800,
-  nav: true,
-  responsive: {
-    0: {
-      items: 1
-    },
+// jQuery("#carousel").owlCarousel({
+//  autoplay: false,
+//  rewind: true, /* use rewind if you don't want loop */
+//  margin: 20,
+//   /*
+//  animateOut: 'fadeOut',
+//  animateIn: 'fadeIn',
+//  */
+//  responsiveClass: true,
+//  autoHeight: true,
+//  autoplayTimeout: 7000,
+//  smartSpeed: 800,
+//  nav: true,
+//  responsive: {
+//    0: {
+//      items: 1
+//    },
 
-    600: {
-      items: 3
-    },
+//    600: {
+//      items: 3
+//    },
 
-    1024: {
-      items: 3
-    },
+//    1024: {
+//      items: 3
+//    },
 
-    1366: {
-      items: 5
-    }
-  }
-});
+//    1366: {
+//      items: 5
+//    }
+//  }
+//});
 
       //  hamburger-menu 
         function closeNav() {
@@ -151,33 +151,33 @@ jQuery(function ($) {
 
 
 
-//Modal//////////////////////////////////////////////////////
+/////////////////////////Modal/////////////////////////////
 
 
-    // Get the modal and buttons
-    var modal = document.getElementById("myModal");
-    var openBtn = document.getElementById("openModal");
-    var closeBtn = document.getElementById("closeModal");
+    //// Get the modal and buttons
+    //var modal = document.getElementById("myModal");
+    //var openBtn = document.getElementById("openModal");
+    //var closeBtn = document.getElementById("closeModal");
 
-    // Open the modal when the "Open Modal" button is clicked
-    openBtn.addEventListener("click", function () {
-        modal.classList.remove("hidden")
-        modal.classList.add("block")
-    modal.classList.add("opacity-100")
-    });
+    //// Open the modal when the "Open Modal" button is clicked
+    //openBtn.addEventListener("click", function () {
+    //    modal.classList.remove("hidden")
+    //    modal.classList.add("block")
+    //modal.classList.add("opacity-100")
+    //});
 
-    // Close the modal when the "Close Modal" button is clicked
-    closeBtn.addEventListener("click", function () {
-        modal.classList.remove("block")
-        modal.classList.add("hidden")
+    //// Close the modal when the "Close Modal" button is clicked
+    //closeBtn.addEventListener("click", function () {
+    //    modal.classList.remove("block")
+    //    modal.classList.add("hidden")
 
-    });
+    //});
 
-    // Close the modal when the overlay is clicked
-    modal.addEventListener("click", function (event) {
-        if (event.target === modal) {
-        modal.classList.remove("block")
-            modal.classList.add("hidden")
-        }
-    });
+    //// Close the modal when the overlay is clicked
+    //modal.addEventListener("click", function (event) {
+    //    if (event.target === modal) {
+    //    modal.classList.remove("block")
+    //        modal.classList.add("hidden")
+    //    }
+    //});
 

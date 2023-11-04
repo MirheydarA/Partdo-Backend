@@ -13,15 +13,22 @@ namespace Presentation.Controllers
     public class WishlistController : Controller
     {
         private readonly IWishlistService _wishlistService;
+        private readonly IHomeService _homeService;
 
-        public WishlistController(IWishlistService wishlistService)
+        public WishlistController(IWishlistService wishlistService, IHomeService homeService)
         {
+
+
             _wishlistService = wishlistService;
+            _homeService = homeService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            var listBasketProducts = await _homeService.GetBasketProductsAsync(User);
+            ViewBag.ListBasketProducts = listBasketProducts;
+
             var x = await _wishlistService.IndexGetWishlist(User);
             return View(x);
         }

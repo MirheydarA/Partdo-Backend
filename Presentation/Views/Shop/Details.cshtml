@@ -1,0 +1,1027 @@
+﻿@{
+    Layout = null;
+}
+@using Business.Services.Utilities;
+@using Business.ViewModels.Users.Shop
+@model ShopDetailsVM
+
+@{
+    var productStockType = Model.StockType;
+    string stockbyString = EnumHelper.GetEnumDisplayName(productStockType);
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product-Partdo</title>
+    <link rel="stylesheet" href="~/Users/dist/output.css" />
+    <link rel="stylesheet" href="~/Users/styles//css/shop.css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer" />
+
+    <!-- Multi Range Slider -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
+
+    <!-- Error Toatr -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+</head>
+
+<body>
+    <!-- header start -->
+    <header class="hidden xl:block">
+        <div class="header py-3 container mx-auto px-4">
+            <div class="flex justify-between items-center">
+                <div class="mr-12">
+                    <ul class="flex gap-[15px] text-sm">
+                        <li>
+                            <a asp-action="index" asp-controller="aboutus"
+                               class="hover:text-red transition duration-300 ease-in-out">About Us</a>
+                        </li>
+                        <li>
+                            <a asp-action="login" asp-controller="account"
+                               class="hover:text-red transition duration-300 ease-in-out">My Account</a>
+                        </li>
+                        <li>
+                            <a asp-action="index" asp-controller="ordertracking"
+                               class="hover:text-red transition duration-300 ease-in-out">Order Tracking</a>
+                        </li>
+                        <li>
+                            <a asp-action="index" asp-controller="Wishlist"
+                               class="hover:text-red transition duration-300 ease-in-out">Wishlist</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="flex items-center ml-[80px]">
+                    <div class="dropdown group relative inline-block" id="myDropdown">
+                        <span class="text-xs cursor-pointer hover:text-[red] transition duration-300 ease-in-out">
+                            English <i class="fa-solid fa-caret-down ml-1"></i>
+                        </span>
+                        <div class="dropdown-content hidden absolute left-[-16px] top-[22px] bg-[#ffffff] group-hover:block text-xs py-1 px-2 pt-6 group-hover:flex flex-col rounded-lg shadow-lg">
+                            <a href="#"
+                               class="hover:bg-[#ffddddd5] px-5 py-1 rounded-lg transition duration-300 ease-in-out">English</a>
+                            <a href="#"
+                               class="mt-1 hover:bg-[#ffddddd5] px-5 py-1 rounded-lg transition duration-300 ease-in-out">Spanish</a>
+                            <a href="#"
+                               class="mt-1 hover:bg-[#ffddddd5] px-5 py-1 rounded-lg transition duration-300 ease-in-out">German</a>
+                        </div>
+                    </div>
+
+                    <div class="dropdown group relative inline-block ml-10"
+                         id="myDropdown">
+                        <span class="text-xs cursor-pointer hover:text-[red] transition duration-300 ease-in-out">
+                            USD <i class="fa-solid fa-caret-down ml-1"></i>
+                        </span>
+                        <div class="dropdown-content hidden absolute left-[-14px] top-[22px] bg-[#ffffff] group-hover:block text-xs py-1 px-2 pt-6 group-hover:flex flex-col rounded-lg shadow-lg">
+                            <a href="#"
+                               class="hover:bg-[#ffddddd5] px-5 py-1 rounded-lg transition duration-300 ease-in-out">USD</a>
+                            <a href="#"
+                               class="mt-1 hover:bg-[#ffddddd5] px-5 py-1 rounded-lg transition duration-300 ease-in-out">INR</a>
+                            <a href="#"
+                               class="mt-1 hover:bg-[#ffddddd5] px-5 py-1 rounded-lg transition duration-300 ease-in-out">GBP</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="text-[#e1e1e1]" />
+
+        <div class="header-bottom flex justify-around container mx-auto py-[20px]">
+            <div class="logo w-[200px]">
+                <a asp-action="index" asp-controller="home">
+                    <img src="~/Users/assets/images/PartDo-Logo.png" alt="" />
+                </a>
+            </div>
+
+            <a asp-action="index" asp-controller="home">
+                <i class="fa-solid fa-warehouse text-[20px] bg-[#ededed] flex items-center p-[13px] rounded-2xl"></i>
+            </a>
+
+            <form method="get" asp-action="index" asp-controller="shop" id="myForm" class="w-[50%]">
+                <div class="relative w-[100%] flex">
+                    <span class="absolute inset-y-0 flex items-center right-4">
+                        <i class="fa-solid fa-magnifying-glass text-[22px]"></i>
+                    </span>
+
+
+                    <input class="placeholder placeholder:text-slate-400 block bg-white w-full border border-[#cccccc] rounded-xl py-2 pl-4 pr-3 shadow-sm focus:outline-none focus:border-red focus:ring-red focus:ring-1 sm:text-sm"
+                           placeholder="Search for products..."
+                           type="text"
+                           id="myInput" />
+                </div>
+            </form>
+
+            <div class="flex flex-col relative group">
+                <div class="flex flex-col justify-center cursor-pointer">
+                    <span class="font-semibold text-[14px]">My Account</span>
+                    <span class="text-[12px]">Hello, Sign In</span>
+                </div>
+
+                <div class="absolute w-[260px] text-center top-10 right-[-10px] hidden group-hover:block rounded-lg shadow-md p-2 z-10 bg-white">
+                    <p class="mb-4">Sign up now and enjoy discounted shopping!</p>
+                    <a href=""
+                       class="bg-[#47cee2] px-[90px] py-[7px] rounded-lg text-[white] font-semibold hover:bg-[#4cb7c8]">Log In</a>
+                    <div class="mt-[15px]">
+                        New Costumer? <a href="" class="underline">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-bottom-right flex items-center">
+                <a href="" class="text-[25px] mr-7 relative">
+                    <i class="fa-regular fa-heart icons"></i>
+                    <span class="bg-red rounded-[50%] absolute w-[17px] h-[17px] text-[15px] right-[-9px] top-0 flex items-center justify-center text-[white] font-semibold">0</span>
+                </a>
+
+                <a href="" class="text-[25px] mr-6 relative">
+                    <i class="fa-solid fa-cart-shopping icons"></i>
+                    <span class="bg-red rounded-[50%] absolute w-[17px] h-[17px] text-[15px] right-[-9px] top-0 flex items-center justify-center text-[white] font-semibold">0</span>
+                </a>
+
+                <div class="flex flex-col">
+                    <span class="text-[11px]">0 items</span>
+                    <span class="font-semibold">$0.00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="drop-shadow-xl"></div> -->
+        <hr class="text-gray drop-shadow-2xl">
+    </header>
+    <!-- header ends -->
+    <!-- Responsive Header Start-->
+    <header>
+        <div class="responsive-header block xl:hidden w-full mx-auto fixed top-0 bg-white z-20 border-b">
+            <div class="header-content flex justify-between px-[15px] py-[10px] container mx-auto">
+                <div class="hamburger-menu">
+                    <div id="mySidenav"
+                         class="sidenav h-full fixed bg-[#ffffff] overflow-x-hidden duration-300 top-0 left-0 w-0">
+                        <div class="menu-header flex justify-between items-center py-[15px] px-[24px]">
+                            <div class="logo w-[147px]">
+                                <img class="w-full"
+                                     src="https://klbtheme.com/partdo/wp-content/uploads/2022/10/logo-dark.png"
+                                     alt="" />
+                            </div>
+                            <a href="javascript:void(0)"
+                               class="closebtn flex items-center justify-center rounded-[20%] font-semibold text-[36px]"
+                               onclick="closeNav()">&times;</a>
+                        </div>
+
+                        <div class="menu-content py-10px px-[20px]">
+                            <div class="menu-content-header mt-[10px">
+                                <span class="text-[#7e7e7e] text-[13px]">MAIN MENU</span>
+                            </div>
+
+                            <div class="lists">
+                                <ul class="mt-[10px]">
+                                    <li class="border-b-[1px] border-[#ededed] pb-[10px] pt-[5px]">
+                                        <a asp-action="index" asp-controller="home" class="font-semibold">Home</a>
+                                    </li>
+                                    <li class="border-b-[1px] border-[#ededed] pb-[10px] pt-[5px]">
+                                        <a asp-action="index" asp-controller="shop" class="font-semibold">Shop</a>
+                                    </li>
+                                    <li class="border-b-[1px] border-[#ededed] pb-[10px] pt-[5px]">
+                                        <a href="" class="font-semibold">Tires & Wheels</a>
+                                    </li>
+                                    <li class="border-b-[1px] border-[#ededed] pb-[10px] pt-[5px]">
+                                        <a href="" class="font-semibold">Interior Accessories</a>
+                                    </li>
+                                    <li class="border-b-[1px] border-[#ededed] pb-[10px] pt-[5px]">
+                                        <a asp-action="index" asp-controller="blog" class="font-semibold">Blog</a>
+                                    </li>
+                                    <li class="pb-[10px] mt-[5px]">
+                                        <a href="" class="font-semibold">Contact</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="list-header mt-[20px]">
+                                <span class="text-[#7e7e7e] text-[13px]">CATEGORY MENU</span>
+                            </div>
+
+                            <div class="lists">
+                                <ul>
+                                    <li class="border-b-[1px] border-[#ededed] pb-[10px] pt-[5px]">
+                                        <a href="" class="font-semibold">Headlights & Lighting</a>
+                                    </li>
+                                    <li class="border-b-[1px] border-[#ededed] pb-[10px] pt-[5px]">
+                                        <a href="" class="font-semibold">Interiror Accessories</a>
+                                    </li>
+                                    <li class="border-b-[1px] border-[#ededed] pb-[10px] pt-[5px]">
+                                        <a href="" class="font-semibold">Tires & Wheels</a>
+                                    </li>
+                                    <li class="border-b-[1px] border-[#ededed] pb-[10px] pt-[5px]">
+                                        <a href="" class="font-semibold">Tools & Equipment</a>
+                                    </li>
+                                    <li class="border-b-[1px] border-[#ededed] pb-[10px] pt-[5px]">
+                                        <a href="" class="font-semibold">Auto Safety & Security</a>
+                                    </li>
+                                    <li class="border-b-[1px] border-[#ededed] pb-[10px] pt-[5px]">
+                                        <a href="" class="font-semibold">Garage Tools</a>
+                                    </li>
+                                    <li class="border-b-[1px] border-[#ededed] pb-[10px] pt-[5px]">
+                                        <a href="" class="font-semibold">Original Battery Tools</a>
+                                    </li>
+                                    <li class="border-b-[1px] border-[#ededed] pb-[10px] pt-[5px]">
+                                        <a href="" class="font-semibold">Phone Displays</a>
+                                    </li>
+                                    <li class="border-b-[1px] border-[#ededed] pb-[10px] pt-[5px]">
+                                        <a href="" class="font-semibold">Battery and hesives</a>
+                                    </li>
+                                    <li class="border-b-[1px] border-[#ededed] pb-[10px] pt-[5px]">
+                                        <a href="" class="font-semibold">Partdo Best Seller</a>
+                                    </li>
+                                    <li class="border-b-[1px] border-[#ededed] pb-[10px] pt-[5px]">
+                                        <a href="" class="font-semibold">Top 100 Offers on Sale</a>
+                                    </li>
+
+                                    <div class="new-arrivals flex justify-between py-[10px] pr-[10px]">
+                                        <span class="arrival text-[black] tracking-wide font-semibold">New Arrivals</span>
+                                        <span class="new bg-[#67d5e8] text-[white] font-bold rounded-[12px] py-[2px] px-[12px] text-[12px] flex items-center">NEW</span>
+                                    </div>
+                                </ul>
+                            </div>
+
+                            <div class="contact-details mt-[30px]">
+                                <div class="list-header mb-[10px]">
+                                    <span class="text-[#7e7e7e] text-[13px] font-semibold">CONTACT DETAILS</span>
+                                </div>
+
+                                <div class="contact-item">
+                                    <div class="contact-detail text-[18px] font-bold">
+                                        <i class="fa-solid fa-square-phone mr-[5px]"></i>
+                                        <span class="number text-[15px]">555-555-5555</span>
+                                    </div>
+                                    <div class="contact-desc">
+                                        <span class="text-[12px] text-gray">You can call anytime from 9 am to 5 pm.</span>
+                                    </div>
+                                </div>
+
+                                <div class="contact-item mt-[20px]">
+                                    <div class="contact-detail text-[18px] font-bold">
+                                        <i class="fa-solid fa-envelope mr-[5px]"></i>
+                                        <span class="number text-[15px]">info@partdotheme.com</span>
+                                    </div>
+                                    <div class="contact-desc">
+                                        <span class="text-[12px] text-gray">
+                                            The e-mail you sent will be returned as soon
+                                            aspossible.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="menu-bottom">
+                                <p class="mt-[50px] text-[13px]">
+                                    Copyright 2023 © Partdo WordPress Theme. All right reserved.
+                                    Powered by KLBTheme.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span style="font-size: 30px; cursor: pointer" onclick="openNav()">&#9776;</span>
+                </div>
+
+                <div class="logo w-[130px] lg:w-[157px] flex items-center">
+                    <img src="https://klbtheme.com/partdo/wp-content/uploads/2022/10/logo-dark.png"
+                         alt=""
+                         class="" />
+                </div>
+
+                <div class="basket-icon flex items-center">
+                    <i class="fa-solid fa-cart-shopping bskt-icon text-[23px]"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Responsive Header Ends -->
+    <!-- Main Starts -->
+
+    <div class="sm:container mx-auto mt-[106px] xl:mt-0 px-3">
+        <section>
+            <div class="mid:grid mid:grid-cols-2 gap-20 mt-10">
+
+                <div>
+
+                    <div id="container" class="overflow-hidden relative border border-border rounded-xl">
+                        <img src="~/Users/assets/images/@Model.MainPhoto" id="hover-img" class=" object-cover origin-center w-full" alt="Image Alt" />
+                        @if (Model.Status is not null)
+                        {
+                            <span class="absolute top-3 left-3 text-[11px] bg-[#ff6f00] text-white px-2 py-[2px] rounded-md font-bold">@Model.Status</span>
+                        }
+                    </div>
+
+                    <div class="grid grid-cols-4 sm:flex gap-3 ">
+                        @foreach (var photo in Model.Photos)
+                        {
+                            <div class="mt-2">
+                                <div class="sm:w-[98px] sm:h-[98px] border border-border rounded-xl active cursor-pointer">
+                                    <img src="~/Users/assets/images/@photo.Name" alt="" class="thumbnail rounded-xl ">
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+
+                <div class="">
+                    <h1 class="sm:text-[40px] text-[25px] font-semibold leading-tight mt-5 mid:mt-0">
+                        @Model.Name
+                    </h1>
+
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center mt-5">
+                        <div class="flex ">
+                            <div class="star-rating text-[12px] text-[#e1e1e1] border-r border-border pr-3">
+                                <span class="fa fa-star star-icon text-yellow-400"></span>
+                                <span class="fa fa-star star-icon text-yellow-400"></span>
+                                <span class="fa fa-star star-icon text-yellow-400"></span>
+                                <span class="fa fa-star star-icon text-yellow-400"></span>
+                                <span class="fa fa-star star-icon text-yellow-400"></span>
+                                <span class="review text-[13px] font-semibold ml-[10px] text-black">1 customer review</span>
+                            </div>
+
+                            <div class="flex items-center">
+                                <span class="text-gray ml-3 font-semibold text-[13px]">SKU: AE3KGO9T</span>
+                            </div>
+                        </div>
+
+                        <div class="stock bg-green-100 px-3 py-[2px] rounded-md sm:ml-5 mt-3 sm:mt-0">
+                            <span class="text-green-900 text-[14px]"> <i class="fa-solid fa-cube package taxt-[12px] mr-2"></i> @stockbyString</span>
+                        </div>
+                    </div>
+
+                    <div class="price flex items-end">
+                        <span class="old-price line-through text-[#787878] text-[24px] mr-3">
+                            @(Model.NewPrice is null ? "" : "$" + Model.Price)
+                        </span>
+                        <span class="new-price text-red text-[30px] font-medium mt-[5px]">
+                            $@(Model.NewPrice is null ? Model.Price : Model.NewPrice)
+                        </span>
+                    </div>
+
+                    <div class="mt-4  ">
+                        <ul class="list-disc text-gray text-[13px] ml-5">
+                            <li>Best-in-class all-around performance</li>
+                            <li>Confident driving in all weather conditions</li>
+                            <li>Visual Alignment Indicators</li>
+                        </ul>
+                    </div>
+
+                    <div class="lg:flex items-center mt-5 border-t border-border pt-5 hidden">
+                        @*<div class="px-2 py-1 border border-border rounded-xl flex justify-between items-center w-[100px] h-[48px] mr-3">
+                        <i class="fa-solid fa-minus text-[14px]"></i>
+                        <input class="w-8 h-5 rounded-md outline-none text-center flex items-center"
+                        value="1"
+                        type="text" />
+                        <i class="fa-solid fa-plus text-[14px]"></i>
+                        </div>*@
+
+                        <button class="flex items-center bg-[#0dbe8c] px-7 py-3 rounded-xl text-white gap-3 font-semibold addToCart" data-id="@Model.Id">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="16"
+                                 height="16"
+                                 fill="currentColor"
+                                 class="bi bi-cart3"
+                                 viewBox="0 0 16 16">
+                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                            </svg>
+                            Add to Cart
+                        </button>
+                    </div>
+
+                    <div class="flex items-center justify-between mt-3">
+                        <p class="text-[13px]">
+                            Did you like this product? Add to favorites now and follow the
+                            product.
+                        </p>
+
+                        <button class="border border-border px-2 py-[6px] rounded-xl hover:bg-[#ffe1e1] hover:text-red duration-300">
+                            <i class="fa-solid fa-heart"></i>
+                        </button>
+                    </div>
+
+                    <div class="border-b border-border pb-7">
+                        <div class="flex flex-col sm:flex-row">
+                            <div>
+                                <img class="rounded-full w-[62px] mr-6"
+                                     src="https://klbtheme.com/partdo/wp-content/uploads/2022/10/avatar-04.jpg"
+                                     alt="" />
+                            </div>
+                            <div>
+                                <span class="text-[13px] text-gray">Have a Question? Ask a Specialist</span>
+
+                                <div>
+                                    <span class="text-[18px] font-medium">(+800) 1234 5678 90</span>
+                                    <a class="text-[14px] text-[#00c7e6] ml-3 font-medium"
+                                       href="">Start Live Chat</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-7 mid:grid mid:grid-cols-2 flex flex-col gap-5">
+                            <div class="flex items-center gap-4">
+                                <div class="border px-3 py-[6px] border-border rounded-full">
+                                    <i class="fa-solid fa-dollar-sign  h-full text-[18px]"></i>
+
+                                </div>
+                                <div>
+                                    <h5 class="text-[13px] font-bold">Low Prices</h5>
+                                    <span class="text-[12px] text-[gray]">Price match guarantee</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-4">
+                                <div class="border px-3 py-[6px] border-border rounded-full">
+                                    <i class="fa-solid fa-check  h-full text-[18px]"></i>
+
+                                </div>
+                                <div>
+                                    <h5 class="text-[13px] font-bold">Guaranteed Fitment</h5>
+                                    <span class="text-[12px] text-[gray]">Always the correct part</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-4">
+                                <div class="border px-[10px] py-[6px] border-border rounded-full">
+                                    <i class="fa-solid fa-headphones  h-full text-[18px]"></i>
+
+                                </div>
+                                <div>
+                                    <h5 class="text-[13px] font-bold">In-House Experts</h5>
+                                    <span class="text-[12px] text-[gray]">We know our products</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-4">
+                                <div class="border px-[10px] py-[6px] border-border rounded-full">
+                                    <i class="fa-solid fa-share h-full text-[18px]"></i>
+
+                                </div>
+                                <div>
+                                    <h5 class="text-[13px] font-bold">Easy Returns</h5>
+                                    <span class="text-[12px] text-[gray]">Quick & Hassle Free</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <div class="text-[13px] flex">
+                            <p class="text-gray">Category:</p>
+                            <span class="ml-2">@Model.Category</span>
+                        </div>
+
+                        <div class="flex gap-3 mt-8">
+                            <a href=""><i class="fa-brands fa-facebook-f bg-[#205dc0] text-white py-2 px-3 rounded-full text-[18px]"></i></a>
+                            <a href=""><i class="fa-brands fa-twitter bg-[#1ba0ff] text-white p-2 rounded-full text-[18px]"></i></a>
+                            <a href=""><i class="fa-brands fa-pinterest bg-[#c60000] text-white p-2 rounded-full text-[18px]"></i></a>
+                            <a href=""><i class="fa-brands fa-linkedin bg-[#0063dc] text-white p-2 rounded-full text-[18px]"></i></a>
+                            <a href=""><i class="fa-brands fa-whatsapp bg-[#00d83a] text-white p-2 rounded-full text-[18px]"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="mt-10">
+                <div>
+                    <div class="pb-5 border-b border-border">
+                        <a href="" id="desc" class="text-[19px] font-medium">Description</a>
+                        <a href="" id="review" class="text-[19px] text-gray font-medium ml-4">Reviews (1)</a>
+                    </div>
+
+                    <div class="mt-4">
+                        <div id="desc-part" class="desc-part">
+                            @Model.Description
+                        </div>
+
+                        <div id="rewiev-part" class="rewiev-part hidden">
+                            <div class="text-[18px] font-medium">
+                                <h2>1 review for Technaxx car Alarm with Charging Function</h2>
+                            </div>
+
+                            <div class="flex mt-4 items-start">
+                                <div class="mid:mr-[20px] mr-5 ">
+                                    <img src="https://secure.gravatar.com/avatar/dd28514c9a8cfba334e05f21703be28e?s=96&d=mm&r=g" alt="" class="rounded-full">
+                                </div>
+                                <div class="comment ">
+                                    <div class="star-rating">
+                                        <span class="fa fa-star checked star-icon text-[10px]  text-[#ffb62f]"></span>
+                                        <span class="fa fa-star checked star-icon text-[10px] text-[#ffb62f]"></span>
+                                        <span class="fa fa-star checked star-icon text-[10px]  text-[#ffb62f]"></span>
+                                        <span class="fa fa-star star-icon text-[10px]  text-[#ffb62f] "></span>
+                                        <span class="fa fa-star star-icon text-[10px] text-[#ffb62f]"></span>
+                                    </div>
+
+                                    <div>
+                                        <span class="font-semibold text-[16px]">admin</span>
+                                        <span class="text-[12px] ml-[15px] text-[#a7a7a7]">November 4, 2022</span>
+                                    </div>
+
+                                    <p class="text-[15px] mb-[16px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
+                                </div>
+                            </div>
+
+                            <div class="ReplyComment pt-[30px] ">
+                                <h3 class="text-[18px] border-b border-border pb-3">Add a review</h3>
+                                <p class="text-[16px] my-[16px]">Your email address will not be published. Required fields are marked *</p>
+
+                                <form action="">
+                                    <div class="flex flex-col">
+                                        <label for="" class="text-[13px]">Your rating *</label>
+                                        <div class="stars ">
+                                            <i class="fa-solid fa-star duration-200 text-[#dbdbdb]"></i>
+                                            <i class="fa-solid fa-star duration-200 text-[#dbdbdb]"></i>
+                                            <i class="fa-solid fa-star duration-200 text-[#dbdbdb]"></i>
+                                            <i class="fa-solid fa-star duration-200 text-[#dbdbdb]"></i>
+                                            <i class="fa-solid fa-star duration-200 text-[#dbdbdb]"></i>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="flex flex-col mb-[16px] mt-3">
+                                        <label class="text-[13px]" for="">Your review  *</label>
+                                        <textarea name="" id="" cols="30" rows="5" class="border min-h-[150px] border-[#c6c6c6] rounded-xl py-[12px] px-[15px] outline-none focus:shadow-black"></textarea>
+                                    </div>
+
+                                    <div class="flex flex-col">
+                                        <label for="" class="text-[13px]">Name *</label>
+                                        <input type="text" class="border border-[#c6c6c6] rounded-xl h-[42px] px-3">
+                                    </div>
+
+                                    <div class="flex flex-col mt-4">
+                                        <label for="" class="text-[13px]">Email *</label>
+                                        <input type="text" class="border border-[#c6c6c6] rounded-xl h-[42px] px-3">
+                                    </div>
+
+
+
+                                    <div class="mt-4">
+                                        <input type="checkbox" class="mr-2" name="" id="">
+                                        <label class="text-[13px]" for="">Save my name, email, and website in this browser for the next time I comment.</label>
+                                    </div>
+
+                                    <div class="mt-4 ">
+                                        <input type="submit" class="bg-[#cdcdcd] px-7 py-3 rounded-xl text-white font-semibold cursor-pointer" value="Submit">
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <div class="mt-9">
+                    <h2 class="text-[20px] font-bold pb-4 border-b border-border">Related products</h2>
+
+                    <div class="grid grid-cols-2 mid:grid-cols-5 ">
+
+                        @if (ViewBag.ListProducts is not null)
+                        {
+                            @foreach (var relatedProduct in ViewBag.ListProducts)
+                            {
+
+                                <div class="product mid:hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_90px] px-4 py-6 hover:rounded-t-2xl translate-y-[-10px]  hover:bg-white group relative mid:hover:z-50">
+                                    <a href="">
+                                        <div class="px-[10px] my-auto ">
+                                            <div class="img rounded-[10px] relative border-[1px] border-border h-full">
+                                                <a href="" class="">
+                                                    <img src="~/Users/assets/images/@relatedProduct.MainPhoto"
+                                                         alt="1000X1000"
+                                                         class="rounded-[10px]" />
+                                                </a>
+                                                <a class="sale absolute bg-red text-[12px] font-bold text-white py-[2px] px-[9px] rounded-[22%] top-[10px] left-[10px]">8%</a>
+                                                <span class="absolute flex justify-center items-center w-[25px] h-[25px] bg-[#ffffff] border-[1px] hover:bg-[#ffe3e3] border-border cursor-pointer shadow-lg text-[16px] font-bold text-[black] py-[2px] px-[9px] rounded-[50%] top-[10px] right-[10px]">
+                                                    <i data-id="@relatedProduct.Id" class="addToWishlist fa-regular heart fa-heart heart-icon hover:text-red duration-200"></i>
+                                                </span>
+                                            </div>
+
+                                            <div class="image-desc flex flex-col mt-[15px]">
+                                                <a href=""
+                                                   class="img-title text-[14px] font-bold hover:text-red mmid:text-ellipsis mmid:whitespace-nowrap overflow-hidden">
+                                                    @relatedProduct.Name
+                                                </a>
+
+                                                <div class="star-rating">
+                                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
+                                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
+                                                    <span class="fa fa-star checked star-icon text-[10px] mt-[15px] text-[orange]"></span>
+                                                    <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
+                                                    <span class="fa fa-star star-icon text-[10px] mt-[15px] text-[#dbdbdb]"></span>
+                                                    <span class="review text-[12px] font-semibold ml-[10px]">1 review</span>
+                                                </div>
+
+                                                <div class="priceandbasket flex justify-between items-center">
+                                                    <div class="price flex items-end  @(relatedProduct.NewPrice is null ? "" : "gap-3")">
+                                                        <span class="old-price line-through text-[#555555] text-[16px] mt-[15px] ">
+                                                            @(relatedProduct.NewPrice is null ? "" : "$" + relatedProduct.Price)
+                                                        </span>
+                                                        <span class="new-price text-[#df1616] text-[19px] font-semibold">
+                                                            $@(relatedProduct.NewPrice is null ? relatedProduct.Price : relatedProduct.NewPrice)
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="stock mt-[8px]">
+                                                    <span class="text-[12px] font-semibold text-[#257c25]">
+                                                        <i class="fa-solid fa-cube package mr-[5px]"></i> @relatedProduct.StockType
+                                                    </span>
+                                                </div>
+
+                                                <div class="border-t border-border hidden mid:group-hover:block translate-y-[40px] top-[85%] left-0 px-3 py-2 absolute bg-white rounded-b-xl">
+                                                    <div class="px-4 ">
+                                                        <ul class="list-disc mt-2 px-4">
+                                                            <li class="leading-tight text-[13px] text-gray">Best-in-class all-around performance</li>
+                                                            <li class="leading-tight text-[13px] text-gray">Confident driving in all weather conditions</li>
+                                                            <li class="leading-tight text-[13px] text-gray">Visual Alignment Indicators</li>
+                                                        </ul>
+
+                                                        <button class="addToCart bg-partdored px-4 py-[8px] w-full rounded-xl text-white font-semibold mt-5 group-hover:shadow-[rgba(0,_0,_0,_0.2)_0px_30px_70px]" data-id="@relatedProduct.Id">Add to Cart</button>
+                                                    </div>
+                                                </div>
+
+                                                <div data-id="@relatedProduct.Id" class="addToCart w-full text-center bg-partdored text-white py-2 rounded-xl mt-4 block mid:hidden">
+                                                    <a href="" class="font-medium">Add to cart</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                </div>
+
+                            }
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="email py-[60px] container mx-auto mid:grid mid:grid-cols-2 flex flex-col border-t border-border">
+                <div class="email-left flex pr-[60px]">
+                    <div class="envelope-icon mid:block hidden">
+                        <i class="fa-regular fa-envelope envelope text-[60px] pr-[30px]"></i>
+                    </div>
+                    <div class="email-content">
+                        <h5 class="text-red text-[16px] mb-[10px] font-semibold">
+                            Join our newsletter for £10 offs
+                        </h5>
+                        <h3 class="text-[26px] mb-[10px] font-medium">
+                            Get our emails for info on new items, sales and much more.
+                        </h3>
+                        <p class="text-14px text-gray w-[350px]">
+                            Register now to get latest updates on promotions & coupons.
+                            Don’t worry, we not spam!
+                        </p>
+                    </div>
+                </div>
+
+                <div class="email-right flex flex-col items-start mid:items-end justify-center">
+                    <div>
+                        <div class="email-right-top">
+                            <form action="">
+                                <div class="input-email flex justify-between border border-border rounded-[12px] gap-[15px] py-1 pr-1 mt-5 mid:mt-0">
+                                    <input type="email"
+                                           name="email"
+                                           placeholder="Enter your email address"
+                                           class="text-[18px] w-full focus:outline-none py-2 pl-3 pr-[10px] rounded-[12px]" />
+                                    <button type="submit"
+                                            class="bg-red text-[16px] font-bold w-[40%] text-white py-2 rounded-[8px]">
+                                        Subscribe
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="email-right-bottom mt-[10px]">
+                            <p class="text-[12px]">
+                                By subscribing you agree to our
+                                <a href="" class="text-red underline">Terms & Conditions and Privacy & Cookies Policy.</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <section class="responsive navbar-bottom">
+        <div class="flex fixed bottom-0 bg-white w-full px-10 py-3 lg:hidden border-t border-[#cbcbcb]">
+            <div class="px-2 py-1 border border-border rounded-xl flex justify-between items-center w-[100px] h-[48px] mr-3">
+                <i class="fa-solid fa-minus text-[14px]"></i>
+                <input class="w-8 h-5 rounded-md outline-none text-center flex items-center"
+                       value="1"
+                       type="text" />
+                <i class="fa-solid fa-plus text-[14px]"></i>
+            </div>
+
+            <button class="flex items-center bg-[#0dbe8c] px-7 py-3 rounded-xl w-full justify-center text-white gap-3 font-semibold">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="16"
+                     height="16"
+                     fill="currentColor"
+                     class="bi bi-cart3"
+                     viewBox="0 0 16 16">
+                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                </svg>
+                Add to Cart
+            </button>
+        </div>
+    </section>
+
+    <!-- Main Ends -->
+
+    <section class="responsive navbar-bottom">
+        <div class="flex justify-between fixed bottom-0 bg-white w-full px-10 md:hidden border-t border-[#cbcbcb]">
+            <div class="flex flex-col items-center py-4">
+                <a href="" class="flex flex-col items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="20"
+                         height="20"
+                         fill="currentColor"
+                         class="bi bi-house-door"
+                         viewBox="0 0 16 16">
+                        <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146ZM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5Z" />
+                    </svg>
+                    <span class="text-[10px] mt-2">HOME</span>
+                </a>
+            </div>
+
+            <div class="flex flex-col items-center py-4">
+                <a href="" class="flex flex-col items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="20"
+                         height="20"
+                         fill="currentColor"
+                         class="bi bi-filter"
+                         viewBox="0 0 16 16">
+                        <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
+                    </svg>
+                    <span class="text-[10px] mt-2">FILTER</span>
+                </a>
+            </div>
+
+            <div class="flex flex-col items-center py-4">
+                <a href="" class="flex flex-col items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="16"
+                         height="20"
+                         fill="currentColor"
+                         class="bi bi-search"
+                         viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                    <span class="text-[10px] mt-2">SEARCH</span>
+                </a>
+            </div>
+
+            <div class="flex flex-col items-center py-4">
+                <a href="" class="flex flex-col items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="16"
+                         height="20"
+                         fill="currentColor"
+                         class="bi bi-heart"
+                         viewBox="0 0 16 16">
+                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+                    </svg>
+                    <span class="text-[10px] mt-2">HEART</span>
+                </a>
+            </div>
+
+            <div class="flex flex-col items-center py-4">
+                <a href="" class="flex flex-col items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="16"
+                         height="20"
+                         fill="currentColor"
+                         class="bi bi-person"
+                         viewBox="0 0 16 16">
+                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
+                    </svg>
+                    <span class="text-[10px] mt-2">HEART</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Start -->
+    <footer>
+        <div class="footer bg-[#212126] mb-[40px] md:mb-0">
+            <div class="mobile:container mx-auto">
+                <div class="footer-inner flex mid:py-[80px] py-[25px] mid:flex-row flex-col">
+                    <div class="column-left-container pb-5 mid:max-w-[340px]">
+                        <div class="logo mb-[20px]">
+                            <img class="w-[50%]"
+                                 src="https://klbtheme.com/partdo/wp-content/uploads/2022/10/logo-light-300x73.png"
+                                 alt="" />
+                        </div>
+
+                        <h3 class="text-white font-semibold text-[18px] mb-[15px]">
+                            Völogi deledes ponade eujäjurtad
+                        </h3>
+
+                        <p class="text-[15px] text-[#808080] mb-[16px]">
+                            Autoseligen syr. Nek diarask fröbomba. Nör antipol kynoda nynat.
+                            Pressa fåmoska. Aposkop redelingar nede, sektigt.
+                        </p>
+
+                        <a href="" class="text-red">info@example.com</a>
+                    </div>
+
+                    <div class="vertical-line border-r border-[#505050] px-[20px]"></div>
+
+                    <div class="column-right w-full flex flex-col mid:flex-row justify-around mt-5 mid:mt-0">
+                        <div class="column-big mid:px-[60px]">
+                            <h4 class="text-white text-[16px] font-semibold mb-[20px]">
+                                Need Help?
+                            </h4>
+
+                            <div class="phonenumber text-[25px] text-white font-bold mb-[15px]">
+                                <p>(+800) 1234 5678 90</p>
+                            </div>
+
+                            <div class="company-works mb-[10px]">
+                                <p class="text-[#808080] text-[14px]">
+                                    Monday – Friday: 9:00-20:00
+                                </p>
+                                <p class="text-[#808080] text-[14px]">
+                                    Saturady: 11:00 – 15:00
+                                </p>
+                            </div>
+
+                            <a href="" class="text-red">support@example.com</a>
+                        </div>
+
+                        <div class="column-small">
+                            <h4 class="text-white mb-[20px] font-semibold mt-5 mid:m-0">
+                                Customer Service
+                            </h4>
+                            <ul>
+                                <li>
+                                    <a href="" class="text-[15px] text-white">Help Center</a>
+                                </li>
+                                <li>
+                                    <a href="" class="text-[15px] text-white">My account</a>
+                                </li>
+                                <li>
+                                    <a href="" class="text-[15px] text-white">Track Products</a>
+                                </li>
+                                <li>
+                                    <a href="" class="text-[15px] text-white">My Orders</a>
+                                </li>
+                                <li>
+                                    <a href="" class="text-[15px] text-white">Your Wishlist</a>
+                                </li>
+                                <li>
+                                    <a href="" class="text-[15px] text-white">Return Policy</a>
+                                </li>
+                                <li>
+                                    <a href="" class="text-[15px] text-white">Buy Gift Cards</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="column-small">
+                            <h4 class="text-white mb-[20px] font-semibold mt-5 mid:m-0">
+                                Store Information
+                            </h4>
+                            <ul>
+                                <li>
+                                    <a href="" class="text-[15px] text-white">About Partdo Store</a>
+                                </li>
+                                <li>
+                                    <a href="" class="text-[15px] text-white">Bestsellers</a>
+                                </li>
+                                <li>
+                                    <a href="" class="text-[15px] text-white">Latest Products</a>
+                                </li>
+                                <li>
+                                    <a href="" class="text-[15px] text-white">New Discounts</a>
+                                </li>
+                                <li>
+                                    <a href="" class="text-[15px] text-white">Sale Products</a>
+                                </li>
+                                <li>
+                                    <a href="" class="text-[15px] text-white">Affliliate Program</a>
+                                </li>
+                                <li>
+                                    <a href="" class="text-[15px] text-white">Sell on Partdo</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-middle mid:flex hidden justify-center border-b-[1px] border-white border-t-[1px]">
+                    <span class="flex text-white text-[15px] py-[10px] border-r-[1px] h-full px-[20px]">-5% for all order in this week Shop now</span>
+
+                    <span class="pl-[20px] flex text-white text-[15px] py-[10px]">Free delivery for all orders over $200</span>
+                </div>
+
+                <div class="footer-middle flex flex-col mid:hidden justify-center border-b-[1px] border-white border-t-[1px]">
+                    <span class="flex text-white text-[15px] py-[10px] h-full px-[20px] justify-center">-5% for all order in this week Shop now</span>
+
+                    <span class="pl-[20px] flex text-white border-t text-[15px] py-[10px] justify-center">Free delivery for all orders over $200</span>
+                </div>
+
+                <div class="footer-bottom py-[60px]">
+                    <div class="top">
+                        <ul class="flex gap-[20px]">
+                            <li>
+                                <a href="" class="text-white text-[13px]">Privacy Policy</a>
+                            </li>
+                            <li>
+                                <a href="" class="text-white text-[13px]">Order Tracking</a>
+                            </li>
+                            <li>
+                                <a href="" class="text-white text-[13px]">Terms and Conditions</a>
+                            </li>
+                            <li>
+                                <a href="" class="text-white text-[13px]">Refund and Returns Policy</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="middle flex mid:flex-row flex-col justify-between mt-2">
+                        <div class="middle-left flex items-center">
+                            <p class="text-[#828282] text-[13px]">
+                                Copyright 2023 © Partdo WordPress Theme. All right reserved.
+                                Powered by KLBTheme.
+                            </p>
+                        </div>
+                        <div class="middle-right mt-3 mid:mt-0">
+                            <img src="~/assets/images/credit-cards.png"
+                                 alt="" />
+                        </div>
+                    </div>
+
+                    <div class="bottom mt-[30px] flex items-center gap-4">
+                        <span class="text-[white] text-[14px] font-medium">Download App on Mobile</span>
+                        <img src="~/assets/images/app-store.png"
+                             alt="" />
+                        <img src="~/assets/images/google-play.png"
+                             alt=""
+                             class="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer End -->
+</body>
+
+</html>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function () {
+        $('.addToCart').on('click', function () {
+            var id = $(this).data('id');
+
+            $.ajax({
+                type: 'GET',
+                url: '/basket/add',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    //alert()
+                    // Handle success response here
+                    toastr.success('Product added successfully', '', { positionClass: 'toast-bottom-right' });
+                },
+                error: function (data) {
+                    //alert("Product Added Succesfully")
+                    // Handle error response here
+                    toastr.success('Error occured', '', { positionClass: 'toast-bottom-right' });
+
+                    //toastr.error('Error: ' + error, '', { positionClass: 'toast-bottom-right' });
+                }
+            });
+        });
+    });
+</script>
+
+<script src="~/Users/styles/js/product.js"></script>
+<script src="~/Users/styles/js/shop.js"></script>

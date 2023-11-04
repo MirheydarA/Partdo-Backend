@@ -40,7 +40,7 @@
 
                         <button class="bg-[#eaeaea] mb-4 w-full py-3 rounded-xl font-semibold hover:bg-[#cbcbcb] duration-300" type="submit">Log in</button>
 
-                        <a class="text-red font-medium hover:text-[#005eff] duration-300" href="">Lost your password?</a>
+                        <a class="text-red font-medium hover:text-[#005eff] duration-300" asp-action="forgotpassword" asp-controller="account">Lost your password?</a>
                         <div class="text-[14px] flex">
                             <span>Don't have account yet?</span> <a asp-controller="account" asp-action="register" class="hover:text-red ml-2">Register now</a>
                         </div>
@@ -177,4 +177,6 @@
 
 @section scripts{
     <script src="~/Users/styles/js/my-account.js"></script>
+
+
 }

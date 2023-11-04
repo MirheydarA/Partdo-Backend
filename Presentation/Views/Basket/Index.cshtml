@@ -22,8 +22,20 @@
           crossorigin="anonymous"
           referrerpolicy="no-referrer" />
 
-    <!-- Multi Range Slider -->
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+
+
+@*    <!-- Multi Range Slider -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>*@
 </head>
 
 <body>
@@ -129,14 +141,19 @@
             </div>
 
             <div class="header-bottom-right flex items-center">
-                <a href="" class="text-[25px] mr-7 relative">
+                <a asp-action="index" asp-controller="wishlist" class="text-[25px] mr-7 relative">
                     <i class="fa-regular fa-heart icons"></i>
-                    <span class="bg-red rounded-[50%] absolute w-[17px] h-[17px] text-[15px] right-[-9px] top-0 flex items-center justify-center text-[white] font-semibold">0</span>
+                    <span class="bg-red rounded-[50%] absolute w-[17px] h-[17px] text-[15px] right-[-9px] top-0 flex items-center justify-center text-[white] font-semibold">@ViewBag.ListWishlistProducts.Count</span>
                 </a>
 
                 <a href="" class="text-[25px] mr-6 relative">
+                    @{var count = 0;}
+                    @foreach (var basketP in Model)
+                    {
+                        count = count + basketP.Count;
+                    }
                     <i class="fa-solid fa-cart-shopping icons"></i>
-                    <span class="bg-red rounded-[50%] absolute w-[17px] h-[17px] text-[15px] right-[-9px] top-0 flex items-center justify-center text-[white] font-semibold">0</span>
+                    <span class="bg-red rounded-[50%] absolute w-[17px] h-[17px] text-[15px] right-[-9px] top-0 flex items-center justify-center text-[white] font-semibold">@count</span>
                 </a>
 
                 <div class="flex flex-col">
@@ -357,11 +374,11 @@
                             <tbody>
                                 @foreach (var basketProduct in Model)
                                 {
-                                    if (basketProduct.Count != 0)
+                                    if (basketProduct is not null)
                                     {
                                         <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                                             <td class="text-center text-[20px]"> <a asp-action="delete" asp-controller="basket" asp-route-id="@basketProduct.Id"><i class="hover:text-red duration-300 cursor-pointer fa-regular fa-trash-can"></i> </a></td>
-                                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <td scope="row" class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                 <a class="relative ">
                                                     <img src="~/Users/assets/images/@basketProduct.PhotoName" alt="" class="w-[70px]" />
                                                 </a>
@@ -395,10 +412,10 @@
                                             <input class="border border-[#c1c1c1] h-[42px] rounded-xl px-4 text-[13px] focus:outline-[#ededed] focus:outline-offset-2 outline-8" placeholder="Coupon code" type="text">
                                             <button class="px-4 py-2 bg-[#e3e3e3] rounded-xl ml-3 text-[14px]">Apply coupon</button>
                                         </div>
-
+@*
                                         <div class="flex items-center">
                                             <button class="px-4 py-2 bg-[#e3e3e3] rounded-xl ml-3 text-[14px]">Remove All</button>
-                                        </div>
+                                        </div>*@
 
                                     </div>
 
@@ -431,7 +448,7 @@
                     </div>
 
                     <div class="py-[10px] text-white font-semibold">
-                        <button class="bg-partdored w-full py-3 rounded-xl">Proceed to checkout</button>
+                        <button class="bg-partdored w-full py-3 rounded-xl" id="checkoutButton">Proceed to checkout</button>
                     </div>
                 </div>
             }
@@ -752,7 +769,7 @@
 
     @*<script src="~/Users/styles/js/basket.js"></script>*@
     <script src="~/Users/styles/js/cart.js"></script>
-    <script>
+@*    <script>
         $(document).on('click', '.increaseCount', function (e) {
             //e.preventDefault();
 
@@ -789,7 +806,7 @@
     </script>
 
     <script>
-        $(document).on('click', '.decrease', function (e) {
+        $(document).on('click', '.decreaseCount', function (e) {
             //e.preventDefault();
             var decreaseCount = $(this);
 
@@ -816,4 +833,26 @@
                 }
             })
         })
-    </script>
+    </script>*@
+<script>
+    $(document).ready(function () {
+        $('#checkoutButton').on('click', function () {
+            // Show toastr notification
+            toastr.success('Proceeding to checkout...');
+
+            // Send the AJAX request to the deleteall action in the basket controller
+            $.ajax({
+                type: 'POST',  // Specify the type of request, for example, POST or GET
+                url: '/basket/Checkout',  // Replace with the actual URL for your deleteall action
+                success: function (data) {
+                    // Handle the success response here
+                    //toastr.success('All items removed from the basket.', '', { positionClass: 'toast-bottom-right' });
+                },
+                error: function (error) {
+                    // Handle the error response here
+                    //toastr.error('An error occurred: ' + error, '', { positionClass: 'toast-bottom-right' });
+                }
+            });
+        });
+    });
+</script>

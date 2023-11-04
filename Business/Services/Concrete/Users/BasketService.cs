@@ -120,9 +120,9 @@ namespace Business.Services.Concrete.Users
                 basketProduct.Count ++;
                 _basketProductRepository.Update(basketProduct);
             }
-            var wishlistProducts = await _wishlistProductRepository.GetWishlistProductsByUser(authUser);
-            var wishlistProduct = wishlistProducts.FirstOrDefault(wp => wp.ProductId == id);
-            wishlistProduct.IsInWishlist = false;
+            //var wishlistProducts = await _wishlistProductRepository.GetWishlistProductsByUser(authUser);
+            //var wishlistProduct = wishlistProducts.FirstOrDefault(wp => wp.ProductId == id);
+            //wishlistProduct.IsInWishlist = false;
             //_wishlistService.DeleteAsync(authUser, wishlistProduct.Id);
             await _unitOfWork.CommitAsync();
             return true;
@@ -181,7 +181,10 @@ namespace Business.Services.Concrete.Users
             if (basketProduct.Count == 0)
             {
                 basketProduct.IsDeleted = true;
-                return false;
+
+                _basketProductRepository.Update(basketProduct);
+                await _unitOfWork.CommitAsync();
+                return true;
             }
 
             basketProduct.Count--;
@@ -220,6 +223,28 @@ namespace Business.Services.Concrete.Users
             return true;
         }
 
+        public async Task<bool> DeleteAllAsync(ClaimsPrincipal user)
+        {
+            var authUser = await _userManager.GetUserAsync(user);
+            if (authUser == null)
+            {
+                return false;
+            }
+
+            var basket = await _basketRepository.GetBasketById(authUser);
+            if (basket == null) return false;
+
+            var products = await _basketProductRepository.GetAllAsync();
+            foreach (var productt in products)
+            {
+                _basketProductRepository.Delete(productt);
+                productt.IsDeleted = true;
+
+            }
+
+            await _unitOfWork.CommitAsync();
+            return true;
+        }
 
     }
 }

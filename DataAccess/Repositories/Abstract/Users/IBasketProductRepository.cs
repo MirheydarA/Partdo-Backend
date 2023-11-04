@@ -12,5 +12,7 @@ namespace DataAccess.Repositories.Abstract.Users
     public interface IBasketProductRepository : IRepository<BasketProduct>
     {
         Task<BasketProduct> GetBasketProductByIdAsync(int id, Basket basket);
+        Task<List<BasketProduct>> GetBasketProductsByUser(User user);
+
     }
 }

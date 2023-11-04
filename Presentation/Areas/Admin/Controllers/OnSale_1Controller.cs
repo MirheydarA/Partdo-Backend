@@ -2,11 +2,14 @@
 using Business.Services.Concrete.Admin;
 using Business.ViewModels.Admin.Category;
 using Business.ViewModels.Admin.OnSale_1;
+using Common.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Superadmin, Admin, HR")]
     public class OnSale_1Controller : Controller
     {
         private readonly IOnSale_1Service _onSale_1Service;

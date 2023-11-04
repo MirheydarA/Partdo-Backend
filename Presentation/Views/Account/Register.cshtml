@@ -1,6 +1,12 @@
 ﻿@using Business.ViewModels.Users.Account
 @model AccountRegisterVM
 
+@section links{
+    <!-- Error Toatr -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+}
 
 <!-- Main Start -->
 
@@ -13,7 +19,7 @@
                 </div>
 
                 <div class="register-form " id="registerForm">
-                    <form method="post" asp-action="register" asp-controller="account">
+                    <form method="post" asp-action="register" asp-controller="account" id="myRegisterForm">
                         <div class="flex flex-col mb-7">
                             <label class="text-[13px] mb-[6px]" asp-for="Username">Username *</label>
                             <input class="border border-[#b4b4b4] h-[42px] rounded-xl shadow-md px-3" asp-for="@Model.Username" type="text">
@@ -42,6 +48,8 @@
                         </p>
 
                         <button class="bg-[#eaeaea] mb-4 w-full py-3 rounded-xl font-semibold hover:bg-[#cbcbcb] duration-300" type="submit">Register</button>
+                        @*<a href="" class="register bg-[#eaeaea] mb-4 w-full py-3 rounded-xl font-semibold hover:bg-[#cbcbcb] duration-300" type="submit">Register</a>*@
+                        
                         <div class="text-[14px] flex">
                             <span>Already have an account?</span> <a asp-controller="account" asp-action="login" class="hover:text-red ml-2">Login now</a>
                         </div>
@@ -177,5 +185,41 @@
 </section>
 
 @section scripts{
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
     <script src="~/Users/styles/js/my-account.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('#myRegisterForm').submit(function (e) {
+                e.preventDefault(); // Prevent the form from submitting normally
+
+                $.ajax({
+                    type: 'POST', // Set the request type (POST/GET)
+                    url: '/account/register',
+                    data: $(this).serialize(), // Serialize the form data
+                    success: function (result) {
+                        // Handle the success case
+                        toastr.success('Registration Successful! Please confirm your email', '', { positionClass: 'toast-bottom-right' });
+                        console.log(result); // Log the result to the console
+                    },
+                    error: function (error) {
+                        // Handle the error case
+                        toastr.error('Error: ' + error, '', { positionClass: 'toast-bottom-right' });
+                        console.log(error); // Log the error to the console
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        toastr.options = {
+            "timeOut": "2000", // Set the time the toastr is displayed, in this case 3 seconds
+            "onHidden": function () {
+                window.location.href = '/account/login'; // Replace 'YourRedirectUrl' with the URL you want to redirect to
+            }
+        };
+    </script>
 } 

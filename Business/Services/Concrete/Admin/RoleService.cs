@@ -62,7 +62,7 @@ namespace Business.Services.Concrete.Admin
         public async Task<RoleUpdateVM> GetUpdateAsync(string id)
         {
             var role = await _roleManager.FindByNameAsync(id);
-            if (role is not null) return null;
+            if (role is null) return null;
 
             var model = new RoleUpdateVM
             {
